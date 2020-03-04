@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Automatic-Module-Name: ru.iaie.reflex.diagram
+Bundle-ManifestVersion: 2
+Bundle-Name: ru.iaie.reflex.diagram
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: ru.iaie.reflex.diagram; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.xbase,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtext.util,
+ org.eclipse.emf.common,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: ru.iaie.reflex.diagram.serializer,
+ ru.iaie.reflex.diagram.validation,
+ ru.iaie.reflex.diagram.reflex,
+ ru.iaie.reflex.diagram,
+ ru.iaie.reflex.diagram.parser.antlr.internal,
+ ru.iaie.reflex.diagram.scoping,
+ ru.iaie.reflex.diagram.generator,
+ ru.iaie.reflex.diagram.reflex.util,
+ ru.iaie.reflex.diagram.services,
+ ru.iaie.reflex.diagram.reflex.impl,
+ ru.iaie.reflex.diagram.parser.antlr
+Import-Package: org.apache.log4j
