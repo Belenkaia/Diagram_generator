@@ -106,7 +106,7 @@ public class ReflexGenerator extends AbstractGenerator {
     return _builder;
   }
   
-  public CharSequence generateLabelGraphics(final String processName) {
+  public CharSequence generateLabelGraphics(final String label) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("LabelGraphics");
     _builder.newLine();
@@ -114,7 +114,7 @@ public class ReflexGenerator extends AbstractGenerator {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("text\t\"");
-    _builder.append(processName, "\t");
+    _builder.append(label, "\t");
     _builder.append("\"");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -314,20 +314,17 @@ public class ReflexGenerator extends AbstractGenerator {
   public void generateDataModel(final Resource resource) {
     Iterable<ru.iaie.reflex.diagram.reflex.Process> _filter = Iterables.<ru.iaie.reflex.diagram.reflex.Process>filter(IteratorExtensions.<EObject>toIterable(resource.getAllContents()), ru.iaie.reflex.diagram.reflex.Process.class);
     for (final ru.iaie.reflex.diagram.reflex.Process process : _filter) {
-      {
-        ArrayList<String> tempVarNames = new ArrayList<String>();
-        EList<Variable> _variable = process.getVariable();
-        for (final Variable vars : _variable) {
-          {
-            ArrayList<String> tempNames = this.getVariableName(vars);
-            for (final String varName : tempNames) {
-              {
-                ActiveProcess node = new ActiveProcess();
-                node.setIdFrom(this.procId.indexOf(process.getName()));
-                node.setIdTo((this.variableId.get(varName)).intValue());
-                node.setAction(this.getVariableAction(vars));
-                this.procList.add(node);
-              }
+      EList<Variable> _variable = process.getVariable();
+      for (final Variable vars : _variable) {
+        {
+          ArrayList<String> tempNames = this.getVariableName(vars);
+          for (final String varName : tempNames) {
+            {
+              ActiveProcess node = new ActiveProcess();
+              node.setIdFrom(this.procId.indexOf(process.getName()));
+              node.setIdTo((this.variableId.get(varName)).intValue());
+              node.setAction(this.getVariableAction(vars));
+              this.procList.add(node);
             }
           }
         }
@@ -366,6 +363,13 @@ public class ReflexGenerator extends AbstractGenerator {
     return (_plus_1 + _name);
   }
   
+  protected String _getVariableNameAndType(final PhysicalVariable variable) {
+    String _type = variable.getType();
+    String _plus = (_type + " : ");
+    String _name = variable.getName();
+    return (_plus + _name);
+  }
+  
   protected String _getReflexType(final CType type) {
     return type.toString();
   }
@@ -385,13 +389,6 @@ public class ReflexGenerator extends AbstractGenerator {
     } else {
       return "signed";
     }
-  }
-  
-  protected String _getVariableNameAndType(final PhysicalVariable variable) {
-    String _type = variable.getType();
-    String _plus = (_type + " : ");
-    String _name = variable.getName();
-    return (_plus + _name);
   }
   
   protected ArrayList<ActiveProcess> _getActiveList(final StartProcStat statement) {
