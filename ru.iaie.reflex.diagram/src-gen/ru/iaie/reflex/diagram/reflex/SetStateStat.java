@@ -14,6 +14,7 @@ package ru.iaie.reflex.diagram.reflex;
  * </p>
  * <ul>
  *   <li>{@link ru.iaie.reflex.diagram.reflex.SetStateStat#getStateId <em>State Id</em>}</li>
+ *   <li>{@link ru.iaie.reflex.diagram.reflex.SetStateStat#isNext <em>Next</em>}</li>
  * </ul>
  *
  * @see ru.iaie.reflex.diagram.reflex.ReflexPackage#getSetStateStat()
@@ -43,5 +44,27 @@ public interface SetStateStat extends Statement
    * @generated
    */
   void setStateId(String value);
+
+  /**
+   * Returns the value of the '<em><b>Next</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Next</em>' attribute.
+   * @see #setNext(boolean)
+   * @see ru.iaie.reflex.diagram.reflex.ReflexPackage#getSetStateStat_Next()
+   * @model
+   * @generated
+   */
+  boolean isNext();
+
+  /**
+   * Sets the value of the '{@link ru.iaie.reflex.diagram.reflex.SetStateStat#isNext <em>Next</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Next</em>' attribute.
+   * @see #isNext()
+   * @generated
+   */
+  void setNext(boolean value);
 
 } // SetStateStat

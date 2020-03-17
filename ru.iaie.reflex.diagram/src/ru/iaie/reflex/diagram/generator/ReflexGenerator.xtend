@@ -11,6 +11,14 @@ import ru.iaie.reflex.diagram.reflex.StopProcStat
 import ru.iaie.reflex.diagram.reflex.Statement
 import ru.iaie.reflex.diagram.reflex.IfElseStat
 import ru.iaie.reflex.diagram.reflex.CompoundStatement
+import ru.iaie.reflex.diagram.reflex.Variable
+import ru.iaie.reflex.diagram.reflex.DeclaredVariable
+import ru.iaie.reflex.diagram.reflex.ProgramVariable
+import ru.iaie.reflex.diagram.reflex.PhysicalVariable
+import java.util.HashMap
+import ru.iaie.reflex.diagram.reflex.ReflexType
+import ru.iaie.reflex.diagram.reflex.CType
+import ru.iaie.reflex.diagram.reflex.ImportedVariable
 
 /**
  * Generates code from your model files on save.
@@ -20,7 +28,8 @@ import ru.iaie.reflex.diagram.reflex.CompoundStatement
 class ReflexGenerator extends AbstractGenerator {
 	var int count_id = 0;
 	var ArrayList<ActiveProcess> procList = new ArrayList<ActiveProcess>;
-	var procId = new ArrayList(); 	
+	var procId = new ArrayList(); 
+	var HashMap<String, Integer> variableId = new HashMap<String, Integer>();
 	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Метод, увеличивающий счетчик процессов. count_id используется для задания Id нодам процессов в выходном файле GML
@@ -56,12 +65,12 @@ class ReflexGenerator extends AbstractGenerator {
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Метод получает на вход длину имени процесса и генерирует строку с настройками отобоажения ноды процесса (длина, высота, цвет границы, форма вершины, и тд)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def generateNodeGraphics (int nameLength) '''
+	def generateNodeGraphics (int nameLength, String typeOfNode) '''
 			graphics
 			[
-				w	«(nameLength * 5 + 25)».0
+				w	«(nameLength * 10)».0
 				h	48.0
-				type	"roundrectangle"
+				type	"«typeOfNode»"
 				raisedBorder	0
 				fill	"#FFFFFF"
 				outline	"#000000"
@@ -86,25 +95,29 @@ class ReflexGenerator extends AbstractGenerator {
 // Метод возвращает строку, содержащую объявление одной вершины (те одного процесса) в gml графе,
 // вызывая при этом generateNodeGraphics(), generateLabelGraphics() для генерации отдельных частей описания вершины 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def generateOneProcessNode(int processId, String processName)
+	def generateOneProcessNode(int processId, String processName, String typeOfNode)
 	'''
 	node
 	[
 		id	«processId»
 		label	"«processName»"
-	    «generateNodeGraphics(processName.length)»
+	    «generateNodeGraphics(processName.length, typeOfNode)»
 		«generateLabelGraphics(processName)»
 	]
 	'''
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Метод возвращает строку, содержащую в себе объявления всех вершин создаваемой диаграммы процессов. запоминает соответствие имени процесса его Id в списке procId
+// флаг diagrammFlag определяет форму вершин процессов (в activity-diagramm это прямоугольник, в data diagramm это эллипс)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def String generateProcessNodes(Resource resource)
+	def String generateProcessNodes(Resource resource, int diagrammFlag)
 	{
 		var String tempString = "";
 		for (e : resource.allContents.toIterable.filter(Process)) { //получаем список всех процессов, и проходим по нему
-	             tempString += generateOneProcessNode(count_id, e.name) // для каждого процесса генерируем строковое описание вершины графа, и конкатенируем его к предыдущим
+	             if(diagrammFlag == 0)
+	             	tempString += generateOneProcessNode(count_id, e.name, "roundrectangle") // для каждого процесса генерируем строковое описание вершины графа, и конкатенируем его к предыдущим
+	             if(diagrammFlag == 1)
+	             	tempString += generateOneProcessNode(count_id, e.name, "ellipse")
 	             procId.add(count_id, e.name) // запоминаем соответствие имени процесса назначенному ему Id
 	             increaseProcessId() // инкрементируем счетчик процессов (это число будет Id для вершины следующего процесса)
 	        }
@@ -112,11 +125,11 @@ class ReflexGenerator extends AbstractGenerator {
 	}
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Метод соединяет вместе заголовок gml файла, список вершин диаграммы и список ребер. Для этого вызываются соответствующие методы.
+// Метод соединяет вместе заголовок gml файла, список вершин диаграммы и список ребер. Для этого вызываются соответствующие методы. Возвращает готовый текст activity-диаграммы
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def generateActivityDiagram(Resource resource)
 	'''«writeHeadGML»
-	«generateProcessNodes(resource)»
+	«generateProcessNodes(resource, 0)»
 	«constructActiveModel(resource)»
 	«checkProcList()»
 	«generateAllEdges()»
@@ -170,6 +183,7 @@ class ReflexGenerator extends AbstractGenerator {
 			System.out.print(i + ":" + procId.get(i) + ", ")
 		}
 		System.out.println()
+		
 		for (process : resource.allContents.toIterable.filter(Process)) 
 		{
 	         for (state : process.states) 
@@ -202,6 +216,138 @@ class ReflexGenerator extends AbstractGenerator {
 	        }
 	        
 	}
+
+
+	
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Метод возвращает строку, содержащую описание вершин переменных в формате gml для диаграммы связи по данным
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	def getVariablesNodes(Resource resource)
+	{
+		var String tempStr = "";
+		for (variable : resource.allContents.toIterable.filter(DeclaredVariable)) 
+		{
+			tempStr += generateOneProcessNode(count_id, variable.getVariableNameAndType(), "roundrectangle")
+			variableId.put(variable.name, count_id) // запоминаем соответствие имени переменной назначенной ее вершине Id
+	        increaseProcessId() // инкрементируем счетчик вершин (это число будет Id для вершины следующей вершины)
+	    }
+	    return tempStr;
+	}
+
+
+	
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	def generateDataModel(Resource resource)
+	{
+		for (process : resource.allContents.toIterable.filter(Process)) 
+		{
+			var ArrayList<String> tempVarNames = new ArrayList<String>
+			for(vars : process.variable)
+			{
+				var ArrayList<String> tempNames = vars.getVariableName()
+				for (varName : tempNames)
+				{
+					var ActiveProcess node = new ActiveProcess
+					node.idFrom = procId.indexOf(process.name)
+					node.idTo = variableId.get(varName)
+					node.action = vars.getVariableAction()
+					procList.add(node)
+				}
+			}
+		}
+	}
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def dispatch ArrayList<String> getVariableName(DeclaredVariable variable)
+{
+	var ArrayList<String> nameList = new ArrayList<String>
+	nameList.add(variable.name)
+	return nameList
+}
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def dispatch ArrayList<String> getVariableName(ImportedVariable variable)
+{
+	var ArrayList<String> nameList = new ArrayList<String>
+	for (vars : variable.varNames)
+		nameList.add(vars)
+	return nameList	
+}
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def dispatch String getVariableAction(DeclaredVariable variable)
+{
+	return "declare"
+}
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def dispatch String getVariableAction(ImportedVariable variable)
+{	
+	return "import"	
+}
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def dispatch String getVariableNameAndType(ProgramVariable variable)
+{
+	return variable.type.getSigned + " ReflexType : "/*  variable.type.getReflexType() + " " + */  + " " + variable.name
+}
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def dispatch String getReflexType(CType type)
+{
+	return type.toString
+}
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def dispatch String getReflexType(ReflexType type)
+{
+	return "ReflexType"
+}
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def dispatch String getSigned(ReflexType type)
+{
+	return ""	
+}
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def dispatch String getSigned(CType type)
+{
+	if(type.signSpec)
+		return 	"unsigned"
+	else
+		return 	"signed"
+}
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// 
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def dispatch String getVariableNameAndType(PhysicalVariable variable)
+{
+	return variable.type + " : " + variable.name	
+}
 
 	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -283,13 +429,34 @@ def dispatch ArrayList<ActiveProcess> getActiveList(Statement statement)
 	}
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Метод соединяет вместе заголовок gml файла, список вершин диаграммы и список ребер. Для этого вызываются соответствующие методы. Возвращает готовый текст data-диаграммы
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	def generateDataDiagram(Resource resource)
+	'''«writeHeadGML»
+	«generateProcessNodes(resource, 1)»
+	«getVariablesNodes(resource)»
+	«generateDataModel(resource)»
+	«generateAllEdges()»
+]'''
+	
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Очистка памяти, обнуление счетчиков
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def void clear()
+{
+	 	procList.clear()
+      	NullProcessId()
+      	procId.clear()
+}
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Основной метод. Создает файл диаграммы и записывает в него результат генерации.
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 	
       	fsa.generateFile("activity_diagram.gml", generateActivityDiagram(resource));
-      	procList.clear()
-      	NullProcessId()
-      	procId.clear()
+     	clear()
+     	fsa.generateFile("data_diagram.gml", generateDataDiagram(resource));
+     	clear()
       }     
 }

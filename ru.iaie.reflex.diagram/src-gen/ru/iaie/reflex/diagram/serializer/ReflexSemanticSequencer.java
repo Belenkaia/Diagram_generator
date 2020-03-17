@@ -1133,7 +1133,7 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     SetStateStat returns SetStateStat
 	 *
 	 * Constraint:
-	 *     stateId=ID?
+	 *     (stateId=ID | next?='next')
 	 */
 	protected void sequence_SetStateStat(ISerializationContext context, SetStateStat semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

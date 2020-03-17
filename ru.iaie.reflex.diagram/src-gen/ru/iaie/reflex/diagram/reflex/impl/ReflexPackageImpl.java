@@ -1297,6 +1297,17 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
    * @generated
    */
   @Override
+  public EAttribute getSetStateStat_Next()
+  {
+    return (EAttribute)setStateStatEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getFunction()
   {
     return functionEClass;
@@ -2312,6 +2323,7 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
 
     setStateStatEClass = createEClass(SET_STATE_STAT);
     createEAttribute(setStateStatEClass, SET_STATE_STAT__STATE_ID);
+    createEAttribute(setStateStatEClass, SET_STATE_STAT__NEXT);
 
     functionEClass = createEClass(FUNCTION);
     createEReference(functionEClass, FUNCTION__RETURN_TYPE);
@@ -2572,6 +2584,7 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
 
     initEClass(setStateStatEClass, SetStateStat.class, "SetStateStat", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getSetStateStat_StateId(), ecorePackage.getEString(), "stateId", null, 0, 1, SetStateStat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSetStateStat_Next(), ecorePackage.getEBoolean(), "next", null, 0, 1, SetStateStat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(functionEClass, Function.class, "Function", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getFunction_ReturnType(), this.getCType(), null, "returnType", null, 0, 1, Function.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

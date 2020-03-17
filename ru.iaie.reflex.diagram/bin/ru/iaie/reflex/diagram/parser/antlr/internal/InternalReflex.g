@@ -1649,10 +1649,20 @@ ruleSetStateStat returns [EObject current=null]
 				)
 			)
 			    |
-			otherlv_4='next'
-			{
-				newLeafNode(otherlv_4, grammarAccess.getSetStateStatAccess().getNextKeyword_2_1());
-			}
+			(
+				(
+					lv_next_4_0='next'
+					{
+						newLeafNode(lv_next_4_0, grammarAccess.getSetStateStatAccess().getNextNextKeyword_2_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getSetStateStatRule());
+						}
+						setWithLastConsumed($current, "next", true, "next");
+					}
+				)
+			)
 		)
 		otherlv_5=';'
 		{

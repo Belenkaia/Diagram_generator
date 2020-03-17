@@ -21,6 +21,7 @@ import ru.iaie.reflex.diagram.reflex.SetStateStat;
  * </p>
  * <ul>
  *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.SetStateStatImpl#getStateId <em>State Id</em>}</li>
+ *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.SetStateStatImpl#isNext <em>Next</em>}</li>
  * </ul>
  *
  * @generated
@@ -46,6 +47,26 @@ public class SetStateStatImpl extends StatementImpl implements SetStateStat
    * @ordered
    */
   protected String stateId = STATE_ID_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isNext() <em>Next</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isNext()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean NEXT_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isNext() <em>Next</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isNext()
+   * @generated
+   * @ordered
+   */
+  protected boolean next = NEXT_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -99,12 +120,39 @@ public class SetStateStatImpl extends StatementImpl implements SetStateStat
    * @generated
    */
   @Override
+  public boolean isNext()
+  {
+    return next;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setNext(boolean newNext)
+  {
+    boolean oldNext = next;
+    next = newNext;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, ReflexPackage.SET_STATE_STAT__NEXT, oldNext, next));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
     {
       case ReflexPackage.SET_STATE_STAT__STATE_ID:
         return getStateId();
+      case ReflexPackage.SET_STATE_STAT__NEXT:
+        return isNext();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -121,6 +169,9 @@ public class SetStateStatImpl extends StatementImpl implements SetStateStat
     {
       case ReflexPackage.SET_STATE_STAT__STATE_ID:
         setStateId((String)newValue);
+        return;
+      case ReflexPackage.SET_STATE_STAT__NEXT:
+        setNext((Boolean)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -139,6 +190,9 @@ public class SetStateStatImpl extends StatementImpl implements SetStateStat
       case ReflexPackage.SET_STATE_STAT__STATE_ID:
         setStateId(STATE_ID_EDEFAULT);
         return;
+      case ReflexPackage.SET_STATE_STAT__NEXT:
+        setNext(NEXT_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -155,6 +209,8 @@ public class SetStateStatImpl extends StatementImpl implements SetStateStat
     {
       case ReflexPackage.SET_STATE_STAT__STATE_ID:
         return STATE_ID_EDEFAULT == null ? stateId != null : !STATE_ID_EDEFAULT.equals(stateId);
+      case ReflexPackage.SET_STATE_STAT__NEXT:
+        return next != NEXT_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -172,6 +228,8 @@ public class SetStateStatImpl extends StatementImpl implements SetStateStat
     StringBuilder result = new StringBuilder(super.toString());
     result.append(" (stateId: ");
     result.append(stateId);
+    result.append(", next: ");
+    result.append(next);
     result.append(')');
     return result.toString();
   }

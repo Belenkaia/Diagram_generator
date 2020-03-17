@@ -982,15 +982,16 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cStateKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
 		private final Assignment cStateIdAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
 		private final RuleCall cStateIdIDTerminalRuleCall_2_0_1_0 = (RuleCall)cStateIdAssignment_2_0_1.eContents().get(0);
-		private final Keyword cNextKeyword_2_1 = (Keyword)cAlternatives_2.eContents().get(1);
+		private final Assignment cNextAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
+		private final Keyword cNextNextKeyword_2_1_0 = (Keyword)cNextAssignment_2_1.eContents().get(0);
 		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		////TODO: add flag to identify if next
 		//SetStateStat:
-		//	{SetStateStat} "set" ("state" stateId=ID | "next") ";";
+		//	{SetStateStat} "set" ("state" stateId=ID | next?="next") ";";
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{SetStateStat} "set" ("state" stateId=ID | "next") ";"
+		//{SetStateStat} "set" ("state" stateId=ID | next?="next") ";"
 		public Group getGroup() { return cGroup; }
 		
 		//{SetStateStat}
@@ -999,7 +1000,7 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		//"set"
 		public Keyword getSetKeyword_1() { return cSetKeyword_1; }
 		
-		//("state" stateId=ID | "next")
+		//("state" stateId=ID | next?="next")
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 		
 		//"state" stateId=ID
@@ -1014,8 +1015,11 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getStateIdIDTerminalRuleCall_2_0_1_0() { return cStateIdIDTerminalRuleCall_2_0_1_0; }
 		
+		//next?="next"
+		public Assignment getNextAssignment_2_1() { return cNextAssignment_2_1; }
+		
 		//"next"
-		public Keyword getNextKeyword_2_1() { return cNextKeyword_2_1; }
+		public Keyword getNextNextKeyword_2_1_0() { return cNextNextKeyword_2_1_0; }
 		
 		//";"
 		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
@@ -3089,7 +3093,7 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 	
 	////TODO: add flag to identify if next
 	//SetStateStat:
-	//	{SetStateStat} "set" ("state" stateId=ID | "next") ";";
+	//	{SetStateStat} "set" ("state" stateId=ID | next?="next") ";";
 	public SetStateStatElements getSetStateStatAccess() {
 		return pSetStateStat;
 	}

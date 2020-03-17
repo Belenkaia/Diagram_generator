@@ -145,6 +145,7 @@
     </genClasses>
     <genClasses ecoreClass="Reflex.ecore#//SetStateStat">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reflex.ecore#//SetStateStat/stateId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reflex.ecore#//SetStateStat/next"/>
     </genClasses>
     <genClasses ecoreClass="Reflex.ecore#//Function">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Reflex.ecore#//Function/returnType"/>

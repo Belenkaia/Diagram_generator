@@ -1071,13 +1071,22 @@ public interface ReflexPackage extends EPackage
   int SET_STATE_STAT__STATE_ID = STATEMENT_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Next</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SET_STATE_STAT__NEXT = STATEMENT_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Set State Stat</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SET_STATE_STAT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 1;
+  int SET_STATE_STAT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link ru.iaie.reflex.diagram.reflex.impl.FunctionImpl <em>Function</em>}' class.
@@ -4056,6 +4065,17 @@ public interface ReflexPackage extends EPackage
   EAttribute getSetStateStat_StateId();
 
   /**
+   * Returns the meta object for the attribute '{@link ru.iaie.reflex.diagram.reflex.SetStateStat#isNext <em>Next</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Next</em>'.
+   * @see ru.iaie.reflex.diagram.reflex.SetStateStat#isNext()
+   * @see #getSetStateStat()
+   * @generated
+   */
+  EAttribute getSetStateStat_Next();
+
+  /**
    * Returns the meta object for class '{@link ru.iaie.reflex.diagram.reflex.Function <em>Function</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5522,6 +5542,14 @@ public interface ReflexPackage extends EPackage
      * @generated
      */
     EAttribute SET_STATE_STAT__STATE_ID = eINSTANCE.getSetStateStat_StateId();
+
+    /**
+     * The meta object literal for the '<em><b>Next</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SET_STATE_STAT__NEXT = eINSTANCE.getSetStateStat_Next();
 
     /**
      * The meta object literal for the '{@link ru.iaie.reflex.diagram.reflex.impl.FunctionImpl <em>Function</em>}' class.

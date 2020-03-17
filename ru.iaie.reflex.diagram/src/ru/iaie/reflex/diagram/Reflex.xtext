@@ -14,6 +14,7 @@ Program:
 	processes+=Process)*
 	"}";
 
+
 Process:
 	"proc" name=ID "{"
 	variable+=Variable*
@@ -98,8 +99,7 @@ ResetStat:
 	"reset" "timeout" ";";
 	//TODO: add flag to identify if next
 SetStateStat:
-	{SetStateStat} "set" (("state" stateId=ID) | "next") ";";
-
+	{SetStateStat} "set" (("state" stateId=ID) | next?="next") ";";
 Function:
 	returnType=CType name=ID "(" argTypes+=CType ("," argTypes+=CType)* ")" ";";
 
