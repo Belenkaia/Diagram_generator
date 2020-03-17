@@ -426,7 +426,12 @@ public class ReflexGenerator extends AbstractGenerator {
     String _plus_1 = ("else: " + _else);
     System.out.println(_plus_1);
     ArrayList<ActiveProcess> procTempThenList = this.getActiveList(statement.getThen());
-    ArrayList<ActiveProcess> procTempElseList = this.getActiveList(statement.getElse());
+    ArrayList<ActiveProcess> procTempElseList = null;
+    Statement _else_1 = statement.getElse();
+    boolean _tripleNotEquals = (_else_1 != null);
+    if (_tripleNotEquals) {
+      procTempElseList = this.getActiveList(statement.getElse());
+    }
     if ((procTempThenList != null)) {
       for (final ActiveProcess l : procTempThenList) {
         procTempList.add(l);

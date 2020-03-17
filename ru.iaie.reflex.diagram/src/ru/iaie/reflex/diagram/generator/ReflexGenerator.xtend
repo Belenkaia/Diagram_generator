@@ -392,10 +392,14 @@ def dispatch String getSigned(CType type)
 	def dispatch ArrayList<ActiveProcess> getActiveList(IfElseStat statement)
 	{
 		var ArrayList<ActiveProcess> procTempList = null;
-		System.out.println("then: " + statement.then)
+		
+		System.out.println("then: " + statement.then) // отладка
 		System.out.println("else: " + statement.getElse)
+		
 		var ArrayList<ActiveProcess> procTempThenList = statement.then.getActiveList()
-		var ArrayList<ActiveProcess> procTempElseList = statement.getElse().getActiveList()
+		var ArrayList<ActiveProcess> procTempElseList = null
+		if(statement.getElse() !== null)
+			procTempElseList = statement.getElse().getActiveList()
 		if(procTempThenList !== null)
 		{
 			for (l: procTempThenList)
