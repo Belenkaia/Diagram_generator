@@ -8,6 +8,9 @@ import org.eclipse.xtext.generator.IGeneratorContext
 import ru.iaie.reflex.diagram.reflex.Process
 import ru.iaie.reflex.diagram.reflex.StartProcStat
 import ru.iaie.reflex.diagram.reflex.StopProcStat
+import ru.iaie.reflex.diagram.reflex.Statement
+import ru.iaie.reflex.diagram.reflex.IfElseStat
+import ru.iaie.reflex.diagram.reflex.CompoundStatement
 
 /**
  * Generates code from your model files on save.
@@ -158,7 +161,7 @@ class ReflexGenerator extends AbstractGenerator {
 	}
 	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//
+// Метод создает модель связи процессов по управлению в виде списка ArrayList<ActiveProcess>
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def constructActiveModel(Resource resource)
 	{
@@ -171,52 +174,114 @@ class ReflexGenerator extends AbstractGenerator {
 		{
 	         for (state : process.states) 
 	         {
-	         	for (i: state.stateFunction)
-	         	{
-	         		for(e: i.body.statements)
+	         		for(statement: state.statements)
 	         		{
-	         			if(e.class.toString.indexOf("StartProcStat") != -1)
-	         			{
-	         				for (statFunction : resource.allContents.toIterable.filter(StartProcStat)) 
-	         				{
-	         					if(e.equals(statFunction))
-	         					{
-	         						System.out.println(" process: " + process.name + "(" + procId.indexOf(process.name) +")" + "start " + statFunction.procId + "(" + procId.indexOf(statFunction.procId) + ")");
-	         						var ActiveProcess proc = new ActiveProcess()
-	         						proc.setAction("start");
-	         						proc.setIdFrom(procId.indexOf(process.name))
-	         						proc.setIdTo(procId.indexOf(statFunction.procId))
-	         						procList.add(proc)
-	         					}
-	         				}	         			
+	         			var ArrayList<ActiveProcess> tempProcList;
+	         			try {
+	         				tempProcList = statement.getActiveList()
 	         			}
-	         			
-	         			if(e.class.toString.indexOf("StopProcStat") != -1)
+	         			catch(IllegalArgumentException ex)
 	         			{
-	         				for (statFunction : resource.allContents.toIterable.filter(StopProcStat)) 
-	         				{
-	         					if(e.equals(statFunction))
-	         					{
-	         						var int procIdTo = procId.indexOf(process.name)
-	         						if(statFunction.procId !== null)
-	         							procIdTo = procId.indexOf(statFunction.procId)
-	         						System.out.println(" process: " + process.name + "(" + procId.indexOf(process.name) +")" + "stop " + statFunction.procId + "(" + procIdTo + ")");
-	         						var ActiveProcess proc = new ActiveProcess()
-	         						proc.setAction("stop");
-	         						proc.setIdFrom(procId.indexOf(process.name))
-	         						proc.setIdTo(procIdTo)
-	         						procList.add(proc)
-	         					}
-	         				}	         			
+	         				System.out.println(ex)
 	         			}
+	         			if(tempProcList !== null)
+	         			{
+	         				for (elem: tempProcList)
+	         				{
+	         					elem.setIdFrom(procId.indexOf(process.name))
+	         					if(elem.idTo == -1)
+	         					{
+	         						elem.setIdTo(procId.indexOf(process.name)) // stopping itself
+	         					}
+	         					procList.add(elem);
+	         				}
+	         			}
+	         		
 	         		}	
-	         	} 
 	         }    
 	        }
 	        
 	}
 
 	
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Полиморфный метод для StartProcStat: возвращает 1 элемент ArrayList<ActiveProcess>, класс, отражающий связь между командой старт и процессом, внутри которого она
+// находится, при этом внутри метода информация о процессе недоступна, поэтому заполняется дефолтными значениями, а после перезаписывается
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	def dispatch ArrayList<ActiveProcess> getActiveList(StartProcStat statement)
+	{
+		var ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>
+		var ActiveProcess proc = new ActiveProcess()
+	    proc.setAction("start");
+	    proc.setIdFrom(-1) // default value
+	    proc.setIdTo(procId.indexOf(statement.procId))
+	    procTempList.add(proc)
+	    
+		return procTempList
+	}
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Полиморфный метод для StopProcStat: возвращает 1 элемент ArrayList<ActiveProcess>, класс, отражающий связь между командой стоп и процессом, внутри которого она
+// находится, при этом внутри метода информация о процессе недоступна, поэтому заполняется дефолтными значениями, а после перезаписывается
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	def dispatch ArrayList<ActiveProcess> getActiveList(StopProcStat statement)
+	{
+		var ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>
+		var ActiveProcess proc = new ActiveProcess()
+	    proc.setAction("stop");
+	    proc.setIdFrom(-1) // default value
+	    if(statement.procId !== null)
+	    {
+	    	proc.setIdTo(procId.indexOf(statement.procId))
+	    }
+	    else
+	    {
+	    	proc.setIdTo(-1) // stopping itself
+	    }
+	    procTempList.add(proc)
+	    
+		return procTempList
+	}
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Полиморфный метод для IfElseStat: возвращает ArrayList<ActiveProcess>, те список классов, отражающих связь между командами старт/стоп и процессом, внутри которого они находятся
+// Метод последовательно вызывает функцию getActiveList у полей IfElseStat, после чего собирает вместе результат, и возвращает его
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	def dispatch ArrayList<ActiveProcess> getActiveList(IfElseStat statement)
+	{
+		var ArrayList<ActiveProcess> procTempList = null;
+		System.out.println("then: " + statement.then)
+		System.out.println("else: " + statement.getElse)
+		var ArrayList<ActiveProcess> procTempThenList = statement.then.getActiveList()
+		var ArrayList<ActiveProcess> procTempElseList = statement.getElse().getActiveList()
+		if(procTempThenList !== null)
+		{
+			for (l: procTempThenList)
+			{
+				procTempList.add(l)
+			}
+		}
+		
+		if(procTempElseList !== null)
+		{
+			for (l: procTempElseList)
+			{
+				procTempList.add(l)
+			}
+		}
+		return (procTempList)
+	}
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Полиморфный метод для суперкласса Statement (заглушка)
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def dispatch ArrayList<ActiveProcess> getActiveList(Statement statement)
+	{
+		return null
+	}
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Основной метод. Создает файл диаграммы и записывает в него результат генерации.
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -226,5 +291,5 @@ class ReflexGenerator extends AbstractGenerator {
       	procList.clear()
       	NullProcessId()
       	procId.clear()
-      }
+      }     
 }

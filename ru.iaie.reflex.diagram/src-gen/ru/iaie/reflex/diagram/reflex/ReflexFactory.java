@@ -114,15 +114,6 @@ public interface ReflexFactory extends EFactory
   State createState();
 
   /**
-   * Returns a new object of class '<em>State Function</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>State Function</em>'.
-   * @generated
-   */
-  StateFunction createStateFunction();
-
-  /**
    * Returns a new object of class '<em>Timeout Function</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -132,13 +123,31 @@ public interface ReflexFactory extends EFactory
   TimeoutFunction createTimeoutFunction();
 
   /**
-   * Returns a new object of class '<em>Body</em>'.
+   * Returns a new object of class '<em>Statement</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Body</em>'.
+   * @return a new object of class '<em>Statement</em>'.
    * @generated
    */
-  Body createBody();
+  Statement createStatement();
+
+  /**
+   * Returns a new object of class '<em>Compound Statement</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Compound Statement</em>'.
+   * @generated
+   */
+  CompoundStatement createCompoundStatement();
+
+  /**
+   * Returns a new object of class '<em>Expression Statement</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Expression Statement</em>'.
+   * @generated
+   */
+  ExpressionStatement createExpressionStatement();
 
   /**
    * Returns a new object of class '<em>Assign Stat</em>'.

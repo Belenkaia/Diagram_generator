@@ -12,9 +12,9 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import ru.iaie.reflex.diagram.reflex.Body;
 import ru.iaie.reflex.diagram.reflex.CaseStat;
 import ru.iaie.reflex.diagram.reflex.ReflexPackage;
+import ru.iaie.reflex.diagram.reflex.Statement;
 
 /**
  * <!-- begin-user-doc -->
@@ -50,7 +50,7 @@ public class CaseStatImpl extends MinimalEObjectImpl.Container implements CaseSt
    * @generated
    * @ordered
    */
-  protected Body body;
+  protected Statement body;
 
   /**
    * <!-- begin-user-doc -->
@@ -129,7 +129,7 @@ public class CaseStatImpl extends MinimalEObjectImpl.Container implements CaseSt
    * @generated
    */
   @Override
-  public Body getBody()
+  public Statement getBody()
   {
     return body;
   }
@@ -139,9 +139,9 @@ public class CaseStatImpl extends MinimalEObjectImpl.Container implements CaseSt
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetBody(Body newBody, NotificationChain msgs)
+  public NotificationChain basicSetBody(Statement newBody, NotificationChain msgs)
   {
-    Body oldBody = body;
+    Statement oldBody = body;
     body = newBody;
     if (eNotificationRequired())
     {
@@ -157,7 +157,7 @@ public class CaseStatImpl extends MinimalEObjectImpl.Container implements CaseSt
    * @generated
    */
   @Override
-  public void setBody(Body newBody)
+  public void setBody(Statement newBody)
   {
     if (newBody != body)
     {
@@ -223,7 +223,7 @@ public class CaseStatImpl extends MinimalEObjectImpl.Container implements CaseSt
         setOption((ru.iaie.reflex.diagram.reflex.Integer)newValue);
         return;
       case ReflexPackage.CASE_STAT__BODY:
-        setBody((Body)newValue);
+        setBody((Statement)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -243,7 +243,7 @@ public class CaseStatImpl extends MinimalEObjectImpl.Container implements CaseSt
         setOption((ru.iaie.reflex.diagram.reflex.Integer)null);
         return;
       case ReflexPackage.CASE_STAT__BODY:
-        setBody((Body)null);
+        setBody((Statement)null);
         return;
     }
     super.eUnset(featureID);

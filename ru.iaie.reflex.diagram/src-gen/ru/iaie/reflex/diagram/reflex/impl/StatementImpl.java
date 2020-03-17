@@ -20,25 +20,25 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import ru.iaie.reflex.diagram.reflex.Body;
 import ru.iaie.reflex.diagram.reflex.ReflexPackage;
+import ru.iaie.reflex.diagram.reflex.Statement;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Body</b></em>'.
+ * An implementation of the model object '<em><b>Statement</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.BodyImpl#getStatements <em>Statements</em>}</li>
- *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.BodyImpl#isLoop <em>Loop</em>}</li>
- *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.BodyImpl#isRestart <em>Restart</em>}</li>
+ *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.StatementImpl#getStatements <em>Statements</em>}</li>
+ *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.StatementImpl#isLoop <em>Loop</em>}</li>
+ *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.StatementImpl#isRestart <em>Restart</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class BodyImpl extends MinimalEObjectImpl.Container implements Body
+public class StatementImpl extends MinimalEObjectImpl.Container implements Statement
 {
   /**
    * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
@@ -95,7 +95,7 @@ public class BodyImpl extends MinimalEObjectImpl.Container implements Body
    * <!-- end-user-doc -->
    * @generated
    */
-  protected BodyImpl()
+  protected StatementImpl()
   {
     super();
   }
@@ -108,7 +108,7 @@ public class BodyImpl extends MinimalEObjectImpl.Container implements Body
   @Override
   protected EClass eStaticClass()
   {
-    return ReflexPackage.Literals.BODY;
+    return ReflexPackage.Literals.STATEMENT;
   }
 
   /**
@@ -121,7 +121,7 @@ public class BodyImpl extends MinimalEObjectImpl.Container implements Body
   {
     if (statements == null)
     {
-      statements = new EObjectContainmentEList<EObject>(EObject.class, this, ReflexPackage.BODY__STATEMENTS);
+      statements = new EObjectContainmentEList<EObject>(EObject.class, this, ReflexPackage.STATEMENT__STATEMENTS);
     }
     return statements;
   }
@@ -148,7 +148,7 @@ public class BodyImpl extends MinimalEObjectImpl.Container implements Body
     boolean oldLoop = loop;
     loop = newLoop;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ReflexPackage.BODY__LOOP, oldLoop, loop));
+      eNotify(new ENotificationImpl(this, Notification.SET, ReflexPackage.STATEMENT__LOOP, oldLoop, loop));
   }
 
   /**
@@ -173,7 +173,7 @@ public class BodyImpl extends MinimalEObjectImpl.Container implements Body
     boolean oldRestart = restart;
     restart = newRestart;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ReflexPackage.BODY__RESTART, oldRestart, restart));
+      eNotify(new ENotificationImpl(this, Notification.SET, ReflexPackage.STATEMENT__RESTART, oldRestart, restart));
   }
 
   /**
@@ -186,7 +186,7 @@ public class BodyImpl extends MinimalEObjectImpl.Container implements Body
   {
     switch (featureID)
     {
-      case ReflexPackage.BODY__STATEMENTS:
+      case ReflexPackage.STATEMENT__STATEMENTS:
         return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -202,11 +202,11 @@ public class BodyImpl extends MinimalEObjectImpl.Container implements Body
   {
     switch (featureID)
     {
-      case ReflexPackage.BODY__STATEMENTS:
+      case ReflexPackage.STATEMENT__STATEMENTS:
         return getStatements();
-      case ReflexPackage.BODY__LOOP:
+      case ReflexPackage.STATEMENT__LOOP:
         return isLoop();
-      case ReflexPackage.BODY__RESTART:
+      case ReflexPackage.STATEMENT__RESTART:
         return isRestart();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -223,14 +223,14 @@ public class BodyImpl extends MinimalEObjectImpl.Container implements Body
   {
     switch (featureID)
     {
-      case ReflexPackage.BODY__STATEMENTS:
+      case ReflexPackage.STATEMENT__STATEMENTS:
         getStatements().clear();
         getStatements().addAll((Collection<? extends EObject>)newValue);
         return;
-      case ReflexPackage.BODY__LOOP:
+      case ReflexPackage.STATEMENT__LOOP:
         setLoop((Boolean)newValue);
         return;
-      case ReflexPackage.BODY__RESTART:
+      case ReflexPackage.STATEMENT__RESTART:
         setRestart((Boolean)newValue);
         return;
     }
@@ -247,13 +247,13 @@ public class BodyImpl extends MinimalEObjectImpl.Container implements Body
   {
     switch (featureID)
     {
-      case ReflexPackage.BODY__STATEMENTS:
+      case ReflexPackage.STATEMENT__STATEMENTS:
         getStatements().clear();
         return;
-      case ReflexPackage.BODY__LOOP:
+      case ReflexPackage.STATEMENT__LOOP:
         setLoop(LOOP_EDEFAULT);
         return;
-      case ReflexPackage.BODY__RESTART:
+      case ReflexPackage.STATEMENT__RESTART:
         setRestart(RESTART_EDEFAULT);
         return;
     }
@@ -270,11 +270,11 @@ public class BodyImpl extends MinimalEObjectImpl.Container implements Body
   {
     switch (featureID)
     {
-      case ReflexPackage.BODY__STATEMENTS:
+      case ReflexPackage.STATEMENT__STATEMENTS:
         return statements != null && !statements.isEmpty();
-      case ReflexPackage.BODY__LOOP:
+      case ReflexPackage.STATEMENT__LOOP:
         return loop != LOOP_EDEFAULT;
-      case ReflexPackage.BODY__RESTART:
+      case ReflexPackage.STATEMENT__RESTART:
         return restart != RESTART_EDEFAULT;
     }
     return super.eIsSet(featureID);
@@ -299,4 +299,4 @@ public class BodyImpl extends MinimalEObjectImpl.Container implements Body
     return result.toString();
   }
 
-} //BodyImpl
+} //StatementImpl

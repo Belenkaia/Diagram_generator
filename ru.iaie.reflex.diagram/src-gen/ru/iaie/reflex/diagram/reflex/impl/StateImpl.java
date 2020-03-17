@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import ru.iaie.reflex.diagram.reflex.ReflexPackage;
 import ru.iaie.reflex.diagram.reflex.State;
-import ru.iaie.reflex.diagram.reflex.StateFunction;
+import ru.iaie.reflex.diagram.reflex.Statement;
 import ru.iaie.reflex.diagram.reflex.TimeoutFunction;
 
 /**
@@ -33,7 +33,7 @@ import ru.iaie.reflex.diagram.reflex.TimeoutFunction;
  * </p>
  * <ul>
  *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.StateImpl#getName <em>Name</em>}</li>
- *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.StateImpl#getStateFunction <em>State Function</em>}</li>
+ *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.StateImpl#getStatements <em>Statements</em>}</li>
  *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.StateImpl#getTimeoutFunction <em>Timeout Function</em>}</li>
  * </ul>
  *
@@ -62,14 +62,14 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getStateFunction() <em>State Function</em>}' containment reference list.
+   * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getStateFunction()
+   * @see #getStatements()
    * @generated
    * @ordered
    */
-  protected EList<StateFunction> stateFunction;
+  protected EList<Statement> statements;
 
   /**
    * The cached value of the '{@link #getTimeoutFunction() <em>Timeout Function</em>}' containment reference.
@@ -133,13 +133,13 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
    * @generated
    */
   @Override
-  public EList<StateFunction> getStateFunction()
+  public EList<Statement> getStatements()
   {
-    if (stateFunction == null)
+    if (statements == null)
     {
-      stateFunction = new EObjectContainmentEList<StateFunction>(StateFunction.class, this, ReflexPackage.STATE__STATE_FUNCTION);
+      statements = new EObjectContainmentEList<Statement>(Statement.class, this, ReflexPackage.STATE__STATEMENTS);
     }
-    return stateFunction;
+    return statements;
   }
 
   /**
@@ -202,8 +202,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
-      case ReflexPackage.STATE__STATE_FUNCTION:
-        return ((InternalEList<?>)getStateFunction()).basicRemove(otherEnd, msgs);
+      case ReflexPackage.STATE__STATEMENTS:
+        return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
       case ReflexPackage.STATE__TIMEOUT_FUNCTION:
         return basicSetTimeoutFunction(null, msgs);
     }
@@ -222,8 +222,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
     {
       case ReflexPackage.STATE__NAME:
         return getName();
-      case ReflexPackage.STATE__STATE_FUNCTION:
-        return getStateFunction();
+      case ReflexPackage.STATE__STATEMENTS:
+        return getStatements();
       case ReflexPackage.STATE__TIMEOUT_FUNCTION:
         return getTimeoutFunction();
     }
@@ -244,9 +244,9 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
       case ReflexPackage.STATE__NAME:
         setName((String)newValue);
         return;
-      case ReflexPackage.STATE__STATE_FUNCTION:
-        getStateFunction().clear();
-        getStateFunction().addAll((Collection<? extends StateFunction>)newValue);
+      case ReflexPackage.STATE__STATEMENTS:
+        getStatements().clear();
+        getStatements().addAll((Collection<? extends Statement>)newValue);
         return;
       case ReflexPackage.STATE__TIMEOUT_FUNCTION:
         setTimeoutFunction((TimeoutFunction)newValue);
@@ -268,8 +268,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
       case ReflexPackage.STATE__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case ReflexPackage.STATE__STATE_FUNCTION:
-        getStateFunction().clear();
+      case ReflexPackage.STATE__STATEMENTS:
+        getStatements().clear();
         return;
       case ReflexPackage.STATE__TIMEOUT_FUNCTION:
         setTimeoutFunction((TimeoutFunction)null);
@@ -290,8 +290,8 @@ public class StateImpl extends MinimalEObjectImpl.Container implements State
     {
       case ReflexPackage.STATE__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case ReflexPackage.STATE__STATE_FUNCTION:
-        return stateFunction != null && !stateFunction.isEmpty();
+      case ReflexPackage.STATE__STATEMENTS:
+        return statements != null && !statements.isEmpty();
       case ReflexPackage.STATE__TIMEOUT_FUNCTION:
         return timeoutFunction != null;
     }

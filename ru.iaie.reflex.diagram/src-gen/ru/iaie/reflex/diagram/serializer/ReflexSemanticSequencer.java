@@ -20,15 +20,16 @@ import ru.iaie.reflex.diagram.reflex.AssignmentExpression;
 import ru.iaie.reflex.diagram.reflex.BitAndExpression;
 import ru.iaie.reflex.diagram.reflex.BitOrExpression;
 import ru.iaie.reflex.diagram.reflex.BitXorExpression;
-import ru.iaie.reflex.diagram.reflex.Body;
 import ru.iaie.reflex.diagram.reflex.CType;
 import ru.iaie.reflex.diagram.reflex.CaseStat;
 import ru.iaie.reflex.diagram.reflex.CastExpression;
 import ru.iaie.reflex.diagram.reflex.CompareExpression;
+import ru.iaie.reflex.diagram.reflex.CompoundStatement;
 import ru.iaie.reflex.diagram.reflex.Const;
 import ru.iaie.reflex.diagram.reflex.EnumMember;
 import ru.iaie.reflex.diagram.reflex.EqualityExpression;
 import ru.iaie.reflex.diagram.reflex.ErrorStat;
+import ru.iaie.reflex.diagram.reflex.ExpressionStatement;
 import ru.iaie.reflex.diagram.reflex.Function;
 import ru.iaie.reflex.diagram.reflex.FunctionCall;
 import ru.iaie.reflex.diagram.reflex.IfElseStat;
@@ -50,7 +51,7 @@ import ru.iaie.reflex.diagram.reflex.SetStateStat;
 import ru.iaie.reflex.diagram.reflex.ShiftExpression;
 import ru.iaie.reflex.diagram.reflex.StartProcStat;
 import ru.iaie.reflex.diagram.reflex.State;
-import ru.iaie.reflex.diagram.reflex.StateFunction;
+import ru.iaie.reflex.diagram.reflex.Statement;
 import ru.iaie.reflex.diagram.reflex.StopProcStat;
 import ru.iaie.reflex.diagram.reflex.SwitchStat;
 import ru.iaie.reflex.diagram.reflex.Time;
@@ -91,9 +92,6 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case ReflexPackage.BIT_XOR_EXPRESSION:
 				sequence_BitXorExpression(context, (BitXorExpression) semanticObject); 
 				return; 
-			case ReflexPackage.BODY:
-				sequence_Body(context, (Body) semanticObject); 
-				return; 
 			case ReflexPackage.CTYPE:
 				sequence_CType(context, (CType) semanticObject); 
 				return; 
@@ -105,6 +103,9 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case ReflexPackage.COMPARE_EXPRESSION:
 				sequence_CompareExpression(context, (CompareExpression) semanticObject); 
+				return; 
+			case ReflexPackage.COMPOUND_STATEMENT:
+				sequence_CompoundStatement(context, (CompoundStatement) semanticObject); 
 				return; 
 			case ReflexPackage.CONST:
 				sequence_Const(context, (Const) semanticObject); 
@@ -120,6 +121,9 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 				return; 
 			case ReflexPackage.ERROR_STAT:
 				sequence_ErrorStat(context, (ErrorStat) semanticObject); 
+				return; 
+			case ReflexPackage.EXPRESSION_STATEMENT:
+				sequence_ExpressionStatement(context, (ExpressionStatement) semanticObject); 
 				return; 
 			case ReflexPackage.FUNCTION:
 				sequence_Function(context, (Function) semanticObject); 
@@ -203,8 +207,8 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case ReflexPackage.STATE:
 				sequence_State(context, (State) semanticObject); 
 				return; 
-			case ReflexPackage.STATE_FUNCTION:
-				sequence_StateFunction(context, (StateFunction) semanticObject); 
+			case ReflexPackage.STATEMENT:
+				sequence_Statement(context, (Statement) semanticObject); 
 				return; 
 			case ReflexPackage.STOP_PROC_STAT:
 				sequence_StopProcStat(context, (StopProcStat) semanticObject); 
@@ -410,29 +414,6 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     Body returns Body
-	 *
-	 * Constraint:
-	 *     (
-	 *         statements+=StartProcStat | 
-	 *         statements+=StopProcStat | 
-	 *         statements+=ErrorStat | 
-	 *         loop?=LoopStat | 
-	 *         restart?=RestartStat | 
-	 *         statements+=SetStateStat | 
-	 *         statements+=Body+ | 
-	 *         statements+=IfElseStat | 
-	 *         statements+=SwitchStat | 
-	 *         statements+=Expression
-	 *     )?
-	 */
-	protected void sequence_Body(ISerializationContext context, Body semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     CType returns CType
 	 *     ReflexType returns CType
 	 *
@@ -449,7 +430,7 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     CaseStat returns CaseStat
 	 *
 	 * Constraint:
-	 *     (option=Integer body=Body)
+	 *     (option=Integer body=Statement)
 	 */
 	protected void sequence_CaseStat(ISerializationContext context, CaseStat semanticObject) {
 		if (errorAcceptor != null) {
@@ -460,7 +441,7 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getCaseStatAccess().getOptionIntegerParserRuleCall_1_0(), semanticObject.getOption());
-		feeder.accept(grammarAccess.getCaseStatAccess().getBodyBodyParserRuleCall_3_0(), semanticObject.getBody());
+		feeder.accept(grammarAccess.getCaseStatAccess().getBodyStatementParserRuleCall_3_0(), semanticObject.getBody());
 		feeder.finish();
 	}
 	
@@ -544,6 +525,19 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		feeder.accept(grammarAccess.getCompareExpressionAccess().getCmpOpCompareOpEnumRuleCall_1_1_0(), semanticObject.getCmpOp());
 		feeder.accept(grammarAccess.getCompareExpressionAccess().getRightCompareExpressionParserRuleCall_1_2_0(), semanticObject.getRight());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns CompoundStatement
+	 *     CompoundStatement returns CompoundStatement
+	 *
+	 * Constraint:
+	 *     statements+=Statement*
+	 */
+	protected void sequence_CompoundStatement(ISerializationContext context, CompoundStatement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -690,6 +684,24 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     ExpressionStatement returns ExpressionStatement
+	 *
+	 * Constraint:
+	 *     expr=Expression
+	 */
+	protected void sequence_ExpressionStatement(ISerializationContext context, ExpressionStatement semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, ReflexPackage.Literals.EXPRESSION_STATEMENT__EXPR) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ReflexPackage.Literals.EXPRESSION_STATEMENT__EXPR));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getExpressionStatementAccess().getExprExpressionParserRuleCall_0_0(), semanticObject.getExpr());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     FunctionCall returns FunctionCall
 	 *     UnaryExpression returns FunctionCall
 	 *     CastExpression returns FunctionCall
@@ -738,10 +750,11 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     Statement returns IfElseStat
 	 *     IfElseStat returns IfElseStat
 	 *
 	 * Constraint:
-	 *     (cond=Expression then=Body else=Body?)
+	 *     (cond=Expression then=Statement else=Statement?)
 	 */
 	protected void sequence_IfElseStat(ISerializationContext context, IfElseStat semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1116,6 +1129,7 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     Statement returns SetStateStat
 	 *     SetStateStat returns SetStateStat
 	 *
 	 * Constraint:
@@ -1169,6 +1183,7 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     Statement returns StartProcStat
 	 *     StartProcStat returns StartProcStat
 	 *
 	 * Constraint:
@@ -1187,28 +1202,10 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     StateFunction returns StateFunction
-	 *
-	 * Constraint:
-	 *     body=Body
-	 */
-	protected void sequence_StateFunction(ISerializationContext context, StateFunction semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, ReflexPackage.Literals.STATE_FUNCTION__BODY) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ReflexPackage.Literals.STATE_FUNCTION__BODY));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getStateFunctionAccess().getBodyBodyParserRuleCall_0(), semanticObject.getBody());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     State returns State
 	 *
 	 * Constraint:
-	 *     (name=ID stateFunction+=StateFunction* timeoutFunction=TimeoutFunction?)
+	 *     (name=ID statements+=Statement* timeoutFunction=TimeoutFunction?)
 	 */
 	protected void sequence_State(ISerializationContext context, State semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1217,6 +1214,19 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     Statement returns Statement
+	 *
+	 * Constraint:
+	 *     (statements+=ErrorStat | loop?=LoopStat | restart?=RestartStat)?
+	 */
+	protected void sequence_Statement(ISerializationContext context, Statement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns StopProcStat
 	 *     StopProcStat returns StopProcStat
 	 *
 	 * Constraint:
@@ -1229,6 +1239,7 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     Statement returns SwitchStat
 	 *     SwitchStat returns SwitchStat
 	 *
 	 * Constraint:
@@ -1264,7 +1275,7 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     TimeoutFunction returns TimeoutFunction
 	 *
 	 * Constraint:
-	 *     (time=Time body=Body)
+	 *     (time=Time body=Statement)
 	 */
 	protected void sequence_TimeoutFunction(ISerializationContext context, TimeoutFunction semanticObject) {
 		if (errorAcceptor != null) {
@@ -1275,7 +1286,7 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getTimeoutFunctionAccess().getTimeTimeParserRuleCall_1_0(), semanticObject.getTime());
-		feeder.accept(grammarAccess.getTimeoutFunctionAccess().getBodyBodyParserRuleCall_2_0(), semanticObject.getBody());
+		feeder.accept(grammarAccess.getTimeoutFunctionAccess().getBodyStatementParserRuleCall_2_0(), semanticObject.getBody());
 		feeder.finish();
 	}
 	

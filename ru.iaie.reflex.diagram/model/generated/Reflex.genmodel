@@ -101,20 +101,21 @@
     </genClasses>
     <genClasses ecoreClass="Reflex.ecore#//State">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reflex.ecore#//State/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Reflex.ecore#//State/stateFunction"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Reflex.ecore#//State/statements"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Reflex.ecore#//State/timeoutFunction"/>
-    </genClasses>
-    <genClasses ecoreClass="Reflex.ecore#//StateFunction">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Reflex.ecore#//StateFunction/body"/>
     </genClasses>
     <genClasses ecoreClass="Reflex.ecore#//TimeoutFunction">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Reflex.ecore#//TimeoutFunction/time"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Reflex.ecore#//TimeoutFunction/body"/>
     </genClasses>
-    <genClasses ecoreClass="Reflex.ecore#//Body">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Reflex.ecore#//Body/statements"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reflex.ecore#//Body/loop"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reflex.ecore#//Body/restart"/>
+    <genClasses ecoreClass="Reflex.ecore#//Statement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Reflex.ecore#//Statement/statements"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reflex.ecore#//Statement/loop"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reflex.ecore#//Statement/restart"/>
+    </genClasses>
+    <genClasses ecoreClass="Reflex.ecore#//CompoundStatement"/>
+    <genClasses ecoreClass="Reflex.ecore#//ExpressionStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Reflex.ecore#//ExpressionStatement/expr"/>
     </genClasses>
     <genClasses ecoreClass="Reflex.ecore#//AssignStat">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reflex.ecore#//AssignStat/varId"/>

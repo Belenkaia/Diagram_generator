@@ -9,23 +9,23 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Body</b></em>'.
+ * A representation of the model object '<em><b>Statement</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link ru.iaie.reflex.diagram.reflex.Body#getStatements <em>Statements</em>}</li>
- *   <li>{@link ru.iaie.reflex.diagram.reflex.Body#isLoop <em>Loop</em>}</li>
- *   <li>{@link ru.iaie.reflex.diagram.reflex.Body#isRestart <em>Restart</em>}</li>
+ *   <li>{@link ru.iaie.reflex.diagram.reflex.Statement#getStatements <em>Statements</em>}</li>
+ *   <li>{@link ru.iaie.reflex.diagram.reflex.Statement#isLoop <em>Loop</em>}</li>
+ *   <li>{@link ru.iaie.reflex.diagram.reflex.Statement#isRestart <em>Restart</em>}</li>
  * </ul>
  *
- * @see ru.iaie.reflex.diagram.reflex.ReflexPackage#getBody()
+ * @see ru.iaie.reflex.diagram.reflex.ReflexPackage#getStatement()
  * @model
  * @generated
  */
-public interface Body extends EObject
+public interface Statement extends EObject
 {
   /**
    * Returns the value of the '<em><b>Statements</b></em>' containment reference list.
@@ -33,7 +33,7 @@ public interface Body extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Statements</em>' containment reference list.
-   * @see ru.iaie.reflex.diagram.reflex.ReflexPackage#getBody_Statements()
+   * @see ru.iaie.reflex.diagram.reflex.ReflexPackage#getStatement_Statements()
    * @model containment="true"
    * @generated
    */
@@ -45,14 +45,14 @@ public interface Body extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Loop</em>' attribute.
    * @see #setLoop(boolean)
-   * @see ru.iaie.reflex.diagram.reflex.ReflexPackage#getBody_Loop()
+   * @see ru.iaie.reflex.diagram.reflex.ReflexPackage#getStatement_Loop()
    * @model
    * @generated
    */
   boolean isLoop();
 
   /**
-   * Sets the value of the '{@link ru.iaie.reflex.diagram.reflex.Body#isLoop <em>Loop</em>}' attribute.
+   * Sets the value of the '{@link ru.iaie.reflex.diagram.reflex.Statement#isLoop <em>Loop</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Loop</em>' attribute.
@@ -67,14 +67,14 @@ public interface Body extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Restart</em>' attribute.
    * @see #setRestart(boolean)
-   * @see ru.iaie.reflex.diagram.reflex.ReflexPackage#getBody_Restart()
+   * @see ru.iaie.reflex.diagram.reflex.ReflexPackage#getStatement_Restart()
    * @model
    * @generated
    */
   boolean isRestart();
 
   /**
-   * Sets the value of the '{@link ru.iaie.reflex.diagram.reflex.Body#isRestart <em>Restart</em>}' attribute.
+   * Sets the value of the '{@link ru.iaie.reflex.diagram.reflex.Statement#isRestart <em>Restart</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @param value the new value of the '<em>Restart</em>' attribute.
@@ -83,4 +83,4 @@ public interface Body extends EObject
    */
   void setRestart(boolean value);
 
-} // Body
+} // Statement

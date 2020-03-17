@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link ru.iaie.reflex.diagram.reflex.State#getName <em>Name</em>}</li>
- *   <li>{@link ru.iaie.reflex.diagram.reflex.State#getStateFunction <em>State Function</em>}</li>
+ *   <li>{@link ru.iaie.reflex.diagram.reflex.State#getStatements <em>Statements</em>}</li>
  *   <li>{@link ru.iaie.reflex.diagram.reflex.State#getTimeoutFunction <em>Timeout Function</em>}</li>
  * </ul>
  *
@@ -50,16 +50,16 @@ public interface State extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>State Function</b></em>' containment reference list.
-   * The list contents are of type {@link ru.iaie.reflex.diagram.reflex.StateFunction}.
+   * Returns the value of the '<em><b>Statements</b></em>' containment reference list.
+   * The list contents are of type {@link ru.iaie.reflex.diagram.reflex.Statement}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>State Function</em>' containment reference list.
-   * @see ru.iaie.reflex.diagram.reflex.ReflexPackage#getState_StateFunction()
+   * @return the value of the '<em>Statements</em>' containment reference list.
+   * @see ru.iaie.reflex.diagram.reflex.ReflexPackage#getState_Statements()
    * @model containment="true"
    * @generated
    */
-  EList<StateFunction> getStateFunction();
+  EList<Statement> getStatements();
 
   /**
    * Returns the value of the '<em><b>Timeout Function</b></em>' containment reference.

@@ -20,7 +20,6 @@ import ru.iaie.reflex.diagram.reflex.AssignmentExpression;
 import ru.iaie.reflex.diagram.reflex.BitAndExpression;
 import ru.iaie.reflex.diagram.reflex.BitOrExpression;
 import ru.iaie.reflex.diagram.reflex.BitXorExpression;
-import ru.iaie.reflex.diagram.reflex.Body;
 import ru.iaie.reflex.diagram.reflex.CType;
 import ru.iaie.reflex.diagram.reflex.CTypeSignSpec;
 import ru.iaie.reflex.diagram.reflex.CaseStat;
@@ -28,12 +27,14 @@ import ru.iaie.reflex.diagram.reflex.CastExpression;
 import ru.iaie.reflex.diagram.reflex.CompareEqOp;
 import ru.iaie.reflex.diagram.reflex.CompareExpression;
 import ru.iaie.reflex.diagram.reflex.CompareOp;
+import ru.iaie.reflex.diagram.reflex.CompoundStatement;
 import ru.iaie.reflex.diagram.reflex.Const;
 import ru.iaie.reflex.diagram.reflex.DeclaredVariable;
 import ru.iaie.reflex.diagram.reflex.EnumMember;
 import ru.iaie.reflex.diagram.reflex.EqualityExpression;
 import ru.iaie.reflex.diagram.reflex.ErrorStat;
 import ru.iaie.reflex.diagram.reflex.Expression;
+import ru.iaie.reflex.diagram.reflex.ExpressionStatement;
 import ru.iaie.reflex.diagram.reflex.Function;
 import ru.iaie.reflex.diagram.reflex.FunctionCall;
 import ru.iaie.reflex.diagram.reflex.IfElseStat;
@@ -60,7 +61,7 @@ import ru.iaie.reflex.diagram.reflex.ShiftExpression;
 import ru.iaie.reflex.diagram.reflex.ShiftOp;
 import ru.iaie.reflex.diagram.reflex.StartProcStat;
 import ru.iaie.reflex.diagram.reflex.State;
-import ru.iaie.reflex.diagram.reflex.StateFunction;
+import ru.iaie.reflex.diagram.reflex.Statement;
 import ru.iaie.reflex.diagram.reflex.StopProcStat;
 import ru.iaie.reflex.diagram.reflex.SwitchStat;
 import ru.iaie.reflex.diagram.reflex.Time;
@@ -132,9 +133,10 @@ public class ReflexFactoryImpl extends EFactoryImpl implements ReflexFactory
       case ReflexPackage.PROGRAM_VARIABLE: return createProgramVariable();
       case ReflexPackage.VISIBILITY: return createVisibility();
       case ReflexPackage.STATE: return createState();
-      case ReflexPackage.STATE_FUNCTION: return createStateFunction();
       case ReflexPackage.TIMEOUT_FUNCTION: return createTimeoutFunction();
-      case ReflexPackage.BODY: return createBody();
+      case ReflexPackage.STATEMENT: return createStatement();
+      case ReflexPackage.COMPOUND_STATEMENT: return createCompoundStatement();
+      case ReflexPackage.EXPRESSION_STATEMENT: return createExpressionStatement();
       case ReflexPackage.ASSIGN_STAT: return createAssignStat();
       case ReflexPackage.IF_ELSE_STAT: return createIfElseStat();
       case ReflexPackage.SWITCH_STAT: return createSwitchStat();
@@ -371,18 +373,6 @@ public class ReflexFactoryImpl extends EFactoryImpl implements ReflexFactory
    * @generated
    */
   @Override
-  public StateFunction createStateFunction()
-  {
-    StateFunctionImpl stateFunction = new StateFunctionImpl();
-    return stateFunction;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public TimeoutFunction createTimeoutFunction()
   {
     TimeoutFunctionImpl timeoutFunction = new TimeoutFunctionImpl();
@@ -395,10 +385,34 @@ public class ReflexFactoryImpl extends EFactoryImpl implements ReflexFactory
    * @generated
    */
   @Override
-  public Body createBody()
+  public Statement createStatement()
   {
-    BodyImpl body = new BodyImpl();
-    return body;
+    StatementImpl statement = new StatementImpl();
+    return statement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public CompoundStatement createCompoundStatement()
+  {
+    CompoundStatementImpl compoundStatement = new CompoundStatementImpl();
+    return compoundStatement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ExpressionStatement createExpressionStatement()
+  {
+    ExpressionStatementImpl expressionStatement = new ExpressionStatementImpl();
+    return expressionStatement;
   }
 
   /**

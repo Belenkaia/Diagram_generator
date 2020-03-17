@@ -44,35 +44,40 @@ Visibility:
 
 State:
 	"state" name=ID "{"
-	(stateFunction+=StateFunction*)
+	statements+=Statement*
 	(timeoutFunction=TimeoutFunction)?
 	"}";
 
-StateFunction:
-	body=Body;
-
 TimeoutFunction:
-	"timeout" time=Time body=Body;
+	"timeout" time=Time body=Statement;
 
-Body:
-	{Body} ";" | statements+=StartProcStat | statements+=StopProcStat |
-	statements+=ErrorStat | loop?=LoopStat | restart?=RestartStat | statements+=SetStateStat | {Body} "{" statements+=Body* "}" |
-	statements+=IfElseStat | statements+=SwitchStat | statements+=Expression ";";
+Statement:
+	{Statement} ";" | StartProcStat | StopProcStat |
+	statements+=ErrorStat | loop?=LoopStat | restart?=RestartStat | SetStateStat | CompoundStatement |
+	IfElseStat | SwitchStat;
+
+CompoundStatement:
+	{CompoundStatement} "{" statements+=Statement* "}"	
+;
+
+ExpressionStatement:
+	expr=Expression ";"
+;
 
 AssignStat:
 	varId=ID "=" expr=Expression ";";
 
 IfElseStat:
 	"if" "(" cond=Expression ")"
-	then=Body
-	(=> "else" else=Body)?;
+	then=Statement
+	(=> "else" else=Statement)?;
 
 SwitchStat:
 	"switch" "(" expr=Expression ")" "{" options+=CaseStat* "}";
 
 	//TODO: add flag for break statement absence
 CaseStat:
-	"case" option=Integer ":" body=Body ("break" ";");
+	"case" option=Integer ":" body=Statement ("break" ";");
 
 StartProcStat:
 	"start" procId=ID ";";

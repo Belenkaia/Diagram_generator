@@ -12,41 +12,41 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import ru.iaie.reflex.diagram.reflex.Body;
+import ru.iaie.reflex.diagram.reflex.Expression;
+import ru.iaie.reflex.diagram.reflex.ExpressionStatement;
 import ru.iaie.reflex.diagram.reflex.ReflexPackage;
-import ru.iaie.reflex.diagram.reflex.StateFunction;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>State Function</b></em>'.
+ * An implementation of the model object '<em><b>Expression Statement</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.StateFunctionImpl#getBody <em>Body</em>}</li>
+ *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.ExpressionStatementImpl#getExpr <em>Expr</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class StateFunctionImpl extends MinimalEObjectImpl.Container implements StateFunction
+public class ExpressionStatementImpl extends MinimalEObjectImpl.Container implements ExpressionStatement
 {
   /**
-   * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
+   * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getBody()
+   * @see #getExpr()
    * @generated
    * @ordered
    */
-  protected Body body;
+  protected Expression expr;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected StateFunctionImpl()
+  protected ExpressionStatementImpl()
   {
     super();
   }
@@ -59,7 +59,7 @@ public class StateFunctionImpl extends MinimalEObjectImpl.Container implements S
   @Override
   protected EClass eStaticClass()
   {
-    return ReflexPackage.Literals.STATE_FUNCTION;
+    return ReflexPackage.Literals.EXPRESSION_STATEMENT;
   }
 
   /**
@@ -68,9 +68,9 @@ public class StateFunctionImpl extends MinimalEObjectImpl.Container implements S
    * @generated
    */
   @Override
-  public Body getBody()
+  public Expression getExpr()
   {
-    return body;
+    return expr;
   }
 
   /**
@@ -78,13 +78,13 @@ public class StateFunctionImpl extends MinimalEObjectImpl.Container implements S
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetBody(Body newBody, NotificationChain msgs)
+  public NotificationChain basicSetExpr(Expression newExpr, NotificationChain msgs)
   {
-    Body oldBody = body;
-    body = newBody;
+    Expression oldExpr = expr;
+    expr = newExpr;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ReflexPackage.STATE_FUNCTION__BODY, oldBody, newBody);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ReflexPackage.EXPRESSION_STATEMENT__EXPR, oldExpr, newExpr);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -96,20 +96,20 @@ public class StateFunctionImpl extends MinimalEObjectImpl.Container implements S
    * @generated
    */
   @Override
-  public void setBody(Body newBody)
+  public void setExpr(Expression newExpr)
   {
-    if (newBody != body)
+    if (newExpr != expr)
     {
       NotificationChain msgs = null;
-      if (body != null)
-        msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ReflexPackage.STATE_FUNCTION__BODY, null, msgs);
-      if (newBody != null)
-        msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ReflexPackage.STATE_FUNCTION__BODY, null, msgs);
-      msgs = basicSetBody(newBody, msgs);
+      if (expr != null)
+        msgs = ((InternalEObject)expr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ReflexPackage.EXPRESSION_STATEMENT__EXPR, null, msgs);
+      if (newExpr != null)
+        msgs = ((InternalEObject)newExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ReflexPackage.EXPRESSION_STATEMENT__EXPR, null, msgs);
+      msgs = basicSetExpr(newExpr, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ReflexPackage.STATE_FUNCTION__BODY, newBody, newBody));
+      eNotify(new ENotificationImpl(this, Notification.SET, ReflexPackage.EXPRESSION_STATEMENT__EXPR, newExpr, newExpr));
   }
 
   /**
@@ -122,8 +122,8 @@ public class StateFunctionImpl extends MinimalEObjectImpl.Container implements S
   {
     switch (featureID)
     {
-      case ReflexPackage.STATE_FUNCTION__BODY:
-        return basicSetBody(null, msgs);
+      case ReflexPackage.EXPRESSION_STATEMENT__EXPR:
+        return basicSetExpr(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -138,8 +138,8 @@ public class StateFunctionImpl extends MinimalEObjectImpl.Container implements S
   {
     switch (featureID)
     {
-      case ReflexPackage.STATE_FUNCTION__BODY:
-        return getBody();
+      case ReflexPackage.EXPRESSION_STATEMENT__EXPR:
+        return getExpr();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -154,8 +154,8 @@ public class StateFunctionImpl extends MinimalEObjectImpl.Container implements S
   {
     switch (featureID)
     {
-      case ReflexPackage.STATE_FUNCTION__BODY:
-        setBody((Body)newValue);
+      case ReflexPackage.EXPRESSION_STATEMENT__EXPR:
+        setExpr((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -171,8 +171,8 @@ public class StateFunctionImpl extends MinimalEObjectImpl.Container implements S
   {
     switch (featureID)
     {
-      case ReflexPackage.STATE_FUNCTION__BODY:
-        setBody((Body)null);
+      case ReflexPackage.EXPRESSION_STATEMENT__EXPR:
+        setExpr((Expression)null);
         return;
     }
     super.eUnset(featureID);
@@ -188,10 +188,10 @@ public class StateFunctionImpl extends MinimalEObjectImpl.Container implements S
   {
     switch (featureID)
     {
-      case ReflexPackage.STATE_FUNCTION__BODY:
-        return body != null;
+      case ReflexPackage.EXPRESSION_STATEMENT__EXPR:
+        return expr != null;
     }
     return super.eIsSet(featureID);
   }
 
-} //StateFunctionImpl
+} //ExpressionStatementImpl

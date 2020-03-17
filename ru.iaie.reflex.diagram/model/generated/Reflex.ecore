@@ -56,36 +56,41 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="State">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="stateFunction" upperBound="-1"
-        eType="#//StateFunction" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="statements" upperBound="-1"
+        eType="#//Statement" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="timeoutFunction" eType="#//TimeoutFunction"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StateFunction">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//Body" containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TimeoutFunction">
     <eStructuralFeatures xsi:type="ecore:EReference" name="time" eType="#//Time" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//Body" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//Statement"
+        containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Body">
+  <eClassifiers xsi:type="ecore:EClass" name="Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="statements" upperBound="-1"
         eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="loop" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="restart" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CompoundStatement" eSuperTypes="#//Statement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ExpressionStatement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//Expression"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AssignStat">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="varId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//Expression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IfElseStat">
+  <eClassifiers xsi:type="ecore:EClass" name="IfElseStat" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="cond" eType="#//Expression"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="then" eType="#//Body" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="else" eType="#//Body" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="then" eType="#//Statement"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="else" eType="#//Statement"
+        containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SwitchStat">
+  <eClassifiers xsi:type="ecore:EClass" name="SwitchStat" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="options" upperBound="-1"
@@ -94,18 +99,19 @@
   <eClassifiers xsi:type="ecore:EClass" name="CaseStat">
     <eStructuralFeatures xsi:type="ecore:EReference" name="option" eType="#//Integer"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//Body" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//Statement"
+        containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StartProcStat">
+  <eClassifiers xsi:type="ecore:EClass" name="StartProcStat" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="procId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StopProcStat">
+  <eClassifiers xsi:type="ecore:EClass" name="StopProcStat" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="procId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ErrorStat">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="procId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SetStateStat">
+  <eClassifiers xsi:type="ecore:EClass" name="SetStateStat" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stateId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Function">

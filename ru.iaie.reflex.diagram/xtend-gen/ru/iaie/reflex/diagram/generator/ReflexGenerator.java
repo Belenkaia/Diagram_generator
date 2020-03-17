@@ -2,6 +2,7 @@ package ru.iaie.reflex.diagram.generator;
 
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
+import java.util.Arrays;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -9,11 +10,13 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.generator.AbstractGenerator;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.generator.IGeneratorContext;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import ru.iaie.reflex.diagram.generator.ActiveProcess;
+import ru.iaie.reflex.diagram.reflex.IfElseStat;
 import ru.iaie.reflex.diagram.reflex.StartProcStat;
 import ru.iaie.reflex.diagram.reflex.State;
-import ru.iaie.reflex.diagram.reflex.StateFunction;
+import ru.iaie.reflex.diagram.reflex.Statement;
 import ru.iaie.reflex.diagram.reflex.StopProcStat;
 
 /**
@@ -241,72 +244,30 @@ public class ReflexGenerator extends AbstractGenerator {
     for (final ru.iaie.reflex.diagram.reflex.Process process : _filter) {
       EList<State> _states = process.getStates();
       for (final State state : _states) {
-        EList<StateFunction> _stateFunction = state.getStateFunction();
-        for (final StateFunction i : _stateFunction) {
-          EList<EObject> _statements = i.getBody().getStatements();
-          for (final EObject e : _statements) {
-            {
-              int _indexOf = e.getClass().toString().indexOf("StartProcStat");
-              boolean _notEquals = (_indexOf != (-1));
-              if (_notEquals) {
-                Iterable<StartProcStat> _filter_1 = Iterables.<StartProcStat>filter(IteratorExtensions.<EObject>toIterable(resource.getAllContents()), StartProcStat.class);
-                for (final StartProcStat statFunction : _filter_1) {
-                  boolean _equals = e.equals(statFunction);
-                  if (_equals) {
-                    String _name = process.getName();
-                    String _plus = (" process: " + _name);
-                    String _plus_1 = (_plus + "(");
-                    int _indexOf_1 = this.procId.indexOf(process.getName());
-                    String _plus_2 = (_plus_1 + Integer.valueOf(_indexOf_1));
-                    String _plus_3 = (_plus_2 + ")");
-                    String _plus_4 = (_plus_3 + "start ");
-                    String _procId = statFunction.getProcId();
-                    String _plus_5 = (_plus_4 + _procId);
-                    String _plus_6 = (_plus_5 + "(");
-                    int _indexOf_2 = this.procId.indexOf(statFunction.getProcId());
-                    String _plus_7 = (_plus_6 + Integer.valueOf(_indexOf_2));
-                    String _plus_8 = (_plus_7 + ")");
-                    System.out.println(_plus_8);
-                    ActiveProcess proc = new ActiveProcess();
-                    proc.setAction("start");
-                    proc.setIdFrom(this.procId.indexOf(process.getName()));
-                    proc.setIdTo(this.procId.indexOf(statFunction.getProcId()));
-                    this.procList.add(proc);
-                  }
-                }
+        EList<Statement> _statements = state.getStatements();
+        for (final Statement statement : _statements) {
+          {
+            ArrayList<ActiveProcess> tempProcList = null;
+            try {
+              tempProcList = this.getActiveList(statement);
+            } catch (final Throwable _t) {
+              if (_t instanceof IllegalArgumentException) {
+                final IllegalArgumentException ex = (IllegalArgumentException)_t;
+                System.out.println(ex);
+              } else {
+                throw Exceptions.sneakyThrow(_t);
               }
-              int _indexOf_3 = e.getClass().toString().indexOf("StopProcStat");
-              boolean _notEquals_1 = (_indexOf_3 != (-1));
-              if (_notEquals_1) {
-                Iterable<StopProcStat> _filter_2 = Iterables.<StopProcStat>filter(IteratorExtensions.<EObject>toIterable(resource.getAllContents()), StopProcStat.class);
-                for (final StopProcStat statFunction_1 : _filter_2) {
-                  boolean _equals_1 = e.equals(statFunction_1);
-                  if (_equals_1) {
-                    int procIdTo = this.procId.indexOf(process.getName());
-                    String _procId_1 = statFunction_1.getProcId();
-                    boolean _tripleNotEquals = (_procId_1 != null);
-                    if (_tripleNotEquals) {
-                      procIdTo = this.procId.indexOf(statFunction_1.getProcId());
-                    }
-                    String _name_1 = process.getName();
-                    String _plus_9 = (" process: " + _name_1);
-                    String _plus_10 = (_plus_9 + "(");
-                    int _indexOf_4 = this.procId.indexOf(process.getName());
-                    String _plus_11 = (_plus_10 + Integer.valueOf(_indexOf_4));
-                    String _plus_12 = (_plus_11 + ")");
-                    String _plus_13 = (_plus_12 + "stop ");
-                    String _procId_2 = statFunction_1.getProcId();
-                    String _plus_14 = (_plus_13 + _procId_2);
-                    String _plus_15 = (_plus_14 + "(");
-                    String _plus_16 = (_plus_15 + Integer.valueOf(procIdTo));
-                    String _plus_17 = (_plus_16 + ")");
-                    System.out.println(_plus_17);
-                    ActiveProcess proc_1 = new ActiveProcess();
-                    proc_1.setAction("stop");
-                    proc_1.setIdFrom(this.procId.indexOf(process.getName()));
-                    proc_1.setIdTo(procIdTo);
-                    this.procList.add(proc_1);
+            }
+            if ((tempProcList != null)) {
+              for (final ActiveProcess elem : tempProcList) {
+                {
+                  elem.setIdFrom(this.procId.indexOf(process.getName()));
+                  int _idTo = elem.getIdTo();
+                  boolean _equals = (_idTo == (-1));
+                  if (_equals) {
+                    elem.setIdTo(this.procId.indexOf(process.getName()));
                   }
+                  this.procList.add(elem);
                 }
               }
             }
@@ -316,11 +277,79 @@ public class ReflexGenerator extends AbstractGenerator {
     }
   }
   
+  protected ArrayList<ActiveProcess> _getActiveList(final StartProcStat statement) {
+    ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>();
+    ActiveProcess proc = new ActiveProcess();
+    proc.setAction("start");
+    proc.setIdFrom((-1));
+    proc.setIdTo(this.procId.indexOf(statement.getProcId()));
+    procTempList.add(proc);
+    return procTempList;
+  }
+  
+  protected ArrayList<ActiveProcess> _getActiveList(final StopProcStat statement) {
+    ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>();
+    ActiveProcess proc = new ActiveProcess();
+    proc.setAction("stop");
+    proc.setIdFrom((-1));
+    String _procId = statement.getProcId();
+    boolean _tripleNotEquals = (_procId != null);
+    if (_tripleNotEquals) {
+      proc.setIdTo(this.procId.indexOf(statement.getProcId()));
+    } else {
+      proc.setIdTo((-1));
+    }
+    procTempList.add(proc);
+    return procTempList;
+  }
+  
+  protected ArrayList<ActiveProcess> _getActiveList(final IfElseStat statement) {
+    ArrayList<ActiveProcess> procTempList = null;
+    Statement _then = statement.getThen();
+    String _plus = ("then: " + _then);
+    System.out.println(_plus);
+    Statement _else = statement.getElse();
+    String _plus_1 = ("else: " + _else);
+    System.out.println(_plus_1);
+    ArrayList<ActiveProcess> procTempThenList = this.getActiveList(statement.getThen());
+    ArrayList<ActiveProcess> procTempElseList = this.getActiveList(statement.getElse());
+    if ((procTempThenList != null)) {
+      for (final ActiveProcess l : procTempThenList) {
+        procTempList.add(l);
+      }
+    }
+    if ((procTempElseList != null)) {
+      for (final ActiveProcess l_1 : procTempElseList) {
+        procTempList.add(l_1);
+      }
+    }
+    return procTempList;
+  }
+  
+  protected ArrayList<ActiveProcess> _getActiveList(final Statement statement) {
+    return null;
+  }
+  
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
     fsa.generateFile("activity_diagram.gml", this.generateActivityDiagram(resource));
     this.procList.clear();
     this.NullProcessId();
     this.procId.clear();
+  }
+  
+  public ArrayList<ActiveProcess> getActiveList(final Statement statement) {
+    if (statement instanceof IfElseStat) {
+      return _getActiveList((IfElseStat)statement);
+    } else if (statement instanceof StartProcStat) {
+      return _getActiveList((StartProcStat)statement);
+    } else if (statement instanceof StopProcStat) {
+      return _getActiveList((StopProcStat)statement);
+    } else if (statement != null) {
+      return _getActiveList(statement);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(statement).toString());
+    }
   }
 }

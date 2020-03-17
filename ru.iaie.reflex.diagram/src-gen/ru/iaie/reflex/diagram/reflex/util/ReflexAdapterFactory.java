@@ -16,17 +16,18 @@ import ru.iaie.reflex.diagram.reflex.AssignmentExpression;
 import ru.iaie.reflex.diagram.reflex.BitAndExpression;
 import ru.iaie.reflex.diagram.reflex.BitOrExpression;
 import ru.iaie.reflex.diagram.reflex.BitXorExpression;
-import ru.iaie.reflex.diagram.reflex.Body;
 import ru.iaie.reflex.diagram.reflex.CType;
 import ru.iaie.reflex.diagram.reflex.CaseStat;
 import ru.iaie.reflex.diagram.reflex.CastExpression;
 import ru.iaie.reflex.diagram.reflex.CompareExpression;
+import ru.iaie.reflex.diagram.reflex.CompoundStatement;
 import ru.iaie.reflex.diagram.reflex.Const;
 import ru.iaie.reflex.diagram.reflex.DeclaredVariable;
 import ru.iaie.reflex.diagram.reflex.EnumMember;
 import ru.iaie.reflex.diagram.reflex.EqualityExpression;
 import ru.iaie.reflex.diagram.reflex.ErrorStat;
 import ru.iaie.reflex.diagram.reflex.Expression;
+import ru.iaie.reflex.diagram.reflex.ExpressionStatement;
 import ru.iaie.reflex.diagram.reflex.Function;
 import ru.iaie.reflex.diagram.reflex.FunctionCall;
 import ru.iaie.reflex.diagram.reflex.IfElseStat;
@@ -48,7 +49,7 @@ import ru.iaie.reflex.diagram.reflex.SetStateStat;
 import ru.iaie.reflex.diagram.reflex.ShiftExpression;
 import ru.iaie.reflex.diagram.reflex.StartProcStat;
 import ru.iaie.reflex.diagram.reflex.State;
-import ru.iaie.reflex.diagram.reflex.StateFunction;
+import ru.iaie.reflex.diagram.reflex.Statement;
 import ru.iaie.reflex.diagram.reflex.StopProcStat;
 import ru.iaie.reflex.diagram.reflex.SwitchStat;
 import ru.iaie.reflex.diagram.reflex.Time;
@@ -171,19 +172,24 @@ public class ReflexAdapterFactory extends AdapterFactoryImpl
         return createStateAdapter();
       }
       @Override
-      public Adapter caseStateFunction(StateFunction object)
-      {
-        return createStateFunctionAdapter();
-      }
-      @Override
       public Adapter caseTimeoutFunction(TimeoutFunction object)
       {
         return createTimeoutFunctionAdapter();
       }
       @Override
-      public Adapter caseBody(Body object)
+      public Adapter caseStatement(Statement object)
       {
-        return createBodyAdapter();
+        return createStatementAdapter();
+      }
+      @Override
+      public Adapter caseCompoundStatement(CompoundStatement object)
+      {
+        return createCompoundStatementAdapter();
+      }
+      @Override
+      public Adapter caseExpressionStatement(ExpressionStatement object)
+      {
+        return createExpressionStatementAdapter();
       }
       @Override
       public Adapter caseAssignStat(AssignStat object)
@@ -533,21 +539,6 @@ public class ReflexAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link ru.iaie.reflex.diagram.reflex.StateFunction <em>State Function</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see ru.iaie.reflex.diagram.reflex.StateFunction
-   * @generated
-   */
-  public Adapter createStateFunctionAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link ru.iaie.reflex.diagram.reflex.TimeoutFunction <em>Timeout Function</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -563,16 +554,46 @@ public class ReflexAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link ru.iaie.reflex.diagram.reflex.Body <em>Body</em>}'.
+   * Creates a new adapter for an object of class '{@link ru.iaie.reflex.diagram.reflex.Statement <em>Statement</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see ru.iaie.reflex.diagram.reflex.Body
+   * @see ru.iaie.reflex.diagram.reflex.Statement
    * @generated
    */
-  public Adapter createBodyAdapter()
+  public Adapter createStatementAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link ru.iaie.reflex.diagram.reflex.CompoundStatement <em>Compound Statement</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see ru.iaie.reflex.diagram.reflex.CompoundStatement
+   * @generated
+   */
+  public Adapter createCompoundStatementAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link ru.iaie.reflex.diagram.reflex.ExpressionStatement <em>Expression Statement</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see ru.iaie.reflex.diagram.reflex.ExpressionStatement
+   * @generated
+   */
+  public Adapter createExpressionStatementAdapter()
   {
     return null;
   }
