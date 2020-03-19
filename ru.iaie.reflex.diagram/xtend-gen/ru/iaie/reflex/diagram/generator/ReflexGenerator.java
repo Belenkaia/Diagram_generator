@@ -43,14 +43,12 @@ public class ReflexGenerator extends AbstractGenerator {
   
   private HashMap<String, Integer> variableId = new HashMap<String, Integer>();
   
-  public void increaseProcessId() {
-    this.count_id++;
-  }
-  
-  public void NullProcessId() {
-    this.count_id = 0;
-  }
-  
+  /**
+   * def void NullProcessId()
+   * {
+   * count_id  = 0
+   * }
+   */
   public CharSequence writeHeadGML() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Creator\t\"tranlator\"");
@@ -69,7 +67,7 @@ public class ReflexGenerator extends AbstractGenerator {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("directed\t1");
-    this.NullProcessId();
+    _builder.append(this.count_id = 0, "\t");
     _builder.newLineIfNotEmpty();
     return _builder;
   }
@@ -173,7 +171,7 @@ public class ReflexGenerator extends AbstractGenerator {
           tempString = (_tempString_1 + _generateOneProcessNode_1);
         }
         this.procId.add(this.count_id, e.getName());
-        this.increaseProcessId();
+        this.count_id++;
       }
     }
     return tempString;
@@ -306,7 +304,7 @@ public class ReflexGenerator extends AbstractGenerator {
         CharSequence _generateOneProcessNode = this.generateOneProcessNode(this.count_id, this.getVariableNameAndType(variable), "roundrectangle");
         tempStr = (_tempStr + _generateOneProcessNode);
         this.variableId.put(variable.getName(), Integer.valueOf(this.count_id));
-        this.increaseProcessId();
+        this.count_id++;
       }
     }
     return tempStr;
@@ -483,7 +481,7 @@ public class ReflexGenerator extends AbstractGenerator {
   
   public void clear() {
     this.procList.clear();
-    this.NullProcessId();
+    this.count_id = 0;
     this.procId.clear();
   }
   

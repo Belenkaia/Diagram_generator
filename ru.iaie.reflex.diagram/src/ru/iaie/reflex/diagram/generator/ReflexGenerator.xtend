@@ -34,19 +34,19 @@ class ReflexGenerator extends AbstractGenerator {
 // Метод, увеличивающий счетчик вершшин. count_id используется для задания Id нодам диаграмм в выходном файле GML
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-	def void increaseProcessId()
+/*	def void increaseProcessId()
 	{
 		count_id ++
 	}
-	
+ */	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Метод, обнуляющий счетчик вершин. count_id используется для задания Id нодам диаграмм в выходном файле GML
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def void NullProcessId()
+/*	def void NullProcessId()
 	{
 		count_id  = 0
 	}	
-	
+	*/
 	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Метод возвращает строку, содержащую заголовок выходного GML файла. Также обнуляется счетчик вершин (count_id) 
@@ -58,7 +58,7 @@ class ReflexGenerator extends AbstractGenerator {
 	[
 		hierarchic	1
 		label	""
-		directed	1«NullProcessId()»
+		directed	1«count_id  = 0»
 	'''
 	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -118,7 +118,7 @@ class ReflexGenerator extends AbstractGenerator {
 	             if(diagrammFlag == 1)
 	             	tempString += generateOneProcessNode(count_id, e.name, "ellipse")
 	             procId.add(count_id, e.name) // запоминаем соответствие имени процесса назначенному ему Id
-	             increaseProcessId() // инкрементируем счетчик процессов (это число будет Id для вершины следующего процесса)
+	             count_id ++ // инкрементируем счетчик процессов (это число будет Id для вершины следующего процесса)
 	        }
 	    return tempString
 	}
@@ -228,7 +228,7 @@ class ReflexGenerator extends AbstractGenerator {
 		{
 			tempStr += generateOneProcessNode(count_id, variable.getVariableNameAndType(), "roundrectangle")
 			variableId.put(variable.name, count_id) // запоминаем соответствие имени переменной назначенной ее вершине Id
-	        increaseProcessId() // инкрементируем счетчик вершин (это число будет Id для вершины следующей вершины)
+	        count_id ++ // инкрементируем счетчик вершин (это число будет Id для вершины следующей вершины)
 	    }
 	    return tempStr;
 	}
@@ -467,7 +467,7 @@ def dispatch ArrayList<ActiveProcess> getActiveList(Statement statement)
 def void clear()
 {
 	 	procList.clear()
-      	NullProcessId()
+      	count_id  = 0
       	procId.clear()
 }
 
