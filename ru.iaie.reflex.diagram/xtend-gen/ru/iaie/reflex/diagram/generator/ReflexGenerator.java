@@ -43,12 +43,6 @@ public class ReflexGenerator extends AbstractGenerator {
   
   private HashMap<String, Integer> variableId = new HashMap<String, Integer>();
   
-  /**
-   * def void NullProcessId()
-   * {
-   * count_id  = 0
-   * }
-   */
   public CharSequence writeHeadGML() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Creator\t\"tranlator\"");
