@@ -11,7 +11,6 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.generator.AbstractGenerator;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.generator.IGeneratorContext;
-import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import ru.iaie.reflex.diagram.generator.ActiveProcess;
 import ru.iaie.reflex.diagram.reflex.CType;
@@ -260,16 +259,7 @@ public class ReflexGenerator extends AbstractGenerator {
         for (final Statement statement : _statements) {
           {
             ArrayList<ActiveProcess> tempProcList = null;
-            try {
-              tempProcList = this.getActiveList(statement);
-            } catch (final Throwable _t) {
-              if (_t instanceof IllegalArgumentException) {
-                final IllegalArgumentException ex = (IllegalArgumentException)_t;
-                System.out.println(ex);
-              } else {
-                throw Exceptions.sneakyThrow(_t);
-              }
-            }
+            tempProcList = this.getActiveList(statement);
             if ((tempProcList != null)) {
               for (final ActiveProcess elem : tempProcList) {
                 {

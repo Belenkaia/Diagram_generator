@@ -172,13 +172,7 @@ class ReflexGenerator extends AbstractGenerator {
 	         		for(statement: state.statements)
 	         		{
 	         			var ArrayList<ActiveProcess> tempProcList;
-	         			try {
-	         				tempProcList = statement.getActiveList()
-	         			}
-	         			catch(IllegalArgumentException ex)
-	         			{
-	         				System.out.println(ex)
-	         			}
+	         			tempProcList = statement.getActiveList()
 	         			if(tempProcList !== null) // если соответствует только Statement, получим null
 	         			{
 	         				for (elem: tempProcList)
