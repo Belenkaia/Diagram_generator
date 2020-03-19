@@ -260,17 +260,15 @@ public class ReflexGenerator extends AbstractGenerator {
           {
             ArrayList<ActiveProcess> tempProcList = null;
             tempProcList = this.getActiveList(statement);
-            if ((tempProcList != null)) {
-              for (final ActiveProcess elem : tempProcList) {
-                {
-                  elem.setIdFrom(this.procId.indexOf(process.getName()));
-                  int _idTo = elem.getIdTo();
-                  boolean _equals = (_idTo == (-1));
-                  if (_equals) {
-                    elem.setIdTo(this.procId.indexOf(process.getName()));
-                  }
-                  this.procList.add(elem);
+            for (final ActiveProcess elem : tempProcList) {
+              {
+                elem.setIdFrom(this.procId.indexOf(process.getName()));
+                int _idTo = elem.getIdTo();
+                boolean _equals = (_idTo == (-1));
+                if (_equals) {
+                  elem.setIdTo(this.procId.indexOf(process.getName()));
                 }
+                this.procList.add(elem);
               }
             }
           }
@@ -399,25 +397,15 @@ public class ReflexGenerator extends AbstractGenerator {
   
   protected ArrayList<ActiveProcess> _getActiveList(final IfElseStat statement) {
     ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>();
-    Statement _then = statement.getThen();
-    String _plus = ("then: " + _then);
-    System.out.println(_plus);
-    Statement _else = statement.getElse();
-    String _plus_1 = ("else: " + _else);
-    System.out.println(_plus_1);
     ArrayList<ActiveProcess> procTempThenList = this.getActiveList(statement.getThen());
     ArrayList<ActiveProcess> procTempElseList = new ArrayList<ActiveProcess>();
-    Statement _else_1 = statement.getElse();
-    boolean _tripleNotEquals = (_else_1 != null);
+    Statement _else = statement.getElse();
+    boolean _tripleNotEquals = (_else != null);
     if (_tripleNotEquals) {
       procTempElseList = this.getActiveList(statement.getElse());
     }
-    if ((procTempThenList != null)) {
-      procTempList.addAll(procTempThenList);
-    }
-    if ((procTempElseList != null)) {
-      procTempList.addAll(procTempElseList);
-    }
+    procTempList.addAll(procTempThenList);
+    procTempList.addAll(procTempElseList);
     return procTempList;
   }
   
@@ -427,9 +415,7 @@ public class ReflexGenerator extends AbstractGenerator {
     for (final Statement s : _statements) {
       {
         ArrayList<ActiveProcess> subProcList = this.getActiveList(s);
-        if ((null != subProcList)) {
-          procTempList.addAll(subProcList);
-        }
+        procTempList.addAll(subProcList);
       }
     }
     return procTempList;

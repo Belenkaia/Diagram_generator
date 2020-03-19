@@ -173,8 +173,8 @@ class ReflexGenerator extends AbstractGenerator {
 	         		{
 	         			var ArrayList<ActiveProcess> tempProcList;
 	         			tempProcList = statement.getActiveList()
-	         			if(tempProcList !== null) // если соответствует только Statement, получим null
-	         			{
+	         			//if(tempProcList !== null) // если соответствует только Statement, получим null
+	         			//{
 	         				for (elem: tempProcList)
 	         				{
 	         					elem.setIdFrom(procId.indexOf(process.name))
@@ -184,7 +184,7 @@ class ReflexGenerator extends AbstractGenerator {
 	         					}
 	         					procList.add(elem);
 	         				}
-	         			}
+	         			//}
 	         		
 	         		}	
 	         }    
@@ -370,32 +370,20 @@ def dispatch String getSigned(CType type)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def dispatch ArrayList<ActiveProcess> getActiveList(IfElseStat statement)
 	{
-		var ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>;
-		
-		System.out.println("then: " + statement.then) // отладка
-		System.out.println("else: " + statement.getElse)
-		
+		var ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>
 		var ArrayList<ActiveProcess> procTempThenList = statement.then.getActiveList()
-		var ArrayList<ActiveProcess> procTempElseList = new ArrayList<ActiveProcess>;
+		var ArrayList<ActiveProcess> procTempElseList = new ArrayList<ActiveProcess>
 		if(statement.getElse() !== null)
 			procTempElseList = statement.getElse().getActiveList()
-		if(procTempThenList !== null)
-		{
+		//if(procTempThenList !== null)
+		//{
 			procTempList.addAll(procTempThenList)
-			/*for (l: procTempThenList)
-			{
-				procTempList.add(l)
-			}*/
-		}
+		//}
 		
-		if(procTempElseList !== null)
-		{
+		//if(procTempElseList !== null)
+		//{
 			procTempList.addAll(procTempElseList)
-			/*for (l: procTempElseList)
-			{
-				procTempList.add(l)
-			}*/
-		}
+		//}
 		return (procTempList)
 	}
 
@@ -410,7 +398,7 @@ def dispatch String getSigned(CType type)
 		for(s : statement.statements)
 		{
 			var ArrayList<ActiveProcess> subProcList = s.getActiveList;
-			if(null !== subProcList)
+			//if(null !== subProcList)
 				procTempList.addAll(subProcList)
 		
 		}
