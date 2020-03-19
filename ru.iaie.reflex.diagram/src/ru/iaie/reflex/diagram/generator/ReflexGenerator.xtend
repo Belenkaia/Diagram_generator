@@ -29,6 +29,8 @@ class ReflexGenerator extends AbstractGenerator {
 	var ArrayList<ActiveProcess> procList = new ArrayList<ActiveProcess>;
 	var procId = new ArrayList(); 
 	var HashMap<String, Integer> variableId = new HashMap<String, Integer>();
+	val NS_RRECTANGLE = 0
+	val NS_ELLIPSE = 1
 	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Метод возвращает строку, содержащую заголовок выходного GML файла. Также обнуляется счетчик вершин (count_id) 
@@ -91,13 +93,13 @@ class ReflexGenerator extends AbstractGenerator {
 // Метод возвращает строку, содержащую в себе объявления всех вершин создаваемой диаграммы процессов. Запоминает соответствие имени процесса его Id в списке procId
 // флаг diagrammFlag определяет форму вершин процессов (в activity-diagramm это прямоугольник, в data diagramm это эллипс)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def String generateProcessNodes(Resource resource, int diagrammFlag)
+	def String generateProcessNodes(Resource resource, int shape)
 	{
 		var String tempString = "";
 		for (e : resource.allContents.toIterable.filter(Process)) { //получаем список всех процессов, и проходим по нему
-	             if(diagrammFlag == 0)
+	             if(shape == NS_RRECTANGLE)
 	             	tempString += generateOneProcessNode(count_id, e.name, "roundrectangle") // для каждого процесса генерируем строковое описание вершины графа, и конкатенируем его к предыдущим
-	             if(diagrammFlag == 1)
+	             if(shape == NS_ELLIPSE)
 	             	tempString += generateOneProcessNode(count_id, e.name, "ellipse")
 	             procId.add(count_id, e.name) // запоминаем соответствие имени процесса назначенному ему Id
 	             count_id ++ // инкрементируем счетчик процессов (это число будет Id для вершины следующего процесса)
@@ -110,7 +112,7 @@ class ReflexGenerator extends AbstractGenerator {
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def generateActivityDiagram(Resource resource)
 	'''«writeHeadGML»
-	«generateProcessNodes(resource, 0)»
+	«generateProcessNodes(resource, NS_RRECTANGLE)»
 	«constructActiveModel(resource)»
 	«checkProcList()»
 	«generateAllEdges()»
@@ -173,19 +175,15 @@ class ReflexGenerator extends AbstractGenerator {
 	         		{
 	         			var ArrayList<ActiveProcess> tempProcList;
 	         			tempProcList = statement.getActiveList()
-	         			//if(tempProcList !== null) // если соответствует только Statement, получим null
-	         			//{
-	         				for (elem: tempProcList)
+	         			for (elem: tempProcList)
+	         			{
+	         				elem.setIdFrom(procId.indexOf(process.name))
+	         				if(elem.idTo == -1) //дефолтное значение стоит, если останавливает самого себя
 	         				{
-	         					elem.setIdFrom(procId.indexOf(process.name))
-	         					if(elem.idTo == -1) //дефолтное значение стоит, если останавливает самого себя
-	         					{
-	         						elem.setIdTo(procId.indexOf(process.name)) // stopping itself
-	         					}
-	         					procList.add(elem);
+	         					elem.setIdTo(procId.indexOf(process.name)) // stopping itself
 	         				}
-	         			//}
-	         		
+	         				procList.add(elem);
+	         			}
 	         		}	
 	         }    
 	        }
@@ -249,9 +247,6 @@ def dispatch ArrayList<String> getVariableName(DeclaredVariable variable)
 def dispatch ArrayList<String> getVariableName(ImportedVariable variable)
 {
 	var ArrayList<String> nameList = new ArrayList<String>
-	/*for (vars : variable.varNames)
-		nameList.add(vars)
-	*/	
 	nameList.addAll(variable.varNames)
 	return nameList	
 }
@@ -375,15 +370,8 @@ def dispatch String getSigned(CType type)
 		var ArrayList<ActiveProcess> procTempElseList = new ArrayList<ActiveProcess>
 		if(statement.getElse() !== null)
 			procTempElseList = statement.getElse().getActiveList()
-		//if(procTempThenList !== null)
-		//{
 			procTempList.addAll(procTempThenList)
-		//}
-		
-		//if(procTempElseList !== null)
-		//{
 			procTempList.addAll(procTempElseList)
-		//}
 		return (procTempList)
 	}
 
@@ -398,9 +386,7 @@ def dispatch String getSigned(CType type)
 		for(s : statement.statements)
 		{
 			var ArrayList<ActiveProcess> subProcList = s.getActiveList;
-			//if(null !== subProcList)
-				procTempList.addAll(subProcList)
-		
+			procTempList.addAll(subProcList)
 		}
 		return procTempList
 	}
@@ -419,7 +405,7 @@ def dispatch ArrayList<ActiveProcess> getActiveList(Statement statement)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def generateDataDiagram(Resource resource)
 	'''«writeHeadGML»
-	«generateProcessNodes(resource, 1)»
+	«generateProcessNodes(resource, NS_ELLIPSE)»
 	«getVariablesNodes(resource)»
 	«generateDataModel(resource)»
 	«generateAllEdges()»

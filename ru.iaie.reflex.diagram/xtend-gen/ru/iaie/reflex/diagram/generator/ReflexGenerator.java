@@ -42,6 +42,10 @@ public class ReflexGenerator extends AbstractGenerator {
   
   private HashMap<String, Integer> variableId = new HashMap<String, Integer>();
   
+  private final int NS_RRECTANGLE = 0;
+  
+  private final int NS_ELLIPSE = 1;
+  
   public CharSequence writeHeadGML() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("Creator\t\"tranlator\"");
@@ -148,17 +152,17 @@ public class ReflexGenerator extends AbstractGenerator {
     return _builder;
   }
   
-  public String generateProcessNodes(final Resource resource, final int diagrammFlag) {
+  public String generateProcessNodes(final Resource resource, final int shape) {
     String tempString = "";
     Iterable<ru.iaie.reflex.diagram.reflex.Process> _filter = Iterables.<ru.iaie.reflex.diagram.reflex.Process>filter(IteratorExtensions.<EObject>toIterable(resource.getAllContents()), ru.iaie.reflex.diagram.reflex.Process.class);
     for (final ru.iaie.reflex.diagram.reflex.Process e : _filter) {
       {
-        if ((diagrammFlag == 0)) {
+        if ((shape == this.NS_RRECTANGLE)) {
           String _tempString = tempString;
           CharSequence _generateOneProcessNode = this.generateOneProcessNode(this.count_id, e.getName(), "roundrectangle");
           tempString = (_tempString + _generateOneProcessNode);
         }
-        if ((diagrammFlag == 1)) {
+        if ((shape == this.NS_ELLIPSE)) {
           String _tempString_1 = tempString;
           CharSequence _generateOneProcessNode_1 = this.generateOneProcessNode(this.count_id, e.getName(), "ellipse");
           tempString = (_tempString_1 + _generateOneProcessNode_1);
@@ -176,7 +180,7 @@ public class ReflexGenerator extends AbstractGenerator {
     _builder.append(_writeHeadGML);
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
-    String _generateProcessNodes = this.generateProcessNodes(resource, 0);
+    String _generateProcessNodes = this.generateProcessNodes(resource, this.NS_RRECTANGLE);
     _builder.append(_generateProcessNodes, "\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -431,7 +435,7 @@ public class ReflexGenerator extends AbstractGenerator {
     _builder.append(_writeHeadGML);
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
-    String _generateProcessNodes = this.generateProcessNodes(resource, 1);
+    String _generateProcessNodes = this.generateProcessNodes(resource, this.NS_ELLIPSE);
     _builder.append(_generateProcessNodes, "\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
