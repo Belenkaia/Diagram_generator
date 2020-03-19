@@ -29,8 +29,8 @@ class ReflexGenerator extends AbstractGenerator {
 	var ArrayList<ActiveProcess> procList = new ArrayList<ActiveProcess>;
 	var procId = new ArrayList(); 
 	var HashMap<String, Integer> variableId = new HashMap<String, Integer>();
-	val NS_RRECTANGLE = 0
-	val NS_ELLIPSE = 1
+//	val NS_RECTANGLE = 0
+//	val NS_ELLIPSE = 1
 	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Метод возвращает строку, содержащую заголовок выходного GML файла. Также обнуляется счетчик вершин (count_id) 
@@ -93,14 +93,14 @@ class ReflexGenerator extends AbstractGenerator {
 // Метод возвращает строку, содержащую в себе объявления всех вершин создаваемой диаграммы процессов. Запоминает соответствие имени процесса его Id в списке procId
 // флаг diagrammFlag определяет форму вершин процессов (в activity-diagramm это прямоугольник, в data diagramm это эллипс)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def String generateProcessNodes(Resource resource, int shape)
+	def String generateProcessNodes(Resource resource/* , int shape*/)
 	{
 		var String tempString = "";
 		for (e : resource.allContents.toIterable.filter(Process)) { //получаем список всех процессов, и проходим по нему
-	             if(shape == NS_RRECTANGLE)
+	            // if(shape == NS_RECTANGLE)
 	             	tempString += generateOneProcessNode(count_id, e.name, "roundrectangle") // для каждого процесса генерируем строковое описание вершины графа, и конкатенируем его к предыдущим
-	             if(shape == NS_ELLIPSE)
-	             	tempString += generateOneProcessNode(count_id, e.name, "ellipse")
+	            // if(shape == NS_ELLIPSE)
+	            // 	tempString += generateOneProcessNode(count_id, e.name, "ellipse")
 	             procId.add(count_id, e.name) // запоминаем соответствие имени процесса назначенному ему Id
 	             count_id ++ // инкрементируем счетчик процессов (это число будет Id для вершины следующего процесса)
 	        }
@@ -112,7 +112,7 @@ class ReflexGenerator extends AbstractGenerator {
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def generateActivityDiagram(Resource resource)
 	'''«writeHeadGML»
-	«generateProcessNodes(resource, NS_RRECTANGLE)»
+	«generateProcessNodes(resource/* , NS_RECTANGLE*/)»
 	«constructActiveModel(resource)»
 	«checkProcList()»
 	«generateAllEdges()»
@@ -200,7 +200,7 @@ class ReflexGenerator extends AbstractGenerator {
 		var String tempStr = "";
 		for (variable : resource.allContents.toIterable.filter(DeclaredVariable)) // идем по объявленным переменным
 		{
-			tempStr += generateOneProcessNode(count_id, variable.getVariableNameAndType(), "roundrectangle")
+			tempStr += generateOneProcessNode(count_id, variable.getVariableNameAndType(), "ellipse"/*"roundrectangle"*/)
 			variableId.put(variable.name, count_id) // запоминаем соответствие имени переменной назначенной ее вершине Id
 	        count_id ++ // инкрементируем счетчик вершин (это число будет Id для вершины следующей вершины)
 	    }
@@ -405,7 +405,7 @@ def dispatch ArrayList<ActiveProcess> getActiveList(Statement statement)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def generateDataDiagram(Resource resource)
 	'''«writeHeadGML»
-	«generateProcessNodes(resource, NS_ELLIPSE)»
+	«generateProcessNodes(resource/*, NS_RECTANGLE*/)»
 	«getVariablesNodes(resource)»
 	«generateDataModel(resource)»
 	«generateAllEdges()»
