@@ -273,8 +273,10 @@ def dispatch ArrayList<String> getVariableName(DeclaredVariable variable)
 def dispatch ArrayList<String> getVariableName(ImportedVariable variable)
 {
 	var ArrayList<String> nameList = new ArrayList<String>
-	for (vars : variable.varNames)
+	/*for (vars : variable.varNames)
 		nameList.add(vars)
+	*/	
+	nameList.addAll(variable.varNames)
 	return nameList	
 }
 
@@ -403,18 +405,20 @@ def dispatch String getSigned(CType type)
 			procTempElseList = statement.getElse().getActiveList()
 		if(procTempThenList !== null)
 		{
-			for (l: procTempThenList)
+			procTempList.addAll(procTempThenList)
+			/*for (l: procTempThenList)
 			{
 				procTempList.add(l)
-			}
+			}*/
 		}
 		
 		if(procTempElseList !== null)
 		{
-			for (l: procTempElseList)
+			procTempList.addAll(procTempElseList)
+			/*for (l: procTempElseList)
 			{
 				procTempList.add(l)
-			}
+			}*/
 		}
 		return (procTempList)
 	}

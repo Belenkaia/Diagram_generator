@@ -341,10 +341,7 @@ public class ReflexGenerator extends AbstractGenerator {
   
   protected ArrayList<String> _getVariableName(final ImportedVariable variable) {
     ArrayList<String> nameList = new ArrayList<String>();
-    EList<String> _varNames = variable.getVarNames();
-    for (final String vars : _varNames) {
-      nameList.add(vars);
-    }
+    nameList.addAll(variable.getVarNames());
     return nameList;
   }
   
@@ -434,14 +431,10 @@ public class ReflexGenerator extends AbstractGenerator {
       procTempElseList = this.getActiveList(statement.getElse());
     }
     if ((procTempThenList != null)) {
-      for (final ActiveProcess l : procTempThenList) {
-        procTempList.add(l);
-      }
+      procTempList.addAll(procTempThenList);
     }
     if ((procTempElseList != null)) {
-      for (final ActiveProcess l_1 : procTempElseList) {
-        procTempList.add(l_1);
-      }
+      procTempList.addAll(procTempElseList);
     }
     return procTempList;
   }
