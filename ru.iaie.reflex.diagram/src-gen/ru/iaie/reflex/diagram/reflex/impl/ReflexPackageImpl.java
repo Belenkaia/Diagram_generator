@@ -1000,20 +1000,9 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
    * @generated
    */
   @Override
-  public EReference getStatement_Statements()
-  {
-    return (EReference)statementEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EAttribute getStatement_Loop()
   {
-    return (EAttribute)statementEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)statementEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1024,7 +1013,7 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
   @Override
   public EAttribute getStatement_Restart()
   {
-    return (EAttribute)statementEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)statementEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1036,6 +1025,17 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
   public EClass getCompoundStatement()
   {
     return compoundStatementEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getCompoundStatement_Statements()
+  {
+    return (EReference)compoundStatementEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -2286,11 +2286,11 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
     createEReference(timeoutFunctionEClass, TIMEOUT_FUNCTION__BODY);
 
     statementEClass = createEClass(STATEMENT);
-    createEReference(statementEClass, STATEMENT__STATEMENTS);
     createEAttribute(statementEClass, STATEMENT__LOOP);
     createEAttribute(statementEClass, STATEMENT__RESTART);
 
     compoundStatementEClass = createEClass(COMPOUND_STATEMENT);
+    createEReference(compoundStatementEClass, COMPOUND_STATEMENT__STATEMENTS);
 
     expressionStatementEClass = createEClass(EXPRESSION_STATEMENT);
     createEReference(expressionStatementEClass, EXPRESSION_STATEMENT__EXPR);
@@ -2471,10 +2471,12 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
     physicalVariableEClass.getESuperTypes().add(this.getDeclaredVariable());
     programVariableEClass.getESuperTypes().add(this.getDeclaredVariable());
     compoundStatementEClass.getESuperTypes().add(this.getStatement());
+    expressionStatementEClass.getESuperTypes().add(this.getStatement());
     ifElseStatEClass.getESuperTypes().add(this.getStatement());
     switchStatEClass.getESuperTypes().add(this.getStatement());
     startProcStatEClass.getESuperTypes().add(this.getStatement());
     stopProcStatEClass.getESuperTypes().add(this.getStatement());
+    errorStatEClass.getESuperTypes().add(this.getStatement());
     setStateStatEClass.getESuperTypes().add(this.getStatement());
     infixOpEClass.getESuperTypes().add(this.getUnaryExpression());
     postfixOpEClass.getESuperTypes().add(this.getUnaryExpression());
@@ -2547,11 +2549,11 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
     initEReference(getTimeoutFunction_Body(), this.getStatement(), null, "body", null, 0, 1, TimeoutFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(statementEClass, Statement.class, "Statement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getStatement_Statements(), ecorePackage.getEObject(), null, "statements", null, 0, -1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getStatement_Loop(), ecorePackage.getEBoolean(), "loop", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getStatement_Restart(), ecorePackage.getEBoolean(), "restart", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(compoundStatementEClass, CompoundStatement.class, "CompoundStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCompoundStatement_Statements(), this.getStatement(), null, "statements", null, 0, -1, CompoundStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(expressionStatementEClass, ExpressionStatement.class, "ExpressionStatement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getExpressionStatement_Expr(), this.getExpression(), null, "expr", null, 0, 1, ExpressionStatement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

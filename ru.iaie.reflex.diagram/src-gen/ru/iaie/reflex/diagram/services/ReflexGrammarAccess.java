@@ -517,24 +517,28 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
 		private final RuleCall cStartProcStatParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cStopProcStatParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final Assignment cStatementsAssignment_3 = (Assignment)cAlternatives.eContents().get(3);
-		private final RuleCall cStatementsErrorStatParserRuleCall_3_0 = (RuleCall)cStatementsAssignment_3.eContents().get(0);
-		private final Assignment cLoopAssignment_4 = (Assignment)cAlternatives.eContents().get(4);
-		private final RuleCall cLoopLoopStatParserRuleCall_4_0 = (RuleCall)cLoopAssignment_4.eContents().get(0);
-		private final Assignment cRestartAssignment_5 = (Assignment)cAlternatives.eContents().get(5);
-		private final RuleCall cRestartRestartStatParserRuleCall_5_0 = (RuleCall)cRestartAssignment_5.eContents().get(0);
+		private final RuleCall cErrorStatParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final Group cGroup_4 = (Group)cAlternatives.eContents().get(4);
+		private final Action cStatementAction_4_0 = (Action)cGroup_4.eContents().get(0);
+		private final Assignment cLoopAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cLoopLoopStatParserRuleCall_4_1_0 = (RuleCall)cLoopAssignment_4_1.eContents().get(0);
+		private final Group cGroup_5 = (Group)cAlternatives.eContents().get(5);
+		private final Action cStatementAction_5_0 = (Action)cGroup_5.eContents().get(0);
+		private final Assignment cRestartAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cRestartRestartStatParserRuleCall_5_1_0 = (RuleCall)cRestartAssignment_5_1.eContents().get(0);
 		private final RuleCall cSetStateStatParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		private final RuleCall cCompoundStatementParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		private final RuleCall cIfElseStatParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
 		private final RuleCall cSwitchStatParserRuleCall_9 = (RuleCall)cAlternatives.eContents().get(9);
+		private final RuleCall cExpressionStatementParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
 		
 		//Statement:
-		//	{Statement} ";" | StartProcStat | StopProcStat | statements+=ErrorStat | loop?=LoopStat | restart?=RestartStat |
-		//	SetStateStat | CompoundStatement | IfElseStat | SwitchStat;
+		//	{Statement} ";" | StartProcStat | StopProcStat | ErrorStat | {Statement} loop?=LoopStat | {Statement}
+		//	restart?=RestartStat | SetStateStat | CompoundStatement | IfElseStat | SwitchStat | ExpressionStatement;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{Statement} ";" | StartProcStat | StopProcStat | statements+=ErrorStat | loop?=LoopStat | restart?=RestartStat |
-		//SetStateStat | CompoundStatement | IfElseStat | SwitchStat
+		//{Statement} ";" | StartProcStat | StopProcStat | ErrorStat | {Statement} loop?=LoopStat | {Statement}
+		//restart?=RestartStat | SetStateStat | CompoundStatement | IfElseStat | SwitchStat | ExpressionStatement
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//{Statement} ";"
@@ -552,23 +556,32 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		//StopProcStat
 		public RuleCall getStopProcStatParserRuleCall_2() { return cStopProcStatParserRuleCall_2; }
 		
-		//statements+=ErrorStat
-		public Assignment getStatementsAssignment_3() { return cStatementsAssignment_3; }
-		
 		//ErrorStat
-		public RuleCall getStatementsErrorStatParserRuleCall_3_0() { return cStatementsErrorStatParserRuleCall_3_0; }
+		public RuleCall getErrorStatParserRuleCall_3() { return cErrorStatParserRuleCall_3; }
+		
+		//{Statement} loop?=LoopStat
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//{Statement}
+		public Action getStatementAction_4_0() { return cStatementAction_4_0; }
 		
 		//loop?=LoopStat
-		public Assignment getLoopAssignment_4() { return cLoopAssignment_4; }
+		public Assignment getLoopAssignment_4_1() { return cLoopAssignment_4_1; }
 		
 		//LoopStat
-		public RuleCall getLoopLoopStatParserRuleCall_4_0() { return cLoopLoopStatParserRuleCall_4_0; }
+		public RuleCall getLoopLoopStatParserRuleCall_4_1_0() { return cLoopLoopStatParserRuleCall_4_1_0; }
+		
+		//{Statement} restart?=RestartStat
+		public Group getGroup_5() { return cGroup_5; }
+		
+		//{Statement}
+		public Action getStatementAction_5_0() { return cStatementAction_5_0; }
 		
 		//restart?=RestartStat
-		public Assignment getRestartAssignment_5() { return cRestartAssignment_5; }
+		public Assignment getRestartAssignment_5_1() { return cRestartAssignment_5_1; }
 		
 		//RestartStat
-		public RuleCall getRestartRestartStatParserRuleCall_5_0() { return cRestartRestartStatParserRuleCall_5_0; }
+		public RuleCall getRestartRestartStatParserRuleCall_5_1_0() { return cRestartRestartStatParserRuleCall_5_1_0; }
 		
 		//SetStateStat
 		public RuleCall getSetStateStatParserRuleCall_6() { return cSetStateStatParserRuleCall_6; }
@@ -581,6 +594,9 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SwitchStat
 		public RuleCall getSwitchStatParserRuleCall_9() { return cSwitchStatParserRuleCall_9; }
+		
+		//ExpressionStatement
+		public RuleCall getExpressionStatementParserRuleCall_10() { return cExpressionStatementParserRuleCall_10; }
 	}
 	public class CompoundStatementElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.CompoundStatement");
@@ -2959,8 +2975,8 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Statement:
-	//	{Statement} ";" | StartProcStat | StopProcStat | statements+=ErrorStat | loop?=LoopStat | restart?=RestartStat |
-	//	SetStateStat | CompoundStatement | IfElseStat | SwitchStat;
+	//	{Statement} ";" | StartProcStat | StopProcStat | ErrorStat | {Statement} loop?=LoopStat | {Statement}
+	//	restart?=RestartStat | SetStateStat | CompoundStatement | IfElseStat | SwitchStat | ExpressionStatement;
 	public StatementElements getStatementAccess() {
 		return pStatement;
 	}

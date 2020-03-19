@@ -109,11 +109,12 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Reflex.ecore#//TimeoutFunction/body"/>
     </genClasses>
     <genClasses ecoreClass="Reflex.ecore#//Statement">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Reflex.ecore#//Statement/statements"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reflex.ecore#//Statement/loop"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reflex.ecore#//Statement/restart"/>
     </genClasses>
-    <genClasses ecoreClass="Reflex.ecore#//CompoundStatement"/>
+    <genClasses ecoreClass="Reflex.ecore#//CompoundStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Reflex.ecore#//CompoundStatement/statements"/>
+    </genClasses>
     <genClasses ecoreClass="Reflex.ecore#//ExpressionStatement">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Reflex.ecore#//ExpressionStatement/expr"/>
     </genClasses>

@@ -221,6 +221,7 @@ public class ReflexSwitch<T> extends Switch<T>
       {
         ExpressionStatement expressionStatement = (ExpressionStatement)theEObject;
         T result = caseExpressionStatement(expressionStatement);
+        if (result == null) result = caseStatement(expressionStatement);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -274,6 +275,7 @@ public class ReflexSwitch<T> extends Switch<T>
       {
         ErrorStat errorStat = (ErrorStat)theEObject;
         T result = caseErrorStat(errorStat);
+        if (result == null) result = caseStatement(errorStat);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }

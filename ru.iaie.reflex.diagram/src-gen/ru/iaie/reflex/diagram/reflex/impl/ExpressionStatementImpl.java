@@ -10,7 +10,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import ru.iaie.reflex.diagram.reflex.Expression;
 import ru.iaie.reflex.diagram.reflex.ExpressionStatement;
@@ -29,7 +28,7 @@ import ru.iaie.reflex.diagram.reflex.ReflexPackage;
  *
  * @generated
  */
-public class ExpressionStatementImpl extends MinimalEObjectImpl.Container implements ExpressionStatement
+public class ExpressionStatementImpl extends StatementImpl implements ExpressionStatement
 {
   /**
    * The cached value of the '{@link #getExpr() <em>Expr</em>}' containment reference.

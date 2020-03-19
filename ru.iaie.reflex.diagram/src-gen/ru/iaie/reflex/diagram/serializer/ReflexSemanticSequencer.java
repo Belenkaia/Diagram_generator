@@ -672,6 +672,7 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     Statement returns ErrorStat
 	 *     ErrorStat returns ErrorStat
 	 *
 	 * Constraint:
@@ -684,6 +685,7 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     Statement returns ExpressionStatement
 	 *     ExpressionStatement returns ExpressionStatement
 	 *
 	 * Constraint:
@@ -1217,7 +1219,7 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Statement returns Statement
 	 *
 	 * Constraint:
-	 *     (statements+=ErrorStat | loop?=LoopStat | restart?=RestartStat)?
+	 *     (loop?=LoopStat | restart?=RestartStat)?
 	 */
 	protected void sequence_Statement(ISerializationContext context, Statement semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

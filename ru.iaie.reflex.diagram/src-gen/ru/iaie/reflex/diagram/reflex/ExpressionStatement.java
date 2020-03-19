@@ -3,7 +3,6 @@
  */
 package ru.iaie.reflex.diagram.reflex;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -21,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface ExpressionStatement extends EObject
+public interface ExpressionStatement extends Statement
 {
   /**
    * Returns the value of the '<em><b>Expr</b></em>' containment reference.

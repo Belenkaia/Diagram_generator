@@ -3,22 +3,12 @@
  */
 package ru.iaie.reflex.diagram.reflex.impl;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 import ru.iaie.reflex.diagram.reflex.ReflexPackage;
 import ru.iaie.reflex.diagram.reflex.Statement;
@@ -31,7 +21,6 @@ import ru.iaie.reflex.diagram.reflex.Statement;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.StatementImpl#getStatements <em>Statements</em>}</li>
  *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.StatementImpl#isLoop <em>Loop</em>}</li>
  *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.StatementImpl#isRestart <em>Restart</em>}</li>
  * </ul>
@@ -40,16 +29,6 @@ import ru.iaie.reflex.diagram.reflex.Statement;
  */
 public class StatementImpl extends MinimalEObjectImpl.Container implements Statement
 {
-  /**
-   * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStatements()
-   * @generated
-   * @ordered
-   */
-  protected EList<EObject> statements;
-
   /**
    * The default value of the '{@link #isLoop() <em>Loop</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -117,21 +96,6 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
    * @generated
    */
   @Override
-  public EList<EObject> getStatements()
-  {
-    if (statements == null)
-    {
-      statements = new EObjectContainmentEList<EObject>(EObject.class, this, ReflexPackage.STATEMENT__STATEMENTS);
-    }
-    return statements;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public boolean isLoop()
   {
     return loop;
@@ -182,28 +146,10 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
    * @generated
    */
   @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case ReflexPackage.STATEMENT__STATEMENTS:
-        return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
     {
-      case ReflexPackage.STATEMENT__STATEMENTS:
-        return getStatements();
       case ReflexPackage.STATEMENT__LOOP:
         return isLoop();
       case ReflexPackage.STATEMENT__RESTART:
@@ -217,16 +163,11 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case ReflexPackage.STATEMENT__STATEMENTS:
-        getStatements().clear();
-        getStatements().addAll((Collection<? extends EObject>)newValue);
-        return;
       case ReflexPackage.STATEMENT__LOOP:
         setLoop((Boolean)newValue);
         return;
@@ -247,9 +188,6 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
-      case ReflexPackage.STATEMENT__STATEMENTS:
-        getStatements().clear();
-        return;
       case ReflexPackage.STATEMENT__LOOP:
         setLoop(LOOP_EDEFAULT);
         return;
@@ -270,8 +208,6 @@ public class StatementImpl extends MinimalEObjectImpl.Container implements State
   {
     switch (featureID)
     {
-      case ReflexPackage.STATEMENT__STATEMENTS:
-        return statements != null && !statements.isEmpty();
       case ReflexPackage.STATEMENT__LOOP:
         return loop != LOOP_EDEFAULT;
       case ReflexPackage.STATEMENT__RESTART:
