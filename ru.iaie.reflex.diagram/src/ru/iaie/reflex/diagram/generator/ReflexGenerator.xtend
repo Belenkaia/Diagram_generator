@@ -17,6 +17,7 @@ import java.util.HashMap
 import ru.iaie.reflex.diagram.reflex.ReflexType
 import ru.iaie.reflex.diagram.reflex.CType
 import ru.iaie.reflex.diagram.reflex.ImportedVariable
+import ru.iaie.reflex.diagram.reflex.CompoundStatement
 
 /**
  * Generates code from your model files on save.
@@ -391,13 +392,13 @@ def dispatch String getSigned(CType type)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def dispatch ArrayList<ActiveProcess> getActiveList(IfElseStat statement)
 	{
-		var ArrayList<ActiveProcess> procTempList = null;
+		var ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>;
 		
 		System.out.println("then: " + statement.then) // отладка
 		System.out.println("else: " + statement.getElse)
 		
 		var ArrayList<ActiveProcess> procTempThenList = statement.then.getActiveList()
-		var ArrayList<ActiveProcess> procTempElseList = null
+		var ArrayList<ActiveProcess> procTempElseList = new ArrayList<ActiveProcess>;
 		if(statement.getElse() !== null)
 			procTempElseList = statement.getElse().getActiveList()
 		if(procTempThenList !== null)
@@ -420,11 +421,29 @@ def dispatch String getSigned(CType type)
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Полиморфный метод getActiveList для составной операции (CompoundStatement) 
+// Возвращает общий список объектов ActiveProcess со всех операций внутри составной операции
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	def dispatch ArrayList<ActiveProcess> getActiveList(CompoundStatement statement)
+	{
+		var ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>;
+		for(s : statement.statements)
+		{
+			var ArrayList<ActiveProcess> subProcList = s.getActiveList;
+			if(null !== subProcList)
+				procTempList.addAll(subProcList)
+		
+		}
+		return procTempList
+	}
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Полиморфный метод для суперкласса Statement (заглушка)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def dispatch ArrayList<ActiveProcess> getActiveList(Statement statement)
 	{
-		return null
+		return new ArrayList<ActiveProcess>;
 	}
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

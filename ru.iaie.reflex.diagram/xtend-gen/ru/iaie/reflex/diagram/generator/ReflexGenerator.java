@@ -15,6 +15,7 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import ru.iaie.reflex.diagram.generator.ActiveProcess;
 import ru.iaie.reflex.diagram.reflex.CType;
+import ru.iaie.reflex.diagram.reflex.CompoundStatement;
 import ru.iaie.reflex.diagram.reflex.DeclaredVariable;
 import ru.iaie.reflex.diagram.reflex.IfElseStat;
 import ru.iaie.reflex.diagram.reflex.ImportedVariable;
@@ -418,7 +419,7 @@ public class ReflexGenerator extends AbstractGenerator {
   }
   
   protected ArrayList<ActiveProcess> _getActiveList(final IfElseStat statement) {
-    ArrayList<ActiveProcess> procTempList = null;
+    ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>();
     Statement _then = statement.getThen();
     String _plus = ("then: " + _then);
     System.out.println(_plus);
@@ -426,7 +427,7 @@ public class ReflexGenerator extends AbstractGenerator {
     String _plus_1 = ("else: " + _else);
     System.out.println(_plus_1);
     ArrayList<ActiveProcess> procTempThenList = this.getActiveList(statement.getThen());
-    ArrayList<ActiveProcess> procTempElseList = null;
+    ArrayList<ActiveProcess> procTempElseList = new ArrayList<ActiveProcess>();
     Statement _else_1 = statement.getElse();
     boolean _tripleNotEquals = (_else_1 != null);
     if (_tripleNotEquals) {
@@ -445,8 +446,22 @@ public class ReflexGenerator extends AbstractGenerator {
     return procTempList;
   }
   
+  protected ArrayList<ActiveProcess> _getActiveList(final CompoundStatement statement) {
+    ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>();
+    EList<Statement> _statements = statement.getStatements();
+    for (final Statement s : _statements) {
+      {
+        ArrayList<ActiveProcess> subProcList = this.getActiveList(s);
+        if ((null != subProcList)) {
+          procTempList.addAll(subProcList);
+        }
+      }
+    }
+    return procTempList;
+  }
+  
   protected ArrayList<ActiveProcess> _getActiveList(final Statement statement) {
-    return null;
+    return new ArrayList<ActiveProcess>();
   }
   
   public CharSequence generateDataDiagram(final Resource resource) {
@@ -543,7 +558,9 @@ public class ReflexGenerator extends AbstractGenerator {
   }
   
   public ArrayList<ActiveProcess> getActiveList(final Statement statement) {
-    if (statement instanceof IfElseStat) {
+    if (statement instanceof CompoundStatement) {
+      return _getActiveList((CompoundStatement)statement);
+    } else if (statement instanceof IfElseStat) {
       return _getActiveList((IfElseStat)statement);
     } else if (statement instanceof StartProcStat) {
       return _getActiveList((StartProcStat)statement);
