@@ -252,18 +252,8 @@ public class ReflexGenerator extends AbstractGenerator {
         for (final Statement statement : _statements) {
           {
             ArrayList<ActiveProcess> tempProcList = null;
-            tempProcList = this.getActiveList(statement);
-            for (final ActiveProcess elem : tempProcList) {
-              {
-                elem.setIdFrom(this.procId.indexOf(process.getName()));
-                int _idTo = elem.getIdTo();
-                boolean _equals = (_idTo == (-1));
-                if (_equals) {
-                  elem.setIdTo(this.procId.indexOf(process.getName()));
-                }
-                this.procList.add(elem);
-              }
-            }
+            tempProcList = this.getActiveList(statement, this.procId.indexOf(process.getName()));
+            this.procList.addAll(tempProcList);
           }
         }
       }
@@ -362,59 +352,59 @@ public class ReflexGenerator extends AbstractGenerator {
     }
   }
   
-  protected ArrayList<ActiveProcess> _getActiveList(final StartProcStat statement) {
+  protected ArrayList<ActiveProcess> _getActiveList(final StartProcStat statement, final int contextProcessId) {
     ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>();
     ActiveProcess proc = new ActiveProcess();
     proc.setAction("start");
-    proc.setIdFrom((-1));
+    proc.setIdFrom(contextProcessId);
     proc.setIdTo(this.procId.indexOf(statement.getProcId()));
     procTempList.add(proc);
     return procTempList;
   }
   
-  protected ArrayList<ActiveProcess> _getActiveList(final StopProcStat statement) {
+  protected ArrayList<ActiveProcess> _getActiveList(final StopProcStat statement, final int contextProcessId) {
     ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>();
     ActiveProcess proc = new ActiveProcess();
     proc.setAction("stop");
-    proc.setIdFrom((-1));
+    proc.setIdFrom(contextProcessId);
     String _procId = statement.getProcId();
     boolean _tripleNotEquals = (_procId != null);
     if (_tripleNotEquals) {
       proc.setIdTo(this.procId.indexOf(statement.getProcId()));
     } else {
-      proc.setIdTo((-1));
+      proc.setIdTo(contextProcessId);
     }
     procTempList.add(proc);
     return procTempList;
   }
   
-  protected ArrayList<ActiveProcess> _getActiveList(final IfElseStat statement) {
+  protected ArrayList<ActiveProcess> _getActiveList(final IfElseStat statement, final int contextProcessId) {
     ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>();
-    ArrayList<ActiveProcess> procTempThenList = this.getActiveList(statement.getThen());
+    ArrayList<ActiveProcess> procTempThenList = this.getActiveList(statement.getThen(), contextProcessId);
     ArrayList<ActiveProcess> procTempElseList = new ArrayList<ActiveProcess>();
     Statement _else = statement.getElse();
     boolean _tripleNotEquals = (_else != null);
     if (_tripleNotEquals) {
-      procTempElseList = this.getActiveList(statement.getElse());
+      procTempElseList = this.getActiveList(statement.getElse(), contextProcessId);
     }
     procTempList.addAll(procTempThenList);
     procTempList.addAll(procTempElseList);
     return procTempList;
   }
   
-  protected ArrayList<ActiveProcess> _getActiveList(final CompoundStatement statement) {
+  protected ArrayList<ActiveProcess> _getActiveList(final CompoundStatement statement, final int contextProcessId) {
     ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>();
     EList<Statement> _statements = statement.getStatements();
     for (final Statement s : _statements) {
       {
-        ArrayList<ActiveProcess> subProcList = this.getActiveList(s);
+        ArrayList<ActiveProcess> subProcList = this.getActiveList(s, contextProcessId);
         procTempList.addAll(subProcList);
       }
     }
     return procTempList;
   }
   
-  protected ArrayList<ActiveProcess> _getActiveList(final Statement statement) {
+  protected ArrayList<ActiveProcess> _getActiveList(final Statement statement, final int contextProcessId) {
     return new ArrayList<ActiveProcess>();
   }
   
@@ -511,20 +501,20 @@ public class ReflexGenerator extends AbstractGenerator {
     }
   }
   
-  public ArrayList<ActiveProcess> getActiveList(final Statement statement) {
+  public ArrayList<ActiveProcess> getActiveList(final Statement statement, final int contextProcessId) {
     if (statement instanceof CompoundStatement) {
-      return _getActiveList((CompoundStatement)statement);
+      return _getActiveList((CompoundStatement)statement, contextProcessId);
     } else if (statement instanceof IfElseStat) {
-      return _getActiveList((IfElseStat)statement);
+      return _getActiveList((IfElseStat)statement, contextProcessId);
     } else if (statement instanceof StartProcStat) {
-      return _getActiveList((StartProcStat)statement);
+      return _getActiveList((StartProcStat)statement, contextProcessId);
     } else if (statement instanceof StopProcStat) {
-      return _getActiveList((StopProcStat)statement);
+      return _getActiveList((StopProcStat)statement, contextProcessId);
     } else if (statement != null) {
-      return _getActiveList(statement);
+      return _getActiveList(statement, contextProcessId);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(statement).toString());
+        Arrays.<Object>asList(statement, contextProcessId).toString());
     }
   }
 }

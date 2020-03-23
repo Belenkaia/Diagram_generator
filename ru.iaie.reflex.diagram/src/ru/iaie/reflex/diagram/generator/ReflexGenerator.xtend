@@ -174,8 +174,9 @@ class ReflexGenerator extends AbstractGenerator {
 	         		for(statement: state.statements)
 	         		{
 	         			var ArrayList<ActiveProcess> tempProcList;
-	         			tempProcList = statement.getActiveList()
-	         			for (elem: tempProcList)
+	         			tempProcList = statement.getActiveList(procId.indexOf(process.name))
+	         			procList.addAll(tempProcList)
+	         			/*for (elem: tempProcList)
 	         			{
 	         				elem.setIdFrom(procId.indexOf(process.name))
 	         				if(elem.idTo == -1) //дефолтное значение стоит, если останавливает самого себя
@@ -183,7 +184,7 @@ class ReflexGenerator extends AbstractGenerator {
 	         					elem.setIdTo(procId.indexOf(process.name)) // stopping itself
 	         				}
 	         				procList.add(elem);
-	         			}
+	         			}*/
 	         		}	
 	         }    
 	        }
@@ -323,12 +324,12 @@ def dispatch String getSigned(CType type)
 // Полиморфный метод для StartProcStat: возвращает 1 элемент ArrayList<ActiveProcess>, класс, отражающий связь между командой старт и процессом, внутри которого она
 // находится, при этом внутри метода информация о процессе недоступна, поэтому заполняется дефолтными значениями, а после перезаписывается
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def dispatch ArrayList<ActiveProcess> getActiveList(StartProcStat statement)
+	def dispatch ArrayList<ActiveProcess> getActiveList(StartProcStat statement, int contextProcessId)
 	{
 		var ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>
 		var ActiveProcess proc = new ActiveProcess()
 	    proc.setAction("start");
-	    proc.setIdFrom(-1) // default value
+	    proc.setIdFrom(contextProcessId)
 	    proc.setIdTo(procId.indexOf(statement.procId))
 	    procTempList.add(proc)
 	    
@@ -339,19 +340,19 @@ def dispatch String getSigned(CType type)
 // Полиморфный метод для StopProcStat: возвращает 1 элемент ArrayList<ActiveProcess>, класс, отражающий связь между командой стоп и процессом, внутри которого она
 // находится, при этом внутри метода информация о процессе недоступна, поэтому заполняется дефолтными значениями, а после перезаписывается
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def dispatch ArrayList<ActiveProcess> getActiveList(StopProcStat statement)
+	def dispatch ArrayList<ActiveProcess> getActiveList(StopProcStat statement, int contextProcessId)
 	{
 		var ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>
 		var ActiveProcess proc = new ActiveProcess()
 	    proc.setAction("stop");
-	    proc.setIdFrom(-1) // default value
-	    if(statement.procId !== null)
+	    proc.setIdFrom(contextProcessId)
+	    if (statement.procId !== null)
 	    {
 	    	proc.setIdTo(procId.indexOf(statement.procId))
 	    }
 	    else
 	    {
-	    	proc.setIdTo(-1) // stopping itself
+	    	proc.setIdTo(contextProcessId)
 	    }
 	    procTempList.add(proc)
 	    
@@ -363,15 +364,15 @@ def dispatch String getSigned(CType type)
 // Полиморфный метод для IfElseStat: возвращает ArrayList<ActiveProcess>, те список классов, отражающих связь между командами старт/стоп и процессом, внутри которого они находятся
 // Метод последовательно вызывает функцию getActiveList у полей IfElseStat, после чего собирает вместе результат, и возвращает его
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def dispatch ArrayList<ActiveProcess> getActiveList(IfElseStat statement)
+	def dispatch ArrayList<ActiveProcess> getActiveList(IfElseStat statement, int contextProcessId)
 	{
 		var ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>
-		var ArrayList<ActiveProcess> procTempThenList = statement.then.getActiveList()
+		var ArrayList<ActiveProcess> procTempThenList = statement.then.getActiveList(contextProcessId)
 		var ArrayList<ActiveProcess> procTempElseList = new ArrayList<ActiveProcess>
 		if(statement.getElse() !== null)
-			procTempElseList = statement.getElse().getActiveList()
-			procTempList.addAll(procTempThenList)
-			procTempList.addAll(procTempElseList)
+			procTempElseList = statement.getElse().getActiveList(contextProcessId)
+		procTempList.addAll(procTempThenList)
+		procTempList.addAll(procTempElseList)
 		return (procTempList)
 	}
 
@@ -380,12 +381,12 @@ def dispatch String getSigned(CType type)
 // Полиморфный метод getActiveList для составной операции (CompoundStatement) 
 // Возвращает общий список объектов ActiveProcess со всех операций внутри составной операции
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def dispatch ArrayList<ActiveProcess> getActiveList(CompoundStatement statement)
+	def dispatch ArrayList<ActiveProcess> getActiveList(CompoundStatement statement, int contextProcessId)
 	{
 		var ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>;
 		for(s : statement.statements)
 		{
-			var ArrayList<ActiveProcess> subProcList = s.getActiveList;
+			var ArrayList<ActiveProcess> subProcList = s.getActiveList(contextProcessId);
 			procTempList.addAll(subProcList)
 		}
 		return procTempList
@@ -395,7 +396,7 @@ def dispatch String getSigned(CType type)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Полиморфный метод для суперкласса Statement (заглушка)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-def dispatch ArrayList<ActiveProcess> getActiveList(Statement statement)
+def dispatch ArrayList<ActiveProcess> getActiveList(Statement statement, int contextProcessId)
 	{
 		return new ArrayList<ActiveProcess>;
 	}
