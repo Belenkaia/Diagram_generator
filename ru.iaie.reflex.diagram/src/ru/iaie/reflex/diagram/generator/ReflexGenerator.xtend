@@ -33,7 +33,9 @@ class ReflexGenerator extends AbstractGenerator {
 //	val NS_ELLIPSE = 1
 	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Метод возвращает строку, содержащую заголовок выходного GML файла. Также обнуляется счетчик вершин (count_id) 
+// Метод возвращает строку, содержащую заголовок выходного GML файла. Также обнуляется счетчик вершин (count_id)
+//
+// Method returns string, which is a head of output GML file. Also nodes counter is made zero 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	
 	def writeHeadGML() '''
 	Creator	"tranlator"
@@ -47,6 +49,9 @@ class ReflexGenerator extends AbstractGenerator {
 	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Метод получает на вход длину подписи вершины и ее тип (те форму), генерирует строку с настройками отобоажения ноды диаграммы (длина, высота, цвет границы, форма вершины, и тд)
+//
+// Method input: node's label length (nameLength) and its shape (typeOfNode)
+// Output: generated string which have a node's properties like shape, height, weight, colors and etc 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def generateNodeGraphics (int nameLength, String typeOfNode) '''
 			graphics
@@ -62,6 +67,9 @@ class ReflexGenerator extends AbstractGenerator {
 	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Метод генерирует LabelGraphics, задающий настройки щрифта и текст подписи внутри вершины. На вход получает подпись для вершины
+//
+// input: label which will be in the graph's node
+// Output: string which have a LabelGraphics info about label, like label text, size and font of them
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	
 	def generateLabelGraphics(String label)
 	'''
@@ -76,7 +84,13 @@ class ReflexGenerator extends AbstractGenerator {
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // На вход поступает число, которое будет присвоено вершине в качестве Id, и текст, который будет внутри вершины  
 // Метод возвращает строку, содержащую объявление одной вершины в gml графе,
-// вызывая при этом generateNodeGraphics(), generateLabelGraphics() для генерации отдельных частей описания вершины 
+// вызывая при этом generateNodeGraphics(), generateLabelGraphics() для генерации отдельных частей описания вершины
+//
+//Input: processId - will be put to gml like node's id
+//		processName - label
+//		typeOfNode - node's shape
+// Output: string which will have a full defining of one node in the output GML diagram.
+// Method calls generateNodeGraphics(), generateLabelGraphics() for generate some parts of node's notification
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def generateOneProcessNode(int processId, String processName, String typeOfNode)
 	'''
@@ -91,7 +105,9 @@ class ReflexGenerator extends AbstractGenerator {
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Метод возвращает строку, содержащую в себе объявления всех вершин создаваемой диаграммы процессов. Запоминает соответствие имени процесса его Id в списке procId
-// флаг diagrammFlag определяет форму вершин процессов (в activity-diagramm это прямоугольник, в data diagramm это эллипс)
+// shape определяет форму вершин процессов
+//
+//Output: string which have a  notification of all process nodes. Also method is saving accord of process name and its id in ArrayList procId
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def String generateProcessNodes(Resource resource/* , int shape*/)
 	{
@@ -109,6 +125,9 @@ class ReflexGenerator extends AbstractGenerator {
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Метод соединяет вместе заголовок gml файла, список вершин диаграммы и список ребер. Для этого вызываются соответствующие методы. Возвращает готовый текст activity-диаграммы
+//
+// Method is collecting a GML head, nodes list and edge list of diagram by calling the same methods 
+// Output: finished text of GML activity diagram
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def generateActivityDiagram(Resource resource)
 	'''«writeHeadGML»
@@ -121,6 +140,11 @@ class ReflexGenerator extends AbstractGenerator {
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Метод принимает fromId - Id вершины, из которой идет ребро. toId -  Id вершины, в которую идет ребро. label - подпись над ребром.
 // Возвращает строку, содержащую описание ребра в формате gml с заданными в параметрах свойствами.
+//
+// Input: fromId - Id of node, from which will go that edge
+//		  toId - Id of node to which will go that edge
+//		  label - edge's label text
+// Output: string with edge's notification
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def generateOneEdge(int fromId, int toId, String label)
 	'''
@@ -134,6 +158,8 @@ class ReflexGenerator extends AbstractGenerator {
 	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Возвращает строку, содержащую описание всех ребер графа диаграммы процессов
+//
+//Output: string with notification of all edges in graph
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def String generateAllEdges()
 	{
@@ -158,6 +184,8 @@ class ReflexGenerator extends AbstractGenerator {
 	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Метод создает модель связи процессов по управлению в виде списка ArrayList<ActiveProcess>
+//
+// Method construct the model of manage connecting behind processes like an ArrayList<ActiveProcess> 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def constructActiveModel(Resource resource)
 	{
@@ -195,6 +223,8 @@ class ReflexGenerator extends AbstractGenerator {
 	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Метод возвращает строку, содержащую описание вершин переменных в формате gml для диаграммы связи по данным
+//
+// Output: string with data nodes notification in the GML format
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def getVariablesNodes(Resource resource)
 	{
@@ -211,6 +241,8 @@ class ReflexGenerator extends AbstractGenerator {
 	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Метод создает модель связи процессов и переменных в формате ArrayList<ActiveProcess> (procList)
+//
+//Method construct the model of connecting behind processes and variables like an ArrayList<ActiveProcess> (procList)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def generateDataModel(Resource resource)
 	{
@@ -234,6 +266,8 @@ class ReflexGenerator extends AbstractGenerator {
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Полиморфный метод. Возвращает имя переменной DeclaredVariable, обернутое в список
+//
+// Polymorphic method. Output: name of variable DeclaredVariable which was put in ArrayList
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def dispatch ArrayList<String> getVariableName(DeclaredVariable variable)
 {
@@ -244,6 +278,8 @@ def dispatch ArrayList<String> getVariableName(DeclaredVariable variable)
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Полиморфный метод. Возвращает список имен импортируемых из одного процесса переменных ImportedVariable
+//
+// Polymorphic method. Output:list of imported from 1 process variable's names
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def dispatch ArrayList<String> getVariableName(ImportedVariable variable)
 {
@@ -254,6 +290,8 @@ def dispatch ArrayList<String> getVariableName(ImportedVariable variable)
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Полиморфный метод. Возвращает подпись для ребра, соединяющего процесс и переменную. Подпись зависит от типа зависимости (декларация или импорт)
+//
+//Polymorphic method. Output: string which is a label of edge between variable node and process node in graph. "declare" for DeclaredVariable 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def dispatch String getVariableAction(DeclaredVariable variable)
 {
@@ -262,6 +300,8 @@ def dispatch String getVariableAction(DeclaredVariable variable)
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Полиморфный метод. Возвращает подпись для ребра, соединяющего процесс и переменную. Подпись зависит от типа зависимости (декларация или импорт)
+//
+//Polymorphic method. Output: string which is a label of edge between variable node and process node in graph. "import" for ImportedVariable
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def dispatch String getVariableAction(ImportedVariable variable)
 {	
@@ -270,6 +310,7 @@ def dispatch String getVariableAction(ImportedVariable variable)
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Полиморфный метод. Возвращает строку с именем переменной и ее типом
+// Polymorphic method. Output: string with variable's name and type
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def dispatch String getVariableNameAndType(ProgramVariable variable)
 {
@@ -278,6 +319,7 @@ def dispatch String getVariableNameAndType(ProgramVariable variable)
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Полиморфный метод. Возвращает строку с именем переменной и ее типом
+// Polymorphic method. Output: string with variable's name and type
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def dispatch String getVariableNameAndType(PhysicalVariable variable)
 {
@@ -302,6 +344,7 @@ def dispatch String getReflexType(ReflexType type)
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Полиморфный метод. Заглушка на случай, если поле не определено
+// Polymorphic method. Output: nullable string
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def dispatch String getSigned(ReflexType type)
 {
@@ -310,6 +353,7 @@ def dispatch String getSigned(ReflexType type)
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Полиморфный метод. Возвращает строку signed/unsigned
+// Polymorphic method. Output: string with signed/unsigned
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def dispatch String getSigned(CType type)
 {
@@ -322,7 +366,10 @@ def dispatch String getSigned(CType type)
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Полиморфный метод для StartProcStat: возвращает 1 элемент ArrayList<ActiveProcess>, класс, отражающий связь между командой старт и процессом, внутри которого она
-// находится, при этом внутри метода информация о процессе недоступна, поэтому заполняется дефолтными значениями, а после перезаписывается
+// находится
+//
+// Polymorphic method. For StartProcStat returns 1 element of ArrayList<ActiveProcess>. It express how connecting the process and statement "start" in them
+// Input: contextProcessId - id of process, in which is that statement
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def dispatch ArrayList<ActiveProcess> getActiveList(StartProcStat statement, int contextProcessId)
 	{
@@ -338,7 +385,10 @@ def dispatch String getSigned(CType type)
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Полиморфный метод для StopProcStat: возвращает 1 элемент ArrayList<ActiveProcess>, класс, отражающий связь между командой стоп и процессом, внутри которого она
-// находится, при этом внутри метода информация о процессе недоступна, поэтому заполняется дефолтными значениями, а после перезаписывается
+// находится
+//
+// Polymorphic method. For StopProcStat returns 1 element of ArrayList<ActiveProcess>. It express how connecting the process and statement "stop" in them
+// Input: contextProcessId - id of process, in which is that statement
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def dispatch ArrayList<ActiveProcess> getActiveList(StopProcStat statement, int contextProcessId)
 	{
@@ -363,6 +413,10 @@ def dispatch String getSigned(CType type)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Полиморфный метод для IfElseStat: возвращает ArrayList<ActiveProcess>, те список классов, отражающих связь между командами старт/стоп и процессом, внутри которого они находятся
 // Метод последовательно вызывает функцию getActiveList у полей IfElseStat, после чего собирает вместе результат, и возвращает его
+//
+// Polymorphic method. For IfElseStat returns ArrayList<ActiveProcess>. It express how connecting the process and statement "stop"/"start" in them
+// Method calls getActiveList from IfElseStat statement's fields, then collect results and return them
+// Input: contextProcessId - id of process, in which is that statement
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def dispatch ArrayList<ActiveProcess> getActiveList(IfElseStat statement, int contextProcessId)
 	{
@@ -380,6 +434,10 @@ def dispatch String getSigned(CType type)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Полиморфный метод getActiveList для составной операции (CompoundStatement) 
 // Возвращает общий список объектов ActiveProcess со всех операций внутри составной операции
+//
+// Polymorphic method. For CompoundStatement returns ArrayList<ActiveProcess>. It express how connecting the process and statement "stop"/"start" in them
+// Method calls getActiveList from statement's fields, then collect results and return them
+// Input: contextProcessId - id of process, in which is that statement
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def dispatch ArrayList<ActiveProcess> getActiveList(CompoundStatement statement, int contextProcessId)
 	{
@@ -395,6 +453,8 @@ def dispatch String getSigned(CType type)
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Полиморфный метод для суперкласса Statement (заглушка)
+//
+// Polymorphic method for Statement (to avoid exception)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def dispatch ArrayList<ActiveProcess> getActiveList(Statement statement, int contextProcessId)
 	{
@@ -403,6 +463,9 @@ def dispatch ArrayList<ActiveProcess> getActiveList(Statement statement, int con
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Метод соединяет вместе заголовок gml файла, список вершин диаграммы и список ребер. Для этого вызываются соответствующие методы. Возвращает готовый текст data-диаграммы
+//
+// Method is collecting a GML head, nodes list (process nodes and data nodes) and edge list of diagram by calling the same methods 
+// Output: finished text of GML data diagram
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def generateDataDiagram(Resource resource)
 	'''«writeHeadGML»
@@ -414,6 +477,8 @@ def dispatch ArrayList<ActiveProcess> getActiveList(Statement statement, int con
 	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Очистка памяти, обнуление счетчиков
+//
+// garbage collector, make variables zero
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def void clear()
 {
@@ -424,6 +489,8 @@ def void clear()
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Основной метод. Создает файл диаграммы и записывает в него результат генерации.
+//
+//Main method. Create diagramm's files and write to them generation results
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 	
