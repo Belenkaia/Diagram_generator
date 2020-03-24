@@ -3500,9 +3500,9 @@ rule__TimeoutFunction__Group__2__Impl
 	}
 :
 (
-	{ before(grammarAccess.getTimeoutFunctionAccess().getBodyAssignment_2()); }
-	(rule__TimeoutFunction__BodyAssignment_2)
-	{ after(grammarAccess.getTimeoutFunctionAccess().getBodyAssignment_2()); }
+	{ before(grammarAccess.getTimeoutFunctionAccess().getStatementsAssignment_2()); }
+	(rule__TimeoutFunction__StatementsAssignment_2)*
+	{ after(grammarAccess.getTimeoutFunctionAccess().getStatementsAssignment_2()); }
 )
 ;
 finally {
@@ -9141,15 +9141,15 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__TimeoutFunction__BodyAssignment_2
+rule__TimeoutFunction__StatementsAssignment_2
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getTimeoutFunctionAccess().getBodyStatementParserRuleCall_2_0()); }
+		{ before(grammarAccess.getTimeoutFunctionAccess().getStatementsStatementParserRuleCall_2_0()); }
 		ruleStatement
-		{ after(grammarAccess.getTimeoutFunctionAccess().getBodyStatementParserRuleCall_2_0()); }
+		{ after(grammarAccess.getTimeoutFunctionAccess().getStatementsStatementParserRuleCall_2_0()); }
 	)
 ;
 finally {

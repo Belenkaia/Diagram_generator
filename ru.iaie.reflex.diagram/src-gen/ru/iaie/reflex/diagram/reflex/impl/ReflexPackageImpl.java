@@ -978,7 +978,7 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
    * @generated
    */
   @Override
-  public EReference getTimeoutFunction_Body()
+  public EReference getTimeoutFunction_Statements()
   {
     return (EReference)timeoutFunctionEClass.getEStructuralFeatures().get(1);
   }
@@ -2283,7 +2283,7 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
 
     timeoutFunctionEClass = createEClass(TIMEOUT_FUNCTION);
     createEReference(timeoutFunctionEClass, TIMEOUT_FUNCTION__TIME);
-    createEReference(timeoutFunctionEClass, TIMEOUT_FUNCTION__BODY);
+    createEReference(timeoutFunctionEClass, TIMEOUT_FUNCTION__STATEMENTS);
 
     statementEClass = createEClass(STATEMENT);
     createEAttribute(statementEClass, STATEMENT__LOOP);
@@ -2546,7 +2546,7 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
 
     initEClass(timeoutFunctionEClass, TimeoutFunction.class, "TimeoutFunction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getTimeoutFunction_Time(), this.getTime(), null, "time", null, 0, 1, TimeoutFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getTimeoutFunction_Body(), this.getStatement(), null, "body", null, 0, 1, TimeoutFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTimeoutFunction_Statements(), this.getStatement(), null, "statements", null, 0, -1, TimeoutFunction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(statementEClass, Statement.class, "Statement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getStatement_Loop(), ecorePackage.getEBoolean(), "loop", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

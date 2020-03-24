@@ -1277,19 +1277,10 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     TimeoutFunction returns TimeoutFunction
 	 *
 	 * Constraint:
-	 *     (time=Time body=Statement)
+	 *     (time=Time statements+=Statement*)
 	 */
 	protected void sequence_TimeoutFunction(ISerializationContext context, TimeoutFunction semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, ReflexPackage.Literals.TIMEOUT_FUNCTION__TIME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ReflexPackage.Literals.TIMEOUT_FUNCTION__TIME));
-			if (transientValues.isValueTransient(semanticObject, ReflexPackage.Literals.TIMEOUT_FUNCTION__BODY) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, ReflexPackage.Literals.TIMEOUT_FUNCTION__BODY));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTimeoutFunctionAccess().getTimeTimeParserRuleCall_1_0(), semanticObject.getTime());
-		feeder.accept(grammarAccess.getTimeoutFunctionAccess().getBodyStatementParserRuleCall_2_0(), semanticObject.getBody());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

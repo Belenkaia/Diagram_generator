@@ -3,14 +3,21 @@
  */
 package ru.iaie.reflex.diagram.reflex.impl;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 import ru.iaie.reflex.diagram.reflex.ReflexPackage;
 import ru.iaie.reflex.diagram.reflex.Statement;
@@ -26,7 +33,7 @@ import ru.iaie.reflex.diagram.reflex.TimeoutFunction;
  * </p>
  * <ul>
  *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.TimeoutFunctionImpl#getTime <em>Time</em>}</li>
- *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.TimeoutFunctionImpl#getBody <em>Body</em>}</li>
+ *   <li>{@link ru.iaie.reflex.diagram.reflex.impl.TimeoutFunctionImpl#getStatements <em>Statements</em>}</li>
  * </ul>
  *
  * @generated
@@ -44,14 +51,14 @@ public class TimeoutFunctionImpl extends MinimalEObjectImpl.Container implements
   protected Time time;
 
   /**
-   * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
+   * The cached value of the '{@link #getStatements() <em>Statements</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getBody()
+   * @see #getStatements()
    * @generated
    * @ordered
    */
-  protected Statement body;
+  protected EList<Statement> statements;
 
   /**
    * <!-- begin-user-doc -->
@@ -130,48 +137,13 @@ public class TimeoutFunctionImpl extends MinimalEObjectImpl.Container implements
    * @generated
    */
   @Override
-  public Statement getBody()
+  public EList<Statement> getStatements()
   {
-    return body;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetBody(Statement newBody, NotificationChain msgs)
-  {
-    Statement oldBody = body;
-    body = newBody;
-    if (eNotificationRequired())
+    if (statements == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ReflexPackage.TIMEOUT_FUNCTION__BODY, oldBody, newBody);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      statements = new EObjectContainmentEList<Statement>(Statement.class, this, ReflexPackage.TIMEOUT_FUNCTION__STATEMENTS);
     }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setBody(Statement newBody)
-  {
-    if (newBody != body)
-    {
-      NotificationChain msgs = null;
-      if (body != null)
-        msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ReflexPackage.TIMEOUT_FUNCTION__BODY, null, msgs);
-      if (newBody != null)
-        msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ReflexPackage.TIMEOUT_FUNCTION__BODY, null, msgs);
-      msgs = basicSetBody(newBody, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, ReflexPackage.TIMEOUT_FUNCTION__BODY, newBody, newBody));
+    return statements;
   }
 
   /**
@@ -186,8 +158,8 @@ public class TimeoutFunctionImpl extends MinimalEObjectImpl.Container implements
     {
       case ReflexPackage.TIMEOUT_FUNCTION__TIME:
         return basicSetTime(null, msgs);
-      case ReflexPackage.TIMEOUT_FUNCTION__BODY:
-        return basicSetBody(null, msgs);
+      case ReflexPackage.TIMEOUT_FUNCTION__STATEMENTS:
+        return ((InternalEList<?>)getStatements()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -204,8 +176,8 @@ public class TimeoutFunctionImpl extends MinimalEObjectImpl.Container implements
     {
       case ReflexPackage.TIMEOUT_FUNCTION__TIME:
         return getTime();
-      case ReflexPackage.TIMEOUT_FUNCTION__BODY:
-        return getBody();
+      case ReflexPackage.TIMEOUT_FUNCTION__STATEMENTS:
+        return getStatements();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -215,6 +187,7 @@ public class TimeoutFunctionImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -223,8 +196,9 @@ public class TimeoutFunctionImpl extends MinimalEObjectImpl.Container implements
       case ReflexPackage.TIMEOUT_FUNCTION__TIME:
         setTime((Time)newValue);
         return;
-      case ReflexPackage.TIMEOUT_FUNCTION__BODY:
-        setBody((Statement)newValue);
+      case ReflexPackage.TIMEOUT_FUNCTION__STATEMENTS:
+        getStatements().clear();
+        getStatements().addAll((Collection<? extends Statement>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -243,8 +217,8 @@ public class TimeoutFunctionImpl extends MinimalEObjectImpl.Container implements
       case ReflexPackage.TIMEOUT_FUNCTION__TIME:
         setTime((Time)null);
         return;
-      case ReflexPackage.TIMEOUT_FUNCTION__BODY:
-        setBody((Statement)null);
+      case ReflexPackage.TIMEOUT_FUNCTION__STATEMENTS:
+        getStatements().clear();
         return;
     }
     super.eUnset(featureID);
@@ -262,8 +236,8 @@ public class TimeoutFunctionImpl extends MinimalEObjectImpl.Container implements
     {
       case ReflexPackage.TIMEOUT_FUNCTION__TIME:
         return time != null;
-      case ReflexPackage.TIMEOUT_FUNCTION__BODY:
-        return body != null;
+      case ReflexPackage.TIMEOUT_FUNCTION__STATEMENTS:
+        return statements != null && !statements.isEmpty();
     }
     return super.eIsSet(featureID);
   }

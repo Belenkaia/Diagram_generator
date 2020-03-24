@@ -922,22 +922,22 @@ ruleTimeoutFunction returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getTimeoutFunctionAccess().getBodyStatementParserRuleCall_2_0());
+					newCompositeNode(grammarAccess.getTimeoutFunctionAccess().getStatementsStatementParserRuleCall_2_0());
 				}
-				lv_body_2_0=ruleStatement
+				lv_statements_2_0=ruleStatement
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getTimeoutFunctionRule());
 					}
-					set(
+					add(
 						$current,
-						"body",
-						lv_body_2_0,
+						"statements",
+						lv_statements_2_0,
 						"ru.iaie.reflex.diagram.Reflex.Statement");
 					afterParserOrEnumRuleCall();
 				}
 			)
-		)
+		)*
 	)
 ;
 

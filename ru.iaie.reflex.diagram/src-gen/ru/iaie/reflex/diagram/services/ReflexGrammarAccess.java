@@ -484,14 +484,14 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cTimeoutKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cTimeAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cTimeTimeParserRuleCall_1_0 = (RuleCall)cTimeAssignment_1.eContents().get(0);
-		private final Assignment cBodyAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cBodyStatementParserRuleCall_2_0 = (RuleCall)cBodyAssignment_2.eContents().get(0);
+		private final Assignment cStatementsAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cStatementsStatementParserRuleCall_2_0 = (RuleCall)cStatementsAssignment_2.eContents().get(0);
 		
 		//TimeoutFunction:
-		//	"timeout" time=Time body=Statement;
+		//	"timeout" time=Time statements+=Statement*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//"timeout" time=Time body=Statement
+		//"timeout" time=Time statements+=Statement*
 		public Group getGroup() { return cGroup; }
 		
 		//"timeout"
@@ -503,11 +503,11 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		//Time
 		public RuleCall getTimeTimeParserRuleCall_1_0() { return cTimeTimeParserRuleCall_1_0; }
 		
-		//body=Statement
-		public Assignment getBodyAssignment_2() { return cBodyAssignment_2; }
+		//statements+=Statement*
+		public Assignment getStatementsAssignment_2() { return cStatementsAssignment_2; }
 		
 		//Statement
-		public RuleCall getBodyStatementParserRuleCall_2_0() { return cBodyStatementParserRuleCall_2_0; }
+		public RuleCall getStatementsStatementParserRuleCall_2_0() { return cStatementsStatementParserRuleCall_2_0; }
 	}
 	public class StatementElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.Statement");
@@ -2965,7 +2965,7 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TimeoutFunction:
-	//	"timeout" time=Time body=Statement;
+	//	"timeout" time=Time statements+=Statement*;
 	public TimeoutFunctionElements getTimeoutFunctionAccess() {
 		return pTimeoutFunction;
 	}

@@ -25,6 +25,7 @@ import ru.iaie.reflex.diagram.reflex.StartProcStat;
 import ru.iaie.reflex.diagram.reflex.State;
 import ru.iaie.reflex.diagram.reflex.Statement;
 import ru.iaie.reflex.diagram.reflex.StopProcStat;
+import ru.iaie.reflex.diagram.reflex.TimeoutFunction;
 import ru.iaie.reflex.diagram.reflex.Variable;
 
 /**
@@ -248,12 +249,26 @@ public class ReflexGenerator extends AbstractGenerator {
     for (final ru.iaie.reflex.diagram.reflex.Process process : _filter) {
       EList<State> _states = process.getStates();
       for (final State state : _states) {
-        EList<Statement> _statements = state.getStatements();
-        for (final Statement statement : _statements) {
-          {
-            ArrayList<ActiveProcess> tempProcList = null;
-            tempProcList = this.getActiveList(statement, this.procId.indexOf(process.getName()));
-            this.procList.addAll(tempProcList);
+        {
+          EList<Statement> _statements = state.getStatements();
+          for (final Statement statement : _statements) {
+            {
+              ArrayList<ActiveProcess> tempProcList = null;
+              tempProcList = this.getActiveList(statement, this.procId.indexOf(process.getName()));
+              this.procList.addAll(tempProcList);
+            }
+          }
+          TimeoutFunction _timeoutFunction = state.getTimeoutFunction();
+          boolean _tripleNotEquals = (_timeoutFunction != null);
+          if (_tripleNotEquals) {
+            EList<Statement> _statements_1 = state.getTimeoutFunction().getStatements();
+            for (final Statement timeoutFunctionStatements : _statements_1) {
+              {
+                ArrayList<ActiveProcess> tempProcList = null;
+                tempProcList = this.getActiveList(timeoutFunctionStatements, this.procId.indexOf(process.getName()));
+                this.procList.addAll(tempProcList);
+              }
+            }
           }
         }
       }

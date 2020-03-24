@@ -51,7 +51,7 @@ State:
 	"}";
 
 TimeoutFunction:
-	"timeout" time=Time body=Statement;
+	"timeout" time=Time statements+=Statement*;
 
 Statement:
 	{Statement} ";" | 

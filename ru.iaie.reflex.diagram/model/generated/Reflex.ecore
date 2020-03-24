@@ -63,8 +63,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TimeoutFunction">
     <eStructuralFeatures xsi:type="ecore:EReference" name="time" eType="#//Time" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//Statement"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="statements" upperBound="-1"
+        eType="#//Statement" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Statement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="loop" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>

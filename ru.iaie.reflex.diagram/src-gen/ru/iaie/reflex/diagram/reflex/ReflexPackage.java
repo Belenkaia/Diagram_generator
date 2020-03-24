@@ -538,13 +538,13 @@ public interface ReflexPackage extends EPackage
   int TIMEOUT_FUNCTION__TIME = 0;
 
   /**
-   * The feature id for the '<em><b>Body</b></em>' containment reference.
+   * The feature id for the '<em><b>Statements</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TIMEOUT_FUNCTION__BODY = 1;
+  int TIMEOUT_FUNCTION__STATEMENTS = 1;
 
   /**
    * The number of structural features of the '<em>Timeout Function</em>' class.
@@ -3739,15 +3739,15 @@ public interface ReflexPackage extends EPackage
   EReference getTimeoutFunction_Time();
 
   /**
-   * Returns the meta object for the containment reference '{@link ru.iaie.reflex.diagram.reflex.TimeoutFunction#getBody <em>Body</em>}'.
+   * Returns the meta object for the containment reference list '{@link ru.iaie.reflex.diagram.reflex.TimeoutFunction#getStatements <em>Statements</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Body</em>'.
-   * @see ru.iaie.reflex.diagram.reflex.TimeoutFunction#getBody()
+   * @return the meta object for the containment reference list '<em>Statements</em>'.
+   * @see ru.iaie.reflex.diagram.reflex.TimeoutFunction#getStatements()
    * @see #getTimeoutFunction()
    * @generated
    */
-  EReference getTimeoutFunction_Body();
+  EReference getTimeoutFunction_Statements();
 
   /**
    * Returns the meta object for class '{@link ru.iaie.reflex.diagram.reflex.Statement <em>Statement</em>}'.
@@ -5272,12 +5272,12 @@ public interface ReflexPackage extends EPackage
     EReference TIMEOUT_FUNCTION__TIME = eINSTANCE.getTimeoutFunction_Time();
 
     /**
-     * The meta object literal for the '<em><b>Body</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Statements</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference TIMEOUT_FUNCTION__BODY = eINSTANCE.getTimeoutFunction_Body();
+    EReference TIMEOUT_FUNCTION__STATEMENTS = eINSTANCE.getTimeoutFunction_Statements();
 
     /**
      * The meta object literal for the '{@link ru.iaie.reflex.diagram.reflex.impl.StatementImpl <em>Statement</em>}' class.

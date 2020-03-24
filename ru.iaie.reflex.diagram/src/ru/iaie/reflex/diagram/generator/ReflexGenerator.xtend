@@ -199,24 +199,24 @@ class ReflexGenerator extends AbstractGenerator {
 		{
 	         for (state : process.states) 
 	         {
-	         		for(statement: state.statements)
+	         	for(statement: state.statements) // go throw statements
+	         	{
+	         		var ArrayList<ActiveProcess> tempProcList;
+	         		tempProcList = statement.getActiveList(procId.indexOf(process.name))
+	         		procList.addAll(tempProcList)
+	         	}
+	       
+	         	if(state.timeoutFunction !== null) // go throw timeoutFunction, if it is exist for that state
+	         	{
+	         		for(timeoutFunctionStatements: state.timeoutFunction.statements)
 	         		{
 	         			var ArrayList<ActiveProcess> tempProcList;
-	         			tempProcList = statement.getActiveList(procId.indexOf(process.name))
+	         			tempProcList = timeoutFunctionStatements.getActiveList(procId.indexOf(process.name))
 	         			procList.addAll(tempProcList)
-	         			/*for (elem: tempProcList)
-	         			{
-	         				elem.setIdFrom(procId.indexOf(process.name))
-	         				if(elem.idTo == -1) //дефолтное значение стоит, если останавливает самого себя
-	         				{
-	         					elem.setIdTo(procId.indexOf(process.name)) // stopping itself
-	         				}
-	         				procList.add(elem);
-	         			}*/
-	         		}	
-	         }    
-	        }
-	        
+	         		}
+	         	}  
+	         }    	 
+	     }
 	}
 
 

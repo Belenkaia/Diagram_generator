@@ -167,7 +167,7 @@ public class ReflexParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getStateAccess().getStatementsAssignment_3(), "rule__State__StatementsAssignment_3");
 			builder.put(grammarAccess.getStateAccess().getTimeoutFunctionAssignment_4(), "rule__State__TimeoutFunctionAssignment_4");
 			builder.put(grammarAccess.getTimeoutFunctionAccess().getTimeAssignment_1(), "rule__TimeoutFunction__TimeAssignment_1");
-			builder.put(grammarAccess.getTimeoutFunctionAccess().getBodyAssignment_2(), "rule__TimeoutFunction__BodyAssignment_2");
+			builder.put(grammarAccess.getTimeoutFunctionAccess().getStatementsAssignment_2(), "rule__TimeoutFunction__StatementsAssignment_2");
 			builder.put(grammarAccess.getStatementAccess().getLoopAssignment_4_1(), "rule__Statement__LoopAssignment_4_1");
 			builder.put(grammarAccess.getStatementAccess().getRestartAssignment_5_1(), "rule__Statement__RestartAssignment_5_1");
 			builder.put(grammarAccess.getCompoundStatementAccess().getStatementsAssignment_2(), "rule__CompoundStatement__StatementsAssignment_2");
