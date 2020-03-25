@@ -12,7 +12,8 @@ class StatechartDiagramGenerator  extends GMLDiagramGenerator{
 var GMLTextGenerator gmlTextGenerator = new GMLTextGenerator()
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//
+//Input: process, to which we will generate statechart diagram
+//Output: string with statechart diagram node's for that process
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def String generateStatechartNodes(Resource resource, Process process)
 	{
@@ -20,8 +21,8 @@ var GMLTextGenerator gmlTextGenerator = new GMLTextGenerator()
 		tempString += gmlTextGenerator.generateOneProcessNode(count_id, "     ", "circle")
 		procId.add(count_id, "start_default") // запоминаем соответствие имени назначенному ему Id
 	    count_id ++
-		for (state : process.states)
-		{ //получаем список всех состояний процесса, и проходим по нему
+		for (state : process.states)//получаем список всех состояний процесса, и проходим по нему
+		{ 
 	    	tempString += gmlTextGenerator.generateOneProcessNode(count_id, state.name, "roundrectangle") 
 	    	procId.add(count_id, state.name) // запоминаем соответствие имени назначенному ему Id
 	        count_id ++
@@ -31,7 +32,7 @@ var GMLTextGenerator gmlTextGenerator = new GMLTextGenerator()
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Возвращает готовый текст statechart-диаграммы
-// 
+// Input: process, to which we will generate statechart diagram
 // Output: finished text of GML process statechart diagram
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def generateStatechartDiagram(Resource resource, Process process)
@@ -42,7 +43,7 @@ var GMLTextGenerator gmlTextGenerator = new GMLTextGenerator()
 ]'''	
 	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//
+// Build statechard diagram model as an ArrayList<ActiveProcess> (procList), where we save the relationships behind states of process
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 def generateStatechartModel(Resource resource, Process process)
@@ -53,7 +54,7 @@ def generateStatechartModel(Resource resource, Process process)
 	    	
 	         for(statement: state.statements) // go throw statements
 	         {
-	         	if(flagFirstStateInProcess)
+	         	if(flagFirstStateInProcess) // we need to put start node to diagram (such circle with edge to first state on process)
 	         	{
 	         		var ActiveProcess startNode = new ActiveProcess()
 	    			startNode.idFrom = procId.indexOf("start_default")
@@ -90,14 +91,16 @@ def dispatch ArrayList<ActiveProcess> getStatechartList(Statement statement, int
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//
+//Polymorphic method for IfElseStat, input: contextStateId which is current state id in the list procId
+//Method calls getStatechartList for 'else' and 'then' fields of statement and collecting their returns to return it
+//Output: ArrayList<ActiveProcess> which have information about relationships between states (like set next and etc)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def dispatch ArrayList<ActiveProcess> getStatechartList(IfElseStat statement, int contextStateId)
 	{
 		var ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>
 		var ArrayList<ActiveProcess> procTempThenList = statement.then.getStatechartList(contextStateId)
 		var ArrayList<ActiveProcess> procTempElseList = new ArrayList<ActiveProcess>
-		if(statement.getElse() !== null)
+		if(statement.getElse() !== null) // 'if' may be without 'else'
 			procTempElseList = statement.getElse().getStatechartList(contextStateId)
 		procTempList.addAll(procTempThenList)
 		procTempList.addAll(procTempElseList)
@@ -106,7 +109,9 @@ def dispatch ArrayList<ActiveProcess> getStatechartList(Statement statement, int
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//
+//Polymorphic method for CompoundStatement, input: contextStateId which is current state id in the list procId
+//Method calls getStatechartList for their statements and collecting their returns to return it
+//Output: ArrayList<ActiveProcess> which have information about relationships between states (like set next and etc)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def dispatch ArrayList<ActiveProcess> getStatechartList(CompoundStatement statement, int contextStateId)
 	{
@@ -120,14 +125,16 @@ def dispatch ArrayList<ActiveProcess> getStatechartList(Statement statement, int
 	}
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//
+//Polymorphic method for SetStateStat, input: contextStateId which is current state id in the list procId
+//Method returns one element of ArrayList<ActiveProcess>, which have information about which state set which state (we have their id in the procId list)
+//Output: ArrayList<ActiveProcess> which have information about relationships between states (like set next and etc)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def dispatch ArrayList<ActiveProcess> getStatechartList(SetStateStat statement, int contextStateId)
 	{
 		var ActiveProcess tempElem = new ActiveProcess()
 		var ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>;
 		tempElem.idFrom = contextStateId
-		if(statement.next)
+		if(statement.next) // we gets id to states in the order we found states in process notification, so, next state will have number id which is currentId + 1
 			tempElem.idTo = contextStateId + 1
 		else
 			tempElem.idTo = (procId.indexOf(statement.stateId))
