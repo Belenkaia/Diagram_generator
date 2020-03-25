@@ -1407,9 +1407,9 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
    * @generated
    */
   @Override
-  public EAttribute getRegister_RegSize()
+  public EReference getRegister_RegSize()
   {
-    return (EAttribute)registerEClass.getEStructuralFeatures().get(4);
+    return (EReference)registerEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -1462,9 +1462,20 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
    * @generated
    */
   @Override
+  public EAttribute getEnum_EnumId()
+  {
+    return (EAttribute)enumEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EReference getEnum_EnumMembers()
   {
-    return (EReference)enumEClass.getEStructuralFeatures().get(0);
+    return (EReference)enumEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1619,17 +1630,6 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
   public EAttribute getPrimaryExpression_VarId()
   {
     return (EAttribute)primaryExpressionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getPrimaryExpression_Literal()
-  {
-    return (EReference)primaryExpressionEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -2023,7 +2023,7 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
    * @generated
    */
   @Override
-  public EAttribute getTime_Days()
+  public EAttribute getTime_IsDay()
   {
     return (EAttribute)timeEClass.getEStructuralFeatures().get(0);
   }
@@ -2034,7 +2034,7 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
    * @generated
    */
   @Override
-  public EAttribute getTime_Hours()
+  public EAttribute getTime_Days()
   {
     return (EAttribute)timeEClass.getEStructuralFeatures().get(1);
   }
@@ -2045,7 +2045,7 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
    * @generated
    */
   @Override
-  public EAttribute getTime_Minutes()
+  public EAttribute getTime_IsHour()
   {
     return (EAttribute)timeEClass.getEStructuralFeatures().get(2);
   }
@@ -2056,42 +2056,9 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
    * @generated
    */
   @Override
-  public EAttribute getTime_Seconds()
+  public EAttribute getTime_Hours()
   {
     return (EAttribute)timeEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getTime_Milis()
-  {
-    return (EAttribute)timeEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getTime_Micros()
-  {
-    return (EAttribute)timeEClass.getEStructuralFeatures().get(5);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getTime_Nanos()
-  {
-    return (EAttribute)timeEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -2335,13 +2302,14 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
     createEAttribute(registerEClass, REGISTER__NAME);
     createEReference(registerEClass, REGISTER__ADDR1);
     createEReference(registerEClass, REGISTER__ADDR2);
-    createEAttribute(registerEClass, REGISTER__REG_SIZE);
+    createEReference(registerEClass, REGISTER__REG_SIZE);
 
     constEClass = createEClass(CONST);
     createEAttribute(constEClass, CONST__CONST_ID);
     createEReference(constEClass, CONST__CONST_VALUE);
 
     enumEClass = createEClass(ENUM);
+    createEAttribute(enumEClass, ENUM__ENUM_ID);
     createEReference(enumEClass, ENUM__ENUM_MEMBERS);
 
     enumMemberEClass = createEClass(ENUM_MEMBER);
@@ -2362,7 +2330,6 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
 
     primaryExpressionEClass = createEClass(PRIMARY_EXPRESSION);
     createEAttribute(primaryExpressionEClass, PRIMARY_EXPRESSION__VAR_ID);
-    createEReference(primaryExpressionEClass, PRIMARY_EXPRESSION__LITERAL);
 
     unaryExpressionEClass = createEClass(UNARY_EXPRESSION);
     createEAttribute(unaryExpressionEClass, UNARY_EXPRESSION__UNARY_OP);
@@ -2416,13 +2383,10 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
     createEAttribute(integerEClass, INTEGER__QUALFIER);
 
     timeEClass = createEClass(TIME);
+    createEAttribute(timeEClass, TIME__IS_DAY);
     createEAttribute(timeEClass, TIME__DAYS);
+    createEAttribute(timeEClass, TIME__IS_HOUR);
     createEAttribute(timeEClass, TIME__HOURS);
-    createEAttribute(timeEClass, TIME__MINUTES);
-    createEAttribute(timeEClass, TIME__SECONDS);
-    createEAttribute(timeEClass, TIME__MILIS);
-    createEAttribute(timeEClass, TIME__MICROS);
-    createEAttribute(timeEClass, TIME__NANOS);
 
     // Create enums
     registerTypeEEnum = createEEnum(REGISTER_TYPE);
@@ -2496,6 +2460,7 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
     logicalOrExpressionEClass.getESuperTypes().add(this.getAssignmentExpression());
     assignmentExpressionEClass.getESuperTypes().add(this.getExpression());
     cTypeEClass.getESuperTypes().add(this.getReflexType());
+    integerEClass.getESuperTypes().add(this.getPrimaryExpression());
 
     // Initialize classes and features; add operations and parameters
     initEClass(programEClass, Program.class, "Program", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -2598,13 +2563,14 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
     initEAttribute(getRegister_Name(), ecorePackage.getEString(), "name", null, 0, 1, Register.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getRegister_Addr1(), this.getInteger(), null, "addr1", null, 0, 1, Register.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getRegister_Addr2(), this.getInteger(), null, "addr2", null, 0, 1, Register.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getRegister_RegSize(), ecorePackage.getEInt(), "regSize", null, 0, 1, Register.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRegister_RegSize(), this.getInteger(), null, "regSize", null, 0, 1, Register.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(constEClass, Const.class, "Const", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getConst_ConstId(), ecorePackage.getEString(), "constId", null, 0, 1, Const.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConst_ConstValue(), this.getExpression(), null, "constValue", null, 0, 1, Const.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(enumEClass, ru.iaie.reflex.diagram.reflex.Enum.class, "Enum", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEnum_EnumId(), ecorePackage.getEString(), "enumId", null, 0, 1, ru.iaie.reflex.diagram.reflex.Enum.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getEnum_EnumMembers(), this.getEnumMember(), null, "enumMembers", null, 0, -1, ru.iaie.reflex.diagram.reflex.Enum.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(enumMemberEClass, EnumMember.class, "EnumMember", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -2625,7 +2591,6 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
 
     initEClass(primaryExpressionEClass, PrimaryExpression.class, "PrimaryExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPrimaryExpression_VarId(), ecorePackage.getEString(), "varId", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPrimaryExpression_Literal(), this.getInteger(), null, "literal", null, 0, 1, PrimaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(unaryExpressionEClass, UnaryExpression.class, "UnaryExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getUnaryExpression_UnaryOp(), this.getUnaryOp(), "unaryOp", null, 0, 1, UnaryExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2679,13 +2644,10 @@ public class ReflexPackageImpl extends EPackageImpl implements ReflexPackage
     initEAttribute(getInteger_Qualfier(), ecorePackage.getEBoolean(), "qualfier", null, 0, 1, ru.iaie.reflex.diagram.reflex.Integer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(timeEClass, Time.class, "Time", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getTime_IsDay(), ecorePackage.getEBoolean(), "isDay", null, 0, 1, Time.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTime_Days(), ecorePackage.getEString(), "days", null, 0, 1, Time.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTime_IsHour(), ecorePackage.getEBoolean(), "isHour", null, 0, 1, Time.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTime_Hours(), ecorePackage.getEString(), "hours", null, 0, 1, Time.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTime_Minutes(), ecorePackage.getEString(), "minutes", null, 0, 1, Time.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTime_Seconds(), ecorePackage.getEString(), "seconds", null, 0, 1, Time.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTime_Milis(), ecorePackage.getEString(), "milis", null, 0, 1, Time.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTime_Micros(), ecorePackage.getEString(), "micros", null, 0, 1, Time.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTime_Nanos(), ecorePackage.getEString(), "nanos", null, 0, 1, Time.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(registerTypeEEnum, RegisterType.class, "RegisterType");

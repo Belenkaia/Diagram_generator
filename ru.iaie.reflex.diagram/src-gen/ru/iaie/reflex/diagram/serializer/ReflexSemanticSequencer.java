@@ -626,7 +626,7 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Enum returns Enum
 	 *
 	 * Constraint:
-	 *     (enumMembers+=EnumMember enumMembers+=EnumMember*)
+	 *     (enumId=ID enumMembers+=EnumMember enumMembers+=EnumMember*)
 	 */
 	protected void sequence_Enum(ISerializationContext context, ru.iaie.reflex.diagram.reflex.Enum semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -731,7 +731,7 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Expression returns FunctionCall
 	 *
 	 * Constraint:
-	 *     (funcId=ID args+=Expression args+=Expression*)
+	 *     (funcId=ID (args+=Expression args+=Expression*)?)
 	 */
 	protected void sequence_FunctionCall(ISerializationContext context, FunctionCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -823,10 +823,35 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     PrimaryExpression returns Integer
+	 *     UnaryExpression returns Integer
+	 *     CastExpression returns Integer
+	 *     MultiplicativeExpression returns Integer
+	 *     MultiplicativeExpression.MultiplicativeExpression_1_0 returns Integer
+	 *     AdditiveExpression returns Integer
+	 *     AdditiveExpression.AdditiveExpression_1_0 returns Integer
+	 *     ShiftExpression returns Integer
+	 *     ShiftExpression.ShiftExpression_1_0 returns Integer
+	 *     CompareExpression returns Integer
+	 *     CompareExpression.CompareExpression_1_0 returns Integer
+	 *     EqualityExpression returns Integer
+	 *     EqualityExpression.EqualityExpression_1_0 returns Integer
+	 *     BitAndExpression returns Integer
+	 *     BitAndExpression.BitAndExpression_1_0 returns Integer
+	 *     BitXorExpression returns Integer
+	 *     BitXorExpression.BitXorExpression_1_0 returns Integer
+	 *     BitOrExpression returns Integer
+	 *     BitOrExpression.BitOrExpression_1_0 returns Integer
+	 *     LogicalAndExpression returns Integer
+	 *     LogicalAndExpression.LogicalAndExpression_1_0 returns Integer
+	 *     LogicalOrExpression returns Integer
+	 *     LogicalOrExpression.LogicalOrExpression_1_0 returns Integer
+	 *     AssignmentExpression returns Integer
+	 *     Expression returns Integer
 	 *     Integer returns Integer
 	 *
 	 * Constraint:
-	 *     ((value=DECIMAL | value=OCTAL | value=HEX) (qualfier?=LONG | qualfier?=UNSIGNED)?)
+	 *     ((value=HEX | value=OCTAL | value=DECIMAL) (qualfier?=LONG | qualfier?=UNSIGNED)?)
 	 */
 	protected void sequence_Integer(ISerializationContext context, ru.iaie.reflex.diagram.reflex.Integer semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1014,7 +1039,7 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Expression returns PrimaryExpression
 	 *
 	 * Constraint:
-	 *     (varId=ID | literal=Integer | expr=Expression)
+	 *     (varId=ID | expr=Expression)?
 	 */
 	protected void sequence_PrimaryExpression(ISerializationContext context, PrimaryExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1104,7 +1129,7 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Register returns Register
 	 *
 	 * Constraint:
-	 *     (type=RegisterType name=ID addr1=Integer addr2=Integer regSize=REG_SIZE)
+	 *     (type=RegisterType name=ID addr1=Integer addr2=Integer regSize=Integer)
 	 */
 	protected void sequence_Register(ISerializationContext context, Register semanticObject) {
 		if (errorAcceptor != null) {
@@ -1124,7 +1149,7 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 		feeder.accept(grammarAccess.getRegisterAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
 		feeder.accept(grammarAccess.getRegisterAccess().getAddr1IntegerParserRuleCall_2_0(), semanticObject.getAddr1());
 		feeder.accept(grammarAccess.getRegisterAccess().getAddr2IntegerParserRuleCall_3_0(), semanticObject.getAddr2());
-		feeder.accept(grammarAccess.getRegisterAccess().getRegSizeREG_SIZETerminalRuleCall_4_0(), semanticObject.getRegSize());
+		feeder.accept(grammarAccess.getRegisterAccess().getRegSizeIntegerParserRuleCall_4_0(), semanticObject.getRegSize());
 		feeder.finish();
 	}
 	
@@ -1257,15 +1282,7 @@ public class ReflexSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	 *     Time returns Time
 	 *
 	 * Constraint:
-	 *     (
-	 *         days=DECIMAL? 
-	 *         hours=DECIMAL? 
-	 *         minutes=DECIMAL? 
-	 *         seconds=DECIMAL? 
-	 *         milis=DECIMAL? 
-	 *         micros=DECIMAL? 
-	 *         nanos=DECIMAL?
-	 *     )
+	 *     ((isDay?=DAY days=DECIMAL)? (isHour?=HOUR hours=DECIMAL)?)
 	 */
 	protected void sequence_Time(ISerializationContext context, Time semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

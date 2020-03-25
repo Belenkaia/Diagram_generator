@@ -614,6 +614,21 @@ public class ReflexSwitch<T> extends Switch<T>
       {
         ru.iaie.reflex.diagram.reflex.Integer integer = (ru.iaie.reflex.diagram.reflex.Integer)theEObject;
         T result = caseInteger(integer);
+        if (result == null) result = casePrimaryExpression(integer);
+        if (result == null) result = caseUnaryExpression(integer);
+        if (result == null) result = caseCastExpression(integer);
+        if (result == null) result = caseMultiplicativeExpression(integer);
+        if (result == null) result = caseAdditiveExpression(integer);
+        if (result == null) result = caseShiftExpression(integer);
+        if (result == null) result = caseCompareExpression(integer);
+        if (result == null) result = caseEqualityExpression(integer);
+        if (result == null) result = caseBitAndExpression(integer);
+        if (result == null) result = caseBitXorExpression(integer);
+        if (result == null) result = caseBitOrExpression(integer);
+        if (result == null) result = caseLogicalAndExpression(integer);
+        if (result == null) result = caseLogicalOrExpression(integer);
+        if (result == null) result = caseAssignmentExpression(integer);
+        if (result == null) result = caseExpression(integer);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }

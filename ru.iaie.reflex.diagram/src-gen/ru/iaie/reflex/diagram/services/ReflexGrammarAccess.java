@@ -1115,14 +1115,14 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cAddr2Assignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cAddr2IntegerParserRuleCall_3_0 = (RuleCall)cAddr2Assignment_3.eContents().get(0);
 		private final Assignment cRegSizeAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cRegSizeREG_SIZETerminalRuleCall_4_0 = (RuleCall)cRegSizeAssignment_4.eContents().get(0);
+		private final RuleCall cRegSizeIntegerParserRuleCall_4_0 = (RuleCall)cRegSizeAssignment_4.eContents().get(0);
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//Register:
-		//	type=RegisterType name=ID addr1=Integer addr2=Integer regSize=REG_SIZE ";";
+		//	type=RegisterType name=ID addr1=Integer addr2=Integer regSize=Integer ";";
 		@Override public ParserRule getRule() { return rule; }
 		
-		//type=RegisterType name=ID addr1=Integer addr2=Integer regSize=REG_SIZE ";"
+		//type=RegisterType name=ID addr1=Integer addr2=Integer regSize=Integer ";"
 		public Group getGroup() { return cGroup; }
 		
 		//type=RegisterType
@@ -1149,11 +1149,11 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		//Integer
 		public RuleCall getAddr2IntegerParserRuleCall_3_0() { return cAddr2IntegerParserRuleCall_3_0; }
 		
-		//regSize=REG_SIZE
+		//regSize=Integer
 		public Assignment getRegSizeAssignment_4() { return cRegSizeAssignment_4; }
 		
-		//REG_SIZE
-		public RuleCall getRegSizeREG_SIZETerminalRuleCall_4_0() { return cRegSizeREG_SIZETerminalRuleCall_4_0; }
+		//Integer
+		public RuleCall getRegSizeIntegerParserRuleCall_4_0() { return cRegSizeIntegerParserRuleCall_4_0; }
 		
 		//";"
 		public Keyword getSemicolonKeyword_5() { return cSemicolonKeyword_5; }
@@ -1197,44 +1197,56 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.Enum");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cEnumKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cEnumMembersAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cEnumMembersEnumMemberParserRuleCall_1_0 = (RuleCall)cEnumMembersAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cCommaKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cEnumMembersAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cEnumMembersEnumMemberParserRuleCall_2_1_0 = (RuleCall)cEnumMembersAssignment_2_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cEnumIdAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cEnumIdIDTerminalRuleCall_1_0 = (RuleCall)cEnumIdAssignment_1.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cEnumMembersAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cEnumMembersEnumMemberParserRuleCall_3_0 = (RuleCall)cEnumMembersAssignment_3.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cCommaKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cEnumMembersAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cEnumMembersEnumMemberParserRuleCall_4_1_0 = (RuleCall)cEnumMembersAssignment_4_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//Enum:
-		//	"enum" enumMembers+=EnumMember (',' enumMembers+=EnumMember)* ";";
+		//	"enum" enumId=ID "{" enumMembers+=EnumMember (',' enumMembers+=EnumMember)* "}";
 		@Override public ParserRule getRule() { return rule; }
 		
-		//"enum" enumMembers+=EnumMember (',' enumMembers+=EnumMember)* ";"
+		//"enum" enumId=ID "{" enumMembers+=EnumMember (',' enumMembers+=EnumMember)* "}"
 		public Group getGroup() { return cGroup; }
 		
 		//"enum"
 		public Keyword getEnumKeyword_0() { return cEnumKeyword_0; }
 		
+		//enumId=ID
+		public Assignment getEnumIdAssignment_1() { return cEnumIdAssignment_1; }
+		
+		//ID
+		public RuleCall getEnumIdIDTerminalRuleCall_1_0() { return cEnumIdIDTerminalRuleCall_1_0; }
+		
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
+		
 		//enumMembers+=EnumMember
-		public Assignment getEnumMembersAssignment_1() { return cEnumMembersAssignment_1; }
+		public Assignment getEnumMembersAssignment_3() { return cEnumMembersAssignment_3; }
 		
 		//EnumMember
-		public RuleCall getEnumMembersEnumMemberParserRuleCall_1_0() { return cEnumMembersEnumMemberParserRuleCall_1_0; }
+		public RuleCall getEnumMembersEnumMemberParserRuleCall_3_0() { return cEnumMembersEnumMemberParserRuleCall_3_0; }
 		
 		//(',' enumMembers+=EnumMember)*
-		public Group getGroup_2() { return cGroup_2; }
+		public Group getGroup_4() { return cGroup_4; }
 		
 		//','
-		public Keyword getCommaKeyword_2_0() { return cCommaKeyword_2_0; }
+		public Keyword getCommaKeyword_4_0() { return cCommaKeyword_4_0; }
 		
 		//enumMembers+=EnumMember
-		public Assignment getEnumMembersAssignment_2_1() { return cEnumMembersAssignment_2_1; }
+		public Assignment getEnumMembersAssignment_4_1() { return cEnumMembersAssignment_4_1; }
 		
 		//EnumMember
-		public RuleCall getEnumMembersEnumMemberParserRuleCall_2_1_0() { return cEnumMembersEnumMemberParserRuleCall_2_1_0; }
+		public RuleCall getEnumMembersEnumMemberParserRuleCall_4_1_0() { return cEnumMembersEnumMemberParserRuleCall_4_1_0; }
 		
-		//";"
-		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
 	}
 	public class EnumMemberElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.EnumMember");
@@ -1328,19 +1340,20 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cFuncIdAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cFuncIdIDTerminalRuleCall_0_0 = (RuleCall)cFuncIdAssignment_0.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cArgsAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cArgsExpressionParserRuleCall_2_0 = (RuleCall)cArgsAssignment_2.eContents().get(0);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cCommaKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cArgsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cArgsExpressionParserRuleCall_3_1_0 = (RuleCall)cArgsAssignment_3_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Assignment cArgsAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
+		private final RuleCall cArgsExpressionParserRuleCall_2_0_0 = (RuleCall)cArgsAssignment_2_0.eContents().get(0);
+		private final Group cGroup_2_1 = (Group)cGroup_2.eContents().get(1);
+		private final Keyword cCommaKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
+		private final Assignment cArgsAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
+		private final RuleCall cArgsExpressionParserRuleCall_2_1_1_0 = (RuleCall)cArgsAssignment_2_1_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//FunctionCall:
-		//	funcId=ID "(" args+=Expression ("," args+=Expression)* ")";
+		//	funcId=ID "(" (args+=Expression ("," args+=Expression)*)? ")";
 		@Override public ParserRule getRule() { return rule; }
 		
-		//funcId=ID "(" args+=Expression ("," args+=Expression)* ")"
+		//funcId=ID "(" (args+=Expression ("," args+=Expression)*)? ")"
 		public Group getGroup() { return cGroup; }
 		
 		//funcId=ID
@@ -1352,45 +1365,50 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 		
+		//(args+=Expression ("," args+=Expression)*)?
+		public Group getGroup_2() { return cGroup_2; }
+		
 		//args+=Expression
-		public Assignment getArgsAssignment_2() { return cArgsAssignment_2; }
+		public Assignment getArgsAssignment_2_0() { return cArgsAssignment_2_0; }
 		
 		//Expression
-		public RuleCall getArgsExpressionParserRuleCall_2_0() { return cArgsExpressionParserRuleCall_2_0; }
+		public RuleCall getArgsExpressionParserRuleCall_2_0_0() { return cArgsExpressionParserRuleCall_2_0_0; }
 		
 		//("," args+=Expression)*
-		public Group getGroup_3() { return cGroup_3; }
+		public Group getGroup_2_1() { return cGroup_2_1; }
 		
 		//","
-		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
+		public Keyword getCommaKeyword_2_1_0() { return cCommaKeyword_2_1_0; }
 		
 		//args+=Expression
-		public Assignment getArgsAssignment_3_1() { return cArgsAssignment_3_1; }
+		public Assignment getArgsAssignment_2_1_1() { return cArgsAssignment_2_1_1; }
 		
 		//Expression
-		public RuleCall getArgsExpressionParserRuleCall_3_1_0() { return cArgsExpressionParserRuleCall_3_1_0; }
+		public RuleCall getArgsExpressionParserRuleCall_2_1_1_0() { return cArgsExpressionParserRuleCall_2_1_1_0; }
 		
 		//")"
-		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
 	}
 	public class PrimaryExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.PrimaryExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Assignment cVarIdAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
 		private final RuleCall cVarIdIDTerminalRuleCall_0_0 = (RuleCall)cVarIdAssignment_0.eContents().get(0);
-		private final Assignment cLiteralAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
-		private final RuleCall cLiteralIntegerParserRuleCall_1_0 = (RuleCall)cLiteralAssignment_1.eContents().get(0);
+		private final RuleCall cIntegerParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
-		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cExprAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cExprExpressionParserRuleCall_2_1_0 = (RuleCall)cExprAssignment_2_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final Action cPrimaryExpressionAction_2_0 = (Action)cGroup_2.eContents().get(0);
+		private final RuleCall cFloatParserRuleCall_2_1 = (RuleCall)cGroup_2.eContents().get(1);
+		private final Group cGroup_3 = (Group)cAlternatives.eContents().get(3);
+		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cExprAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cExprExpressionParserRuleCall_3_1_0 = (RuleCall)cExprAssignment_3_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
 		
 		//PrimaryExpression:
-		//	varId=ID | literal=Integer | "(" expr=Expression ")";
+		//	varId=ID | Integer | {PrimaryExpression} Float | "(" expr=Expression ")";
 		@Override public ParserRule getRule() { return rule; }
 		
-		//varId=ID | literal=Integer | "(" expr=Expression ")"
+		//varId=ID | Integer | {PrimaryExpression} Float | "(" expr=Expression ")"
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//varId=ID
@@ -1399,26 +1417,32 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getVarIdIDTerminalRuleCall_0_0() { return cVarIdIDTerminalRuleCall_0_0; }
 		
-		//literal=Integer
-		public Assignment getLiteralAssignment_1() { return cLiteralAssignment_1; }
-		
 		//Integer
-		public RuleCall getLiteralIntegerParserRuleCall_1_0() { return cLiteralIntegerParserRuleCall_1_0; }
+		public RuleCall getIntegerParserRuleCall_1() { return cIntegerParserRuleCall_1; }
 		
-		//"(" expr=Expression ")"
+		//{PrimaryExpression} Float
 		public Group getGroup_2() { return cGroup_2; }
 		
+		//{PrimaryExpression}
+		public Action getPrimaryExpressionAction_2_0() { return cPrimaryExpressionAction_2_0; }
+		
+		//Float
+		public RuleCall getFloatParserRuleCall_2_1() { return cFloatParserRuleCall_2_1; }
+		
+		//"(" expr=Expression ")"
+		public Group getGroup_3() { return cGroup_3; }
+		
 		//"("
-		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
+		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
 		
 		//expr=Expression
-		public Assignment getExprAssignment_2_1() { return cExprAssignment_2_1; }
+		public Assignment getExprAssignment_3_1() { return cExprAssignment_3_1; }
 		
 		//Expression
-		public RuleCall getExprExpressionParserRuleCall_2_1_0() { return cExprExpressionParserRuleCall_2_1_0; }
+		public RuleCall getExprExpressionParserRuleCall_3_1_0() { return cExprExpressionParserRuleCall_3_1_0; }
 		
 		//")"
-		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
+		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
 	}
 	public class UnaryExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.UnaryExpression");
@@ -2075,9 +2099,9 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cValueAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final Alternatives cValueAlternatives_0_0 = (Alternatives)cValueAssignment_0.eContents().get(0);
-		private final RuleCall cValueDECIMALTerminalRuleCall_0_0_0 = (RuleCall)cValueAlternatives_0_0.eContents().get(0);
+		private final RuleCall cValueHEXTerminalRuleCall_0_0_0 = (RuleCall)cValueAlternatives_0_0.eContents().get(0);
 		private final RuleCall cValueOCTALTerminalRuleCall_0_0_1 = (RuleCall)cValueAlternatives_0_0.eContents().get(1);
-		private final RuleCall cValueHEXTerminalRuleCall_0_0_2 = (RuleCall)cValueAlternatives_0_0.eContents().get(2);
+		private final RuleCall cValueDECIMALTerminalRuleCall_0_0_2 = (RuleCall)cValueAlternatives_0_0.eContents().get(2);
 		private final Assignment cQualfierAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final Alternatives cQualfierAlternatives_1_0 = (Alternatives)cQualfierAssignment_1.eContents().get(0);
 		private final RuleCall cQualfierLONGTerminalRuleCall_1_0_0 = (RuleCall)cQualfierAlternatives_1_0.eContents().get(0);
@@ -2085,26 +2109,26 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// LITERALS
 		//Integer:
-		//	value=(DECIMAL | OCTAL | HEX) qualfier?=(LONG | UNSIGNED)?;
+		//	value=(HEX | OCTAL | DECIMAL) qualfier?=(LONG | UNSIGNED)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//value=(DECIMAL | OCTAL | HEX) qualfier?=(LONG | UNSIGNED)?
+		//value=(HEX | OCTAL | DECIMAL) qualfier?=(LONG | UNSIGNED)?
 		public Group getGroup() { return cGroup; }
 		
-		//value=(DECIMAL | OCTAL | HEX)
+		//value=(HEX | OCTAL | DECIMAL)
 		public Assignment getValueAssignment_0() { return cValueAssignment_0; }
 		
-		//(DECIMAL | OCTAL | HEX)
+		//(HEX | OCTAL | DECIMAL)
 		public Alternatives getValueAlternatives_0_0() { return cValueAlternatives_0_0; }
 		
-		//DECIMAL
-		public RuleCall getValueDECIMALTerminalRuleCall_0_0_0() { return cValueDECIMALTerminalRuleCall_0_0_0; }
+		//HEX
+		public RuleCall getValueHEXTerminalRuleCall_0_0_0() { return cValueHEXTerminalRuleCall_0_0_0; }
 		
 		//OCTAL
 		public RuleCall getValueOCTALTerminalRuleCall_0_0_1() { return cValueOCTALTerminalRuleCall_0_0_1; }
 		
-		//HEX
-		public RuleCall getValueHEXTerminalRuleCall_0_0_2() { return cValueHEXTerminalRuleCall_0_0_2; }
+		//DECIMAL
+		public RuleCall getValueDECIMALTerminalRuleCall_0_0_2() { return cValueDECIMALTerminalRuleCall_0_0_2; }
 		
 		//qualfier?=(LONG | UNSIGNED)?
 		public Assignment getQualfierAssignment_1() { return cQualfierAssignment_1; }
@@ -2118,6 +2142,25 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		//UNSIGNED
 		public RuleCall getQualfierUNSIGNEDTerminalRuleCall_1_0_1() { return cQualfierUNSIGNEDTerminalRuleCall_1_0_1; }
 	}
+	public class FloatElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.Float");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cDEC_FLOATTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cHEX_FLOATTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//Float:
+		//	DEC_FLOAT | HEX_FLOAT;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//DEC_FLOAT | HEX_FLOAT
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//DEC_FLOAT
+		public RuleCall getDEC_FLOATTerminalRuleCall_0() { return cDEC_FLOATTerminalRuleCall_0; }
+		
+		//HEX_FLOAT
+		public RuleCall getHEX_FLOATTerminalRuleCall_1() { return cHEX_FLOATTerminalRuleCall_1; }
+	}
 	public class TimeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.Time");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -2126,42 +2169,22 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cTKeyword_1_0 = (Keyword)cAlternatives_1.eContents().get(0);
 		private final Keyword cTKeyword_1_1 = (Keyword)cAlternatives_1.eContents().get(1);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final RuleCall cDAYTerminalRuleCall_2_0 = (RuleCall)cGroup_2.eContents().get(0);
+		private final Assignment cIsDayAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
+		private final RuleCall cIsDayDAYTerminalRuleCall_2_0_0 = (RuleCall)cIsDayAssignment_2_0.eContents().get(0);
 		private final Assignment cDaysAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
 		private final RuleCall cDaysDECIMALTerminalRuleCall_2_1_0 = (RuleCall)cDaysAssignment_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final RuleCall cHOURTerminalRuleCall_3_0 = (RuleCall)cGroup_3.eContents().get(0);
+		private final Assignment cIsHourAssignment_3_0 = (Assignment)cGroup_3.eContents().get(0);
+		private final RuleCall cIsHourHOURTerminalRuleCall_3_0_0 = (RuleCall)cIsHourAssignment_3_0.eContents().get(0);
 		private final Assignment cHoursAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cHoursDECIMALTerminalRuleCall_3_1_0 = (RuleCall)cHoursAssignment_3_1.eContents().get(0);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final RuleCall cMINUTETerminalRuleCall_4_0 = (RuleCall)cGroup_4.eContents().get(0);
-		private final Assignment cMinutesAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cMinutesDECIMALTerminalRuleCall_4_1_0 = (RuleCall)cMinutesAssignment_4_1.eContents().get(0);
-		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final RuleCall cSECONDTerminalRuleCall_5_0 = (RuleCall)cGroup_5.eContents().get(0);
-		private final Assignment cSecondsAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
-		private final RuleCall cSecondsDECIMALTerminalRuleCall_5_1_0 = (RuleCall)cSecondsAssignment_5_1.eContents().get(0);
-		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
-		private final RuleCall cMILISECONDTerminalRuleCall_6_0 = (RuleCall)cGroup_6.eContents().get(0);
-		private final Assignment cMilisAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
-		private final RuleCall cMilisDECIMALTerminalRuleCall_6_1_0 = (RuleCall)cMilisAssignment_6_1.eContents().get(0);
-		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
-		private final RuleCall cMICROSECONDTerminalRuleCall_7_0 = (RuleCall)cGroup_7.eContents().get(0);
-		private final Assignment cMicrosAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
-		private final RuleCall cMicrosDECIMALTerminalRuleCall_7_1_0 = (RuleCall)cMicrosAssignment_7_1.eContents().get(0);
-		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
-		private final RuleCall cNANOSECONDTerminalRuleCall_8_0 = (RuleCall)cGroup_8.eContents().get(0);
-		private final Assignment cNanosAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
-		private final RuleCall cNanosDECIMALTerminalRuleCall_8_1_0 = (RuleCall)cNanosAssignment_8_1.eContents().get(0);
 		
 		//// Time
 		//Time:
-		//	{Time} ("0t" | "0T") (DAY days=DECIMAL)? (HOUR hours=DECIMAL)? (MINUTE minutes=DECIMAL)? (SECOND seconds=DECIMAL)?
-		//	(MILISECOND milis=DECIMAL)? (MICROSECOND micros=DECIMAL)? (NANOSECOND nanos=DECIMAL)?;
+		//	{Time} ("0t" | "0T") (isDay?=DAY days=DECIMAL)? (isHour?=HOUR hours=DECIMAL)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{Time} ("0t" | "0T") (DAY days=DECIMAL)? (HOUR hours=DECIMAL)? (MINUTE minutes=DECIMAL)? (SECOND seconds=DECIMAL)?
-		//(MILISECOND milis=DECIMAL)? (MICROSECOND micros=DECIMAL)? (NANOSECOND nanos=DECIMAL)?
+		//{Time} ("0t" | "0T") (isDay?=DAY days=DECIMAL)? (isHour?=HOUR hours=DECIMAL)?
 		public Group getGroup() { return cGroup; }
 		
 		//{Time}
@@ -2176,11 +2199,14 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		//"0T"
 		public Keyword getTKeyword_1_1() { return cTKeyword_1_1; }
 		
-		//(DAY days=DECIMAL)?
+		//(isDay?=DAY days=DECIMAL)?
 		public Group getGroup_2() { return cGroup_2; }
 		
+		//isDay?=DAY
+		public Assignment getIsDayAssignment_2_0() { return cIsDayAssignment_2_0; }
+		
 		//DAY
-		public RuleCall getDAYTerminalRuleCall_2_0() { return cDAYTerminalRuleCall_2_0; }
+		public RuleCall getIsDayDAYTerminalRuleCall_2_0_0() { return cIsDayDAYTerminalRuleCall_2_0_0; }
 		
 		//days=DECIMAL
 		public Assignment getDaysAssignment_2_1() { return cDaysAssignment_2_1; }
@@ -2188,77 +2214,20 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		//DECIMAL
 		public RuleCall getDaysDECIMALTerminalRuleCall_2_1_0() { return cDaysDECIMALTerminalRuleCall_2_1_0; }
 		
-		//(HOUR hours=DECIMAL)?
+		//(isHour?=HOUR hours=DECIMAL)?
 		public Group getGroup_3() { return cGroup_3; }
 		
+		//isHour?=HOUR
+		public Assignment getIsHourAssignment_3_0() { return cIsHourAssignment_3_0; }
+		
 		//HOUR
-		public RuleCall getHOURTerminalRuleCall_3_0() { return cHOURTerminalRuleCall_3_0; }
+		public RuleCall getIsHourHOURTerminalRuleCall_3_0_0() { return cIsHourHOURTerminalRuleCall_3_0_0; }
 		
 		//hours=DECIMAL
 		public Assignment getHoursAssignment_3_1() { return cHoursAssignment_3_1; }
 		
 		//DECIMAL
 		public RuleCall getHoursDECIMALTerminalRuleCall_3_1_0() { return cHoursDECIMALTerminalRuleCall_3_1_0; }
-		
-		//(MINUTE minutes=DECIMAL)?
-		public Group getGroup_4() { return cGroup_4; }
-		
-		//MINUTE
-		public RuleCall getMINUTETerminalRuleCall_4_0() { return cMINUTETerminalRuleCall_4_0; }
-		
-		//minutes=DECIMAL
-		public Assignment getMinutesAssignment_4_1() { return cMinutesAssignment_4_1; }
-		
-		//DECIMAL
-		public RuleCall getMinutesDECIMALTerminalRuleCall_4_1_0() { return cMinutesDECIMALTerminalRuleCall_4_1_0; }
-		
-		//(SECOND seconds=DECIMAL)?
-		public Group getGroup_5() { return cGroup_5; }
-		
-		//SECOND
-		public RuleCall getSECONDTerminalRuleCall_5_0() { return cSECONDTerminalRuleCall_5_0; }
-		
-		//seconds=DECIMAL
-		public Assignment getSecondsAssignment_5_1() { return cSecondsAssignment_5_1; }
-		
-		//DECIMAL
-		public RuleCall getSecondsDECIMALTerminalRuleCall_5_1_0() { return cSecondsDECIMALTerminalRuleCall_5_1_0; }
-		
-		//(MILISECOND milis=DECIMAL)?
-		public Group getGroup_6() { return cGroup_6; }
-		
-		//MILISECOND
-		public RuleCall getMILISECONDTerminalRuleCall_6_0() { return cMILISECONDTerminalRuleCall_6_0; }
-		
-		//milis=DECIMAL
-		public Assignment getMilisAssignment_6_1() { return cMilisAssignment_6_1; }
-		
-		//DECIMAL
-		public RuleCall getMilisDECIMALTerminalRuleCall_6_1_0() { return cMilisDECIMALTerminalRuleCall_6_1_0; }
-		
-		//(MICROSECOND micros=DECIMAL)?
-		public Group getGroup_7() { return cGroup_7; }
-		
-		//MICROSECOND
-		public RuleCall getMICROSECONDTerminalRuleCall_7_0() { return cMICROSECONDTerminalRuleCall_7_0; }
-		
-		//micros=DECIMAL
-		public Assignment getMicrosAssignment_7_1() { return cMicrosAssignment_7_1; }
-		
-		//DECIMAL
-		public RuleCall getMicrosDECIMALTerminalRuleCall_7_1_0() { return cMicrosDECIMALTerminalRuleCall_7_1_0; }
-		
-		//(NANOSECOND nanos=DECIMAL)?
-		public Group getGroup_8() { return cGroup_8; }
-		
-		//NANOSECOND
-		public RuleCall getNANOSECONDTerminalRuleCall_8_0() { return cNANOSECONDTerminalRuleCall_8_0; }
-		
-		//nanos=DECIMAL
-		public Assignment getNanosAssignment_8_1() { return cNanosAssignment_8_1; }
-		
-		//DECIMAL
-		public RuleCall getNanosDECIMALTerminalRuleCall_8_1_0() { return cNanosDECIMALTerminalRuleCall_8_1_0; }
 	}
 	
 	public class RegisterTypeElements extends AbstractEnumRuleElementFinder {
@@ -2713,12 +2682,21 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 	private final TerminalRule tBOOL_TYPE;
 	private final TerminalRule tTACT;
 	private final IntegerElements pInteger;
-	private final TerminalRule tREG_SIZE;
+	private final FloatElements pFloat;
+	private final TerminalRule tDEC_FLOAT;
+	private final TerminalRule tHEX_FLOAT;
+	private final TerminalRule tDEC_SEQUENCE;
+	private final TerminalRule tHEX_SEQUENCE;
+	private final TerminalRule tBIN_EXPONENT;
+	private final TerminalRule tEXPONENT;
+	private final TerminalRule tSIGN;
 	private final TerminalRule tDECIMAL;
 	private final TerminalRule tOCTAL;
 	private final TerminalRule tHEX;
+	private final TerminalRule tHEX_PREFIX;
 	private final TimeElements pTime;
 	private final TerminalRule tLONG;
+	private final TerminalRule tFLOAT_SUFFIX;
 	private final TerminalRule tUNSIGNED;
 	private final TerminalRule tDAY;
 	private final TerminalRule tHOUR;
@@ -2812,12 +2790,21 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		this.tBOOL_TYPE = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.BOOL_TYPE");
 		this.tTACT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.TACT");
 		this.pInteger = new IntegerElements();
-		this.tREG_SIZE = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.REG_SIZE");
+		this.pFloat = new FloatElements();
+		this.tDEC_FLOAT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.DEC_FLOAT");
+		this.tHEX_FLOAT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.HEX_FLOAT");
+		this.tDEC_SEQUENCE = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.DEC_SEQUENCE");
+		this.tHEX_SEQUENCE = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.HEX_SEQUENCE");
+		this.tBIN_EXPONENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.BIN_EXPONENT");
+		this.tEXPONENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.EXPONENT");
+		this.tSIGN = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.SIGN");
 		this.tDECIMAL = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.DECIMAL");
 		this.tOCTAL = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.OCTAL");
 		this.tHEX = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.HEX");
+		this.tHEX_PREFIX = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.HEX_PREFIX");
 		this.pTime = new TimeElements();
 		this.tLONG = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.LONG");
+		this.tFLOAT_SUFFIX = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.FLOAT_SUFFIX");
 		this.tUNSIGNED = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.UNSIGNED");
 		this.tDAY = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.DAY");
 		this.tHOUR = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ru.iaie.reflex.diagram.Reflex.HOUR");
@@ -3139,7 +3126,7 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Register:
-	//	type=RegisterType name=ID addr1=Integer addr2=Integer regSize=REG_SIZE ";";
+	//	type=RegisterType name=ID addr1=Integer addr2=Integer regSize=Integer ";";
 	public RegisterElements getRegisterAccess() {
 		return pRegister;
 	}
@@ -3159,7 +3146,7 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Enum:
-	//	"enum" enumMembers+=EnumMember (',' enumMembers+=EnumMember)* ";";
+	//	"enum" enumId=ID "{" enumMembers+=EnumMember (',' enumMembers+=EnumMember)* "}";
 	public EnumElements getEnumAccess() {
 		return pEnum;
 	}
@@ -3200,7 +3187,7 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//FunctionCall:
-	//	funcId=ID "(" args+=Expression ("," args+=Expression)* ")";
+	//	funcId=ID "(" (args+=Expression ("," args+=Expression)*)? ")";
 	public FunctionCallElements getFunctionCallAccess() {
 		return pFunctionCall;
 	}
@@ -3210,7 +3197,7 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//PrimaryExpression:
-	//	varId=ID | literal=Integer | "(" expr=Expression ")";
+	//	varId=ID | Integer | {PrimaryExpression} Float | "(" expr=Expression ")";
 	public PrimaryExpressionElements getPrimaryExpressionAccess() {
 		return pPrimaryExpression;
 	}
@@ -3562,7 +3549,7 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// LITERALS
 	//Integer:
-	//	value=(DECIMAL | OCTAL | HEX) qualfier?=(LONG | UNSIGNED)?;
+	//	value=(HEX | OCTAL | DECIMAL) qualfier?=(LONG | UNSIGNED)?;
 	public IntegerElements getIntegerAccess() {
 		return pInteger;
 	}
@@ -3571,34 +3558,85 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 		return getIntegerAccess().getRule();
 	}
 	
-	//terminal REG_SIZE returns ecore::EInt:
-	//	"8" | "16";
-	public TerminalRule getREG_SIZERule() {
-		return tREG_SIZE;
+	//Float:
+	//	DEC_FLOAT | HEX_FLOAT;
+	public FloatElements getFloatAccess() {
+		return pFloat;
+	}
+	
+	public ParserRule getFloatRule() {
+		return getFloatAccess().getRule();
+	}
+	
+	//terminal DEC_FLOAT:
+	//	DEC_SEQUENCE? '.' DEC_SEQUENCE (EXPONENT SIGN DEC_SEQUENCE)? (LONG | FLOAT_SUFFIX)?;
+	public TerminalRule getDEC_FLOATRule() {
+		return tDEC_FLOAT;
+	}
+	
+	//terminal HEX_FLOAT:
+	//	HEX_SEQUENCE? '.' HEX_SEQUENCE (BIN_EXPONENT SIGN DEC_SEQUENCE)? (LONG | FLOAT_SUFFIX)?;
+	public TerminalRule getHEX_FLOATRule() {
+		return tHEX_FLOAT;
+	}
+	
+	//terminal DEC_SEQUENCE:
+	//	'0'..'9'+;
+	public TerminalRule getDEC_SEQUENCERule() {
+		return tDEC_SEQUENCE;
+	}
+	
+	//terminal HEX_SEQUENCE:
+	//	'0'..'9' | 'a'..'f' | 'A'..'F'+;
+	public TerminalRule getHEX_SEQUENCERule() {
+		return tHEX_SEQUENCE;
+	}
+	
+	//terminal BIN_EXPONENT:
+	//	'p' | 'P';
+	public TerminalRule getBIN_EXPONENTRule() {
+		return tBIN_EXPONENT;
+	}
+	
+	//terminal EXPONENT:
+	//	'e' | 'E';
+	public TerminalRule getEXPONENTRule() {
+		return tEXPONENT;
+	}
+	
+	//terminal SIGN:
+	//	'+' | '-';
+	public TerminalRule getSIGNRule() {
+		return tSIGN;
 	}
 	
 	//terminal DECIMAL:
-	//	'1'..'9' '0'..'9'*;
+	//	"0" | '1'..'9' '0'..'9'*;
 	public TerminalRule getDECIMALRule() {
 		return tDECIMAL;
 	}
 	
 	//terminal OCTAL:
-	//	'0' '0'..'7'*;
+	//	'0' '0'..'7'+;
 	public TerminalRule getOCTALRule() {
 		return tOCTAL;
 	}
 	
 	//terminal HEX:
-	//	'0' ('x' | 'X') ('0'..'9' | 'a'..'f' | 'A'..'F')+;
+	//	HEX_PREFIX HEX_SEQUENCE;
 	public TerminalRule getHEXRule() {
 		return tHEX;
 	}
 	
+	//terminal HEX_PREFIX:
+	//	'0' ('x' | 'X');
+	public TerminalRule getHEX_PREFIXRule() {
+		return tHEX_PREFIX;
+	}
+	
 	//// Time
 	//Time:
-	//	{Time} ("0t" | "0T") (DAY days=DECIMAL)? (HOUR hours=DECIMAL)? (MINUTE minutes=DECIMAL)? (SECOND seconds=DECIMAL)?
-	//	(MILISECOND milis=DECIMAL)? (MICROSECOND micros=DECIMAL)? (NANOSECOND nanos=DECIMAL)?;
+	//	{Time} ("0t" | "0T") (isDay?=DAY days=DECIMAL)? (isHour?=HOUR hours=DECIMAL)?;
 	public TimeElements getTimeAccess() {
 		return pTime;
 	}
@@ -3611,6 +3649,12 @@ public class ReflexGrammarAccess extends AbstractGrammarElementFinder {
 	//	"L" | "l";
 	public TerminalRule getLONGRule() {
 		return tLONG;
+	}
+	
+	//terminal FLOAT_SUFFIX:
+	//	"F" | "f";
+	public TerminalRule getFLOAT_SUFFIXRule() {
+		return tFLOAT_SUFFIX;
 	}
 	
 	//terminal UNSIGNED:

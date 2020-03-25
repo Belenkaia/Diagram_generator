@@ -1934,19 +1934,20 @@ ruleRegister returns [EObject current=null]
 		)
 		(
 			(
-				lv_regSize_4_0=RULE_REG_SIZE
 				{
-					newLeafNode(lv_regSize_4_0, grammarAccess.getRegisterAccess().getRegSizeREG_SIZETerminalRuleCall_4_0());
+					newCompositeNode(grammarAccess.getRegisterAccess().getRegSizeIntegerParserRuleCall_4_0());
 				}
+				lv_regSize_4_0=ruleInteger
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getRegisterRule());
+						$current = createModelElementForParent(grammarAccess.getRegisterRule());
 					}
-					setWithLastConsumed(
+					set(
 						$current,
 						"regSize",
 						lv_regSize_4_0,
-						"ru.iaie.reflex.diagram.Reflex.REG_SIZE");
+						"ru.iaie.reflex.diagram.Reflex.Integer");
+					afterParserOrEnumRuleCall();
 				}
 			)
 		)
@@ -2043,10 +2044,32 @@ ruleEnum returns [EObject current=null]
 		}
 		(
 			(
+				lv_enumId_1_0=RULE_ID
 				{
-					newCompositeNode(grammarAccess.getEnumAccess().getEnumMembersEnumMemberParserRuleCall_1_0());
+					newLeafNode(lv_enumId_1_0, grammarAccess.getEnumAccess().getEnumIdIDTerminalRuleCall_1_0());
 				}
-				lv_enumMembers_1_0=ruleEnumMember
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getEnumRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"enumId",
+						lv_enumId_1_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
+			)
+		)
+		otherlv_2='{'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getEnumAccess().getLeftCurlyBracketKeyword_2());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getEnumAccess().getEnumMembersEnumMemberParserRuleCall_3_0());
+				}
+				lv_enumMembers_3_0=ruleEnumMember
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getEnumRule());
@@ -2054,23 +2077,23 @@ ruleEnum returns [EObject current=null]
 					add(
 						$current,
 						"enumMembers",
-						lv_enumMembers_1_0,
+						lv_enumMembers_3_0,
 						"ru.iaie.reflex.diagram.Reflex.EnumMember");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
 		(
-			otherlv_2=','
+			otherlv_4=','
 			{
-				newLeafNode(otherlv_2, grammarAccess.getEnumAccess().getCommaKeyword_2_0());
+				newLeafNode(otherlv_4, grammarAccess.getEnumAccess().getCommaKeyword_4_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getEnumAccess().getEnumMembersEnumMemberParserRuleCall_2_1_0());
+						newCompositeNode(grammarAccess.getEnumAccess().getEnumMembersEnumMemberParserRuleCall_4_1_0());
 					}
-					lv_enumMembers_3_0=ruleEnumMember
+					lv_enumMembers_5_0=ruleEnumMember
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getEnumRule());
@@ -2078,16 +2101,16 @@ ruleEnum returns [EObject current=null]
 						add(
 							$current,
 							"enumMembers",
-							lv_enumMembers_3_0,
+							lv_enumMembers_5_0,
 							"ru.iaie.reflex.diagram.Reflex.EnumMember");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 		)*
-		otherlv_4=';'
+		otherlv_6='}'
 		{
-			newLeafNode(otherlv_4, grammarAccess.getEnumAccess().getSemicolonKeyword_3());
+			newLeafNode(otherlv_6, grammarAccess.getEnumAccess().getRightCurlyBracketKeyword_5());
 		}
 	)
 ;
@@ -2304,34 +2327,11 @@ ruleFunctionCall returns [EObject current=null]
 		}
 		(
 			(
-				{
-					newCompositeNode(grammarAccess.getFunctionCallAccess().getArgsExpressionParserRuleCall_2_0());
-				}
-				lv_args_2_0=ruleExpression
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getFunctionCallRule());
-					}
-					add(
-						$current,
-						"args",
-						lv_args_2_0,
-						"ru.iaie.reflex.diagram.Reflex.Expression");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		(
-			otherlv_3=','
-			{
-				newLeafNode(otherlv_3, grammarAccess.getFunctionCallAccess().getCommaKeyword_3_0());
-			}
-			(
 				(
 					{
-						newCompositeNode(grammarAccess.getFunctionCallAccess().getArgsExpressionParserRuleCall_3_1_0());
+						newCompositeNode(grammarAccess.getFunctionCallAccess().getArgsExpressionParserRuleCall_2_0_0());
 					}
-					lv_args_4_0=ruleExpression
+					lv_args_2_0=ruleExpression
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getFunctionCallRule());
@@ -2339,16 +2339,41 @@ ruleFunctionCall returns [EObject current=null]
 						add(
 							$current,
 							"args",
-							lv_args_4_0,
+							lv_args_2_0,
 							"ru.iaie.reflex.diagram.Reflex.Expression");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
-		)*
+			(
+				otherlv_3=','
+				{
+					newLeafNode(otherlv_3, grammarAccess.getFunctionCallAccess().getCommaKeyword_2_1_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getFunctionCallAccess().getArgsExpressionParserRuleCall_2_1_1_0());
+						}
+						lv_args_4_0=ruleExpression
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getFunctionCallRule());
+							}
+							add(
+								$current,
+								"args",
+								lv_args_4_0,
+								"ru.iaie.reflex.diagram.Reflex.Expression");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+		)?
 		otherlv_5=')'
 		{
-			newLeafNode(otherlv_5, grammarAccess.getFunctionCallAccess().getRightParenthesisKeyword_4());
+			newLeafNode(otherlv_5, grammarAccess.getFunctionCallAccess().getRightParenthesisKeyword_3());
 		}
 	)
 ;
@@ -2388,37 +2413,43 @@ rulePrimaryExpression returns [EObject current=null]
 			)
 		)
 		    |
+		{
+			newCompositeNode(grammarAccess.getPrimaryExpressionAccess().getIntegerParserRuleCall_1());
+		}
+		this_Integer_1=ruleInteger
+		{
+			$current = $this_Integer_1.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getPrimaryExpressionAccess().getLiteralIntegerParserRuleCall_1_0());
-				}
-				lv_literal_1_0=ruleInteger
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getPrimaryExpressionRule());
-					}
-					set(
-						$current,
-						"literal",
-						lv_literal_1_0,
-						"ru.iaie.reflex.diagram.Reflex.Integer");
-					afterParserOrEnumRuleCall();
+					$current = forceCreateModelElement(
+						grammarAccess.getPrimaryExpressionAccess().getPrimaryExpressionAction_2_0(),
+						$current);
 				}
 			)
+			{
+				newCompositeNode(grammarAccess.getPrimaryExpressionAccess().getFloatParserRuleCall_2_1());
+			}
+			ruleFloat
+			{
+				afterParserOrEnumRuleCall();
+			}
 		)
 		    |
 		(
-			otherlv_2='('
+			otherlv_4='('
 			{
-				newLeafNode(otherlv_2, grammarAccess.getPrimaryExpressionAccess().getLeftParenthesisKeyword_2_0());
+				newLeafNode(otherlv_4, grammarAccess.getPrimaryExpressionAccess().getLeftParenthesisKeyword_3_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getPrimaryExpressionAccess().getExprExpressionParserRuleCall_2_1_0());
+						newCompositeNode(grammarAccess.getPrimaryExpressionAccess().getExprExpressionParserRuleCall_3_1_0());
 					}
-					lv_expr_3_0=ruleExpression
+					lv_expr_5_0=ruleExpression
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getPrimaryExpressionRule());
@@ -2426,15 +2457,15 @@ rulePrimaryExpression returns [EObject current=null]
 						set(
 							$current,
 							"expr",
-							lv_expr_3_0,
+							lv_expr_5_0,
 							"ru.iaie.reflex.diagram.Reflex.Expression");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
-			otherlv_4=')'
+			otherlv_6=')'
 			{
-				newLeafNode(otherlv_4, grammarAccess.getPrimaryExpressionAccess().getRightParenthesisKeyword_2_2());
+				newLeafNode(otherlv_6, grammarAccess.getPrimaryExpressionAccess().getRightParenthesisKeyword_3_2());
 			}
 		)
 	)
@@ -3602,9 +3633,9 @@ ruleInteger returns [EObject current=null]
 		(
 			(
 				(
-					lv_value_0_1=RULE_DECIMAL
+					lv_value_0_1=RULE_HEX
 					{
-						newLeafNode(lv_value_0_1, grammarAccess.getIntegerAccess().getValueDECIMALTerminalRuleCall_0_0_0());
+						newLeafNode(lv_value_0_1, grammarAccess.getIntegerAccess().getValueHEXTerminalRuleCall_0_0_0());
 					}
 					{
 						if ($current==null) {
@@ -3614,7 +3645,7 @@ ruleInteger returns [EObject current=null]
 							$current,
 							"value",
 							lv_value_0_1,
-							"ru.iaie.reflex.diagram.Reflex.DECIMAL");
+							"ru.iaie.reflex.diagram.Reflex.HEX");
 					}
 					    |
 					lv_value_0_2=RULE_OCTAL
@@ -3632,9 +3663,9 @@ ruleInteger returns [EObject current=null]
 							"ru.iaie.reflex.diagram.Reflex.OCTAL");
 					}
 					    |
-					lv_value_0_3=RULE_HEX
+					lv_value_0_3=RULE_DECIMAL
 					{
-						newLeafNode(lv_value_0_3, grammarAccess.getIntegerAccess().getValueHEXTerminalRuleCall_0_0_2());
+						newLeafNode(lv_value_0_3, grammarAccess.getIntegerAccess().getValueDECIMALTerminalRuleCall_0_0_2());
 					}
 					{
 						if ($current==null) {
@@ -3644,7 +3675,7 @@ ruleInteger returns [EObject current=null]
 							$current,
 							"value",
 							lv_value_0_3,
-							"ru.iaie.reflex.diagram.Reflex.HEX");
+							"ru.iaie.reflex.diagram.Reflex.DECIMAL");
 					}
 				)
 			)
@@ -3687,6 +3718,40 @@ ruleInteger returns [EObject current=null]
 	)
 ;
 
+// Entry rule entryRuleFloat
+entryRuleFloat returns [String current=null]:
+	{ newCompositeNode(grammarAccess.getFloatRule()); }
+	iv_ruleFloat=ruleFloat
+	{ $current=$iv_ruleFloat.current.getText(); }
+	EOF;
+
+// Rule Float
+ruleFloat returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		this_DEC_FLOAT_0=RULE_DEC_FLOAT
+		{
+			$current.merge(this_DEC_FLOAT_0);
+		}
+		{
+			newLeafNode(this_DEC_FLOAT_0, grammarAccess.getFloatAccess().getDEC_FLOATTerminalRuleCall_0());
+		}
+		    |
+		this_HEX_FLOAT_1=RULE_HEX_FLOAT
+		{
+			$current.merge(this_HEX_FLOAT_1);
+		}
+		{
+			newLeafNode(this_HEX_FLOAT_1, grammarAccess.getFloatAccess().getHEX_FLOATTerminalRuleCall_1());
+		}
+	)
+;
+
 // Entry rule entryRuleTime
 entryRuleTime returns [EObject current=null]:
 	{ newCompositeNode(grammarAccess.getTimeRule()); }
@@ -3722,10 +3787,24 @@ ruleTime returns [EObject current=null]
 			}
 		)
 		(
-			this_DAY_3=RULE_DAY
-			{
-				newLeafNode(this_DAY_3, grammarAccess.getTimeAccess().getDAYTerminalRuleCall_2_0());
-			}
+			(
+				(
+					lv_isDay_3_0=RULE_DAY
+					{
+						newLeafNode(lv_isDay_3_0, grammarAccess.getTimeAccess().getIsDayDAYTerminalRuleCall_2_0_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getTimeRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"isDay",
+							true,
+							"ru.iaie.reflex.diagram.Reflex.DAY");
+					}
+				)
+			)
 			(
 				(
 					lv_days_4_0=RULE_DECIMAL
@@ -3746,10 +3825,24 @@ ruleTime returns [EObject current=null]
 			)
 		)?
 		(
-			this_HOUR_5=RULE_HOUR
-			{
-				newLeafNode(this_HOUR_5, grammarAccess.getTimeAccess().getHOURTerminalRuleCall_3_0());
-			}
+			(
+				(
+					lv_isHour_5_0=RULE_HOUR
+					{
+						newLeafNode(lv_isHour_5_0, grammarAccess.getTimeAccess().getIsHourHOURTerminalRuleCall_3_0_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getTimeRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"isHour",
+							true,
+							"ru.iaie.reflex.diagram.Reflex.HOUR");
+					}
+				)
+			)
 			(
 				(
 					lv_hours_6_0=RULE_DECIMAL
@@ -3764,126 +3857,6 @@ ruleTime returns [EObject current=null]
 							$current,
 							"hours",
 							lv_hours_6_0,
-							"ru.iaie.reflex.diagram.Reflex.DECIMAL");
-					}
-				)
-			)
-		)?
-		(
-			this_MINUTE_7=RULE_MINUTE
-			{
-				newLeafNode(this_MINUTE_7, grammarAccess.getTimeAccess().getMINUTETerminalRuleCall_4_0());
-			}
-			(
-				(
-					lv_minutes_8_0=RULE_DECIMAL
-					{
-						newLeafNode(lv_minutes_8_0, grammarAccess.getTimeAccess().getMinutesDECIMALTerminalRuleCall_4_1_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getTimeRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"minutes",
-							lv_minutes_8_0,
-							"ru.iaie.reflex.diagram.Reflex.DECIMAL");
-					}
-				)
-			)
-		)?
-		(
-			this_SECOND_9=RULE_SECOND
-			{
-				newLeafNode(this_SECOND_9, grammarAccess.getTimeAccess().getSECONDTerminalRuleCall_5_0());
-			}
-			(
-				(
-					lv_seconds_10_0=RULE_DECIMAL
-					{
-						newLeafNode(lv_seconds_10_0, grammarAccess.getTimeAccess().getSecondsDECIMALTerminalRuleCall_5_1_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getTimeRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"seconds",
-							lv_seconds_10_0,
-							"ru.iaie.reflex.diagram.Reflex.DECIMAL");
-					}
-				)
-			)
-		)?
-		(
-			this_MILISECOND_11=RULE_MILISECOND
-			{
-				newLeafNode(this_MILISECOND_11, grammarAccess.getTimeAccess().getMILISECONDTerminalRuleCall_6_0());
-			}
-			(
-				(
-					lv_milis_12_0=RULE_DECIMAL
-					{
-						newLeafNode(lv_milis_12_0, grammarAccess.getTimeAccess().getMilisDECIMALTerminalRuleCall_6_1_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getTimeRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"milis",
-							lv_milis_12_0,
-							"ru.iaie.reflex.diagram.Reflex.DECIMAL");
-					}
-				)
-			)
-		)?
-		(
-			this_MICROSECOND_13=RULE_MICROSECOND
-			{
-				newLeafNode(this_MICROSECOND_13, grammarAccess.getTimeAccess().getMICROSECONDTerminalRuleCall_7_0());
-			}
-			(
-				(
-					lv_micros_14_0=RULE_DECIMAL
-					{
-						newLeafNode(lv_micros_14_0, grammarAccess.getTimeAccess().getMicrosDECIMALTerminalRuleCall_7_1_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getTimeRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"micros",
-							lv_micros_14_0,
-							"ru.iaie.reflex.diagram.Reflex.DECIMAL");
-					}
-				)
-			)
-		)?
-		(
-			this_NANOSECOND_15=RULE_NANOSECOND
-			{
-				newLeafNode(this_NANOSECOND_15, grammarAccess.getTimeAccess().getNANOSECONDTerminalRuleCall_8_0());
-			}
-			(
-				(
-					lv_nanos_16_0=RULE_DECIMAL
-					{
-						newLeafNode(lv_nanos_16_0, grammarAccess.getTimeAccess().getNanosDECIMALTerminalRuleCall_8_1_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getTimeRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"nanos",
-							lv_nanos_16_0,
 							"ru.iaie.reflex.diagram.Reflex.DECIMAL");
 					}
 				)
@@ -4292,15 +4265,31 @@ RULE_BOOL_TYPE : 'bool';
 
 RULE_TACT : 'tact';
 
-RULE_REG_SIZE : ('8'|'16');
+RULE_DEC_FLOAT : RULE_DEC_SEQUENCE? '.' RULE_DEC_SEQUENCE (RULE_EXPONENT RULE_SIGN RULE_DEC_SEQUENCE)? (RULE_LONG|RULE_FLOAT_SUFFIX)?;
 
-RULE_DECIMAL : '1'..'9' ('0'..'9')*;
+RULE_HEX_FLOAT : RULE_HEX_SEQUENCE? '.' RULE_HEX_SEQUENCE (RULE_BIN_EXPONENT RULE_SIGN RULE_DEC_SEQUENCE)? (RULE_LONG|RULE_FLOAT_SUFFIX)?;
 
-RULE_OCTAL : '0' ('0'..'7')*;
+fragment RULE_DEC_SEQUENCE : ('0'..'9')+;
 
-RULE_HEX : '0' ('x'|'X') ('0'..'9'|'a'..'f'|'A'..'F')+;
+fragment RULE_HEX_SEQUENCE : ('0'..'9'|'a'..'f'|'A'..'F')+;
+
+fragment RULE_BIN_EXPONENT : ('p'|'P');
+
+fragment RULE_EXPONENT : ('e'|'E');
+
+fragment RULE_SIGN : ('+'|'-');
+
+RULE_DECIMAL : ('0'|'1'..'9' ('0'..'9')*);
+
+RULE_OCTAL : '0' ('0'..'7')+;
+
+RULE_HEX : RULE_HEX_PREFIX RULE_HEX_SEQUENCE;
+
+fragment RULE_HEX_PREFIX : '0' ('x'|'X');
 
 RULE_LONG : ('L'|'l');
+
+fragment RULE_FLOAT_SUFFIX : ('F'|'f');
 
 RULE_UNSIGNED : ('U'|'u');
 

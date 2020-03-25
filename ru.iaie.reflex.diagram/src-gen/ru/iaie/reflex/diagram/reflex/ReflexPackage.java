@@ -1163,7 +1163,7 @@ public interface ReflexPackage extends EPackage
   int REGISTER__ADDR2 = 3;
 
   /**
-   * The feature id for the '<em><b>Reg Size</b></em>' attribute.
+   * The feature id for the '<em><b>Reg Size</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1228,13 +1228,22 @@ public interface ReflexPackage extends EPackage
   int ENUM = 25;
 
   /**
+   * The feature id for the '<em><b>Enum Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENUM__ENUM_ID = 0;
+
+  /**
    * The feature id for the '<em><b>Enum Members</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ENUM__ENUM_MEMBERS = 0;
+  int ENUM__ENUM_MEMBERS = 1;
 
   /**
    * The number of structural features of the '<em>Enum</em>' class.
@@ -1243,7 +1252,7 @@ public interface ReflexPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ENUM_FEATURE_COUNT = 1;
+  int ENUM_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link ru.iaie.reflex.diagram.reflex.impl.EnumMemberImpl <em>Enum Member</em>}' class.
@@ -3047,22 +3056,13 @@ public interface ReflexPackage extends EPackage
   int PRIMARY_EXPRESSION__VAR_ID = UNARY_EXPRESSION_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Literal</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PRIMARY_EXPRESSION__LITERAL = UNARY_EXPRESSION_FEATURE_COUNT + 1;
-
-  /**
    * The number of structural features of the '<em>Primary Expression</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PRIMARY_EXPRESSION_FEATURE_COUNT = UNARY_EXPRESSION_FEATURE_COUNT + 2;
+  int PRIMARY_EXPRESSION_FEATURE_COUNT = UNARY_EXPRESSION_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link ru.iaie.reflex.diagram.reflex.impl.ReflexTypeImpl <em>Type</em>}' class.
@@ -3122,13 +3122,148 @@ public interface ReflexPackage extends EPackage
   int INTEGER = 47;
 
   /**
+   * The feature id for the '<em><b>Assign Var</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTEGER__ASSIGN_VAR = PRIMARY_EXPRESSION__ASSIGN_VAR;
+
+  /**
+   * The feature id for the '<em><b>Assign Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTEGER__ASSIGN_OP = PRIMARY_EXPRESSION__ASSIGN_OP;
+
+  /**
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTEGER__EXPR = PRIMARY_EXPRESSION__EXPR;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTEGER__LEFT = PRIMARY_EXPRESSION__LEFT;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTEGER__RIGHT = PRIMARY_EXPRESSION__RIGHT;
+
+  /**
+   * The feature id for the '<em><b>Eq Cmp Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTEGER__EQ_CMP_OP = PRIMARY_EXPRESSION__EQ_CMP_OP;
+
+  /**
+   * The feature id for the '<em><b>Cmp Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTEGER__CMP_OP = PRIMARY_EXPRESSION__CMP_OP;
+
+  /**
+   * The feature id for the '<em><b>Shift Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTEGER__SHIFT_OP = PRIMARY_EXPRESSION__SHIFT_OP;
+
+  /**
+   * The feature id for the '<em><b>Add Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTEGER__ADD_OP = PRIMARY_EXPRESSION__ADD_OP;
+
+  /**
+   * The feature id for the '<em><b>Rightt</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTEGER__RIGHTT = PRIMARY_EXPRESSION__RIGHTT;
+
+  /**
+   * The feature id for the '<em><b>Mul Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTEGER__MUL_OP = PRIMARY_EXPRESSION__MUL_OP;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTEGER__TYPE = PRIMARY_EXPRESSION__TYPE;
+
+  /**
+   * The feature id for the '<em><b>Unary Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTEGER__UNARY_OP = PRIMARY_EXPRESSION__UNARY_OP;
+
+  /**
+   * The feature id for the '<em><b>Rest</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTEGER__REST = PRIMARY_EXPRESSION__REST;
+
+  /**
+   * The feature id for the '<em><b>Var Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INTEGER__VAR_ID = PRIMARY_EXPRESSION__VAR_ID;
+
+  /**
    * The feature id for the '<em><b>Value</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INTEGER__VALUE = 0;
+  int INTEGER__VALUE = PRIMARY_EXPRESSION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Qualfier</b></em>' attribute.
@@ -3137,7 +3272,7 @@ public interface ReflexPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INTEGER__QUALFIER = 1;
+  int INTEGER__QUALFIER = PRIMARY_EXPRESSION_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Integer</em>' class.
@@ -3146,7 +3281,7 @@ public interface ReflexPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INTEGER_FEATURE_COUNT = 2;
+  int INTEGER_FEATURE_COUNT = PRIMARY_EXPRESSION_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link ru.iaie.reflex.diagram.reflex.impl.TimeImpl <em>Time</em>}' class.
@@ -3159,13 +3294,31 @@ public interface ReflexPackage extends EPackage
   int TIME = 48;
 
   /**
+   * The feature id for the '<em><b>Is Day</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TIME__IS_DAY = 0;
+
+  /**
    * The feature id for the '<em><b>Days</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TIME__DAYS = 0;
+  int TIME__DAYS = 1;
+
+  /**
+   * The feature id for the '<em><b>Is Hour</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TIME__IS_HOUR = 2;
 
   /**
    * The feature id for the '<em><b>Hours</b></em>' attribute.
@@ -3174,52 +3327,7 @@ public interface ReflexPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TIME__HOURS = 1;
-
-  /**
-   * The feature id for the '<em><b>Minutes</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TIME__MINUTES = 2;
-
-  /**
-   * The feature id for the '<em><b>Seconds</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TIME__SECONDS = 3;
-
-  /**
-   * The feature id for the '<em><b>Milis</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TIME__MILIS = 4;
-
-  /**
-   * The feature id for the '<em><b>Micros</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TIME__MICROS = 5;
-
-  /**
-   * The feature id for the '<em><b>Nanos</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TIME__NANOS = 6;
+  int TIME__HOURS = 3;
 
   /**
    * The number of structural features of the '<em>Time</em>' class.
@@ -3228,7 +3336,7 @@ public interface ReflexPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TIME_FEATURE_COUNT = 7;
+  int TIME_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link ru.iaie.reflex.diagram.reflex.RegisterType <em>Register Type</em>}' enum.
@@ -4155,15 +4263,15 @@ public interface ReflexPackage extends EPackage
   EReference getRegister_Addr2();
 
   /**
-   * Returns the meta object for the attribute '{@link ru.iaie.reflex.diagram.reflex.Register#getRegSize <em>Reg Size</em>}'.
+   * Returns the meta object for the containment reference '{@link ru.iaie.reflex.diagram.reflex.Register#getRegSize <em>Reg Size</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Reg Size</em>'.
+   * @return the meta object for the containment reference '<em>Reg Size</em>'.
    * @see ru.iaie.reflex.diagram.reflex.Register#getRegSize()
    * @see #getRegister()
    * @generated
    */
-  EAttribute getRegister_RegSize();
+  EReference getRegister_RegSize();
 
   /**
    * Returns the meta object for class '{@link ru.iaie.reflex.diagram.reflex.Const <em>Const</em>}'.
@@ -4206,6 +4314,17 @@ public interface ReflexPackage extends EPackage
    * @generated
    */
   EClass getEnum();
+
+  /**
+   * Returns the meta object for the attribute '{@link ru.iaie.reflex.diagram.reflex.Enum#getEnumId <em>Enum Id</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Enum Id</em>'.
+   * @see ru.iaie.reflex.diagram.reflex.Enum#getEnumId()
+   * @see #getEnum()
+   * @generated
+   */
+  EAttribute getEnum_EnumId();
 
   /**
    * Returns the meta object for the containment reference list '{@link ru.iaie.reflex.diagram.reflex.Enum#getEnumMembers <em>Enum Members</em>}'.
@@ -4366,17 +4485,6 @@ public interface ReflexPackage extends EPackage
    * @generated
    */
   EAttribute getPrimaryExpression_VarId();
-
-  /**
-   * Returns the meta object for the containment reference '{@link ru.iaie.reflex.diagram.reflex.PrimaryExpression#getLiteral <em>Literal</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Literal</em>'.
-   * @see ru.iaie.reflex.diagram.reflex.PrimaryExpression#getLiteral()
-   * @see #getPrimaryExpression()
-   * @generated
-   */
-  EReference getPrimaryExpression_Literal();
 
   /**
    * Returns the meta object for class '{@link ru.iaie.reflex.diagram.reflex.UnaryExpression <em>Unary Expression</em>}'.
@@ -4746,6 +4854,17 @@ public interface ReflexPackage extends EPackage
   EClass getTime();
 
   /**
+   * Returns the meta object for the attribute '{@link ru.iaie.reflex.diagram.reflex.Time#isIsDay <em>Is Day</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Is Day</em>'.
+   * @see ru.iaie.reflex.diagram.reflex.Time#isIsDay()
+   * @see #getTime()
+   * @generated
+   */
+  EAttribute getTime_IsDay();
+
+  /**
    * Returns the meta object for the attribute '{@link ru.iaie.reflex.diagram.reflex.Time#getDays <em>Days</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -4757,6 +4876,17 @@ public interface ReflexPackage extends EPackage
   EAttribute getTime_Days();
 
   /**
+   * Returns the meta object for the attribute '{@link ru.iaie.reflex.diagram.reflex.Time#isIsHour <em>Is Hour</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Is Hour</em>'.
+   * @see ru.iaie.reflex.diagram.reflex.Time#isIsHour()
+   * @see #getTime()
+   * @generated
+   */
+  EAttribute getTime_IsHour();
+
+  /**
    * Returns the meta object for the attribute '{@link ru.iaie.reflex.diagram.reflex.Time#getHours <em>Hours</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -4766,61 +4896,6 @@ public interface ReflexPackage extends EPackage
    * @generated
    */
   EAttribute getTime_Hours();
-
-  /**
-   * Returns the meta object for the attribute '{@link ru.iaie.reflex.diagram.reflex.Time#getMinutes <em>Minutes</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Minutes</em>'.
-   * @see ru.iaie.reflex.diagram.reflex.Time#getMinutes()
-   * @see #getTime()
-   * @generated
-   */
-  EAttribute getTime_Minutes();
-
-  /**
-   * Returns the meta object for the attribute '{@link ru.iaie.reflex.diagram.reflex.Time#getSeconds <em>Seconds</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Seconds</em>'.
-   * @see ru.iaie.reflex.diagram.reflex.Time#getSeconds()
-   * @see #getTime()
-   * @generated
-   */
-  EAttribute getTime_Seconds();
-
-  /**
-   * Returns the meta object for the attribute '{@link ru.iaie.reflex.diagram.reflex.Time#getMilis <em>Milis</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Milis</em>'.
-   * @see ru.iaie.reflex.diagram.reflex.Time#getMilis()
-   * @see #getTime()
-   * @generated
-   */
-  EAttribute getTime_Milis();
-
-  /**
-   * Returns the meta object for the attribute '{@link ru.iaie.reflex.diagram.reflex.Time#getMicros <em>Micros</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Micros</em>'.
-   * @see ru.iaie.reflex.diagram.reflex.Time#getMicros()
-   * @see #getTime()
-   * @generated
-   */
-  EAttribute getTime_Micros();
-
-  /**
-   * Returns the meta object for the attribute '{@link ru.iaie.reflex.diagram.reflex.Time#getNanos <em>Nanos</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Nanos</em>'.
-   * @see ru.iaie.reflex.diagram.reflex.Time#getNanos()
-   * @see #getTime()
-   * @generated
-   */
-  EAttribute getTime_Nanos();
 
   /**
    * Returns the meta object for enum '{@link ru.iaie.reflex.diagram.reflex.RegisterType <em>Register Type</em>}'.
@@ -5610,12 +5685,12 @@ public interface ReflexPackage extends EPackage
     EReference REGISTER__ADDR2 = eINSTANCE.getRegister_Addr2();
 
     /**
-     * The meta object literal for the '<em><b>Reg Size</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Reg Size</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute REGISTER__REG_SIZE = eINSTANCE.getRegister_RegSize();
+    EReference REGISTER__REG_SIZE = eINSTANCE.getRegister_RegSize();
 
     /**
      * The meta object literal for the '{@link ru.iaie.reflex.diagram.reflex.impl.ConstImpl <em>Const</em>}' class.
@@ -5652,6 +5727,14 @@ public interface ReflexPackage extends EPackage
      * @generated
      */
     EClass ENUM = eINSTANCE.getEnum();
+
+    /**
+     * The meta object literal for the '<em><b>Enum Id</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ENUM__ENUM_ID = eINSTANCE.getEnum_EnumId();
 
     /**
      * The meta object literal for the '<em><b>Enum Members</b></em>' containment reference list feature.
@@ -5782,14 +5865,6 @@ public interface ReflexPackage extends EPackage
      * @generated
      */
     EAttribute PRIMARY_EXPRESSION__VAR_ID = eINSTANCE.getPrimaryExpression_VarId();
-
-    /**
-     * The meta object literal for the '<em><b>Literal</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PRIMARY_EXPRESSION__LITERAL = eINSTANCE.getPrimaryExpression_Literal();
 
     /**
      * The meta object literal for the '{@link ru.iaie.reflex.diagram.reflex.impl.UnaryExpressionImpl <em>Unary Expression</em>}' class.
@@ -6108,6 +6183,14 @@ public interface ReflexPackage extends EPackage
     EClass TIME = eINSTANCE.getTime();
 
     /**
+     * The meta object literal for the '<em><b>Is Day</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TIME__IS_DAY = eINSTANCE.getTime_IsDay();
+
+    /**
      * The meta object literal for the '<em><b>Days</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -6116,52 +6199,20 @@ public interface ReflexPackage extends EPackage
     EAttribute TIME__DAYS = eINSTANCE.getTime_Days();
 
     /**
+     * The meta object literal for the '<em><b>Is Hour</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TIME__IS_HOUR = eINSTANCE.getTime_IsHour();
+
+    /**
      * The meta object literal for the '<em><b>Hours</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EAttribute TIME__HOURS = eINSTANCE.getTime_Hours();
-
-    /**
-     * The meta object literal for the '<em><b>Minutes</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute TIME__MINUTES = eINSTANCE.getTime_Minutes();
-
-    /**
-     * The meta object literal for the '<em><b>Seconds</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute TIME__SECONDS = eINSTANCE.getTime_Seconds();
-
-    /**
-     * The meta object literal for the '<em><b>Milis</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute TIME__MILIS = eINSTANCE.getTime_Milis();
-
-    /**
-     * The meta object literal for the '<em><b>Micros</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute TIME__MICROS = eINSTANCE.getTime_Micros();
-
-    /**
-     * The meta object literal for the '<em><b>Nanos</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute TIME__NANOS = eINSTANCE.getTime_Nanos();
 
     /**
      * The meta object literal for the '{@link ru.iaie.reflex.diagram.reflex.RegisterType <em>Register Type</em>}' enum.

@@ -53,6 +53,8 @@ public class ReflexSyntacticSequencer extends AbstractSyntacticSequencer {
 			return getDOUBLE_C_TYPEToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getFLOAT_C_TYPERule())
 			return getFLOAT_C_TYPEToken(semanticObject, ruleCall, node);
+		else if (ruleCall.getRule() == grammarAccess.getFloatRule())
+			return getFloatToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getHOURRule())
 			return getHOURToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getIDRule())
@@ -69,18 +71,8 @@ public class ReflexSyntacticSequencer extends AbstractSyntacticSequencer {
 			return getLONG_C_TYPEToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getLoopStatRule())
 			return getLoopStatToken(semanticObject, ruleCall, node);
-		else if (ruleCall.getRule() == grammarAccess.getMICROSECONDRule())
-			return getMICROSECONDToken(semanticObject, ruleCall, node);
-		else if (ruleCall.getRule() == grammarAccess.getMILISECONDRule())
-			return getMILISECONDToken(semanticObject, ruleCall, node);
-		else if (ruleCall.getRule() == grammarAccess.getMINUTERule())
-			return getMINUTEToken(semanticObject, ruleCall, node);
-		else if (ruleCall.getRule() == grammarAccess.getNANOSECONDRule())
-			return getNANOSECONDToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getRestartStatRule())
 			return getRestartStatToken(semanticObject, ruleCall, node);
-		else if (ruleCall.getRule() == grammarAccess.getSECONDRule())
-			return getSECONDToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getSHORT_C_TYPERule())
 			return getSHORT_C_TYPEToken(semanticObject, ruleCall, node);
 		else if (ruleCall.getRule() == grammarAccess.getTACTRule())
@@ -184,6 +176,16 @@ public class ReflexSyntacticSequencer extends AbstractSyntacticSequencer {
 	}
 	
 	/**
+	 * Float:
+	 * 	DEC_FLOAT | HEX_FLOAT;
+	 */
+	protected String getFloatToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return ".";
+	}
+	
+	/**
 	 * terminal HOUR:
 	 * 	"H" | "h";
 	 */
@@ -263,46 +265,6 @@ public class ReflexSyntacticSequencer extends AbstractSyntacticSequencer {
 	}
 	
 	/**
-	 * terminal MICROSECOND:
-	 * 	"US" | "us";
-	 */
-	protected String getMICROSECONDToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "US";
-	}
-	
-	/**
-	 * terminal MILISECOND:
-	 * 	"MS" | "ms";
-	 */
-	protected String getMILISECONDToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "MS";
-	}
-	
-	/**
-	 * terminal MINUTE:
-	 * 	"M" | "m";
-	 */
-	protected String getMINUTEToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "M";
-	}
-	
-	/**
-	 * terminal NANOSECOND:
-	 * 	"NS" | "ns";
-	 */
-	protected String getNANOSECONDToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "NS";
-	}
-	
-	/**
 	 * RestartStat:
 	 * 	"restart" ";";
 	 */
@@ -310,16 +272,6 @@ public class ReflexSyntacticSequencer extends AbstractSyntacticSequencer {
 		if (node != null)
 			return getTokenText(node);
 		return "restart ;";
-	}
-	
-	/**
-	 * terminal SECOND:
-	 * 	"S" | "s";
-	 */
-	protected String getSECONDToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "S";
 	}
 	
 	/**
@@ -413,13 +365,8 @@ public class ReflexSyntacticSequencer extends AbstractSyntacticSequencer {
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) (rule start)
-	 *     (rule start) (ambiguity) DAY days=DECIMAL
-	 *     (rule start) (ambiguity) HOUR hours=DECIMAL
-	 *     (rule start) (ambiguity) MICROSECOND micros=DECIMAL
-	 *     (rule start) (ambiguity) MILISECOND milis=DECIMAL
-	 *     (rule start) (ambiguity) MINUTE minutes=DECIMAL
-	 *     (rule start) (ambiguity) NANOSECOND nanos=DECIMAL
-	 *     (rule start) (ambiguity) SECOND seconds=DECIMAL
+	 *     (rule start) (ambiguity) isDay?=DAY
+	 *     (rule start) (ambiguity) isHour?=HOUR
 	 */
 	protected void emit_Time_TKeyword_1_0_or_TKeyword_1_1(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

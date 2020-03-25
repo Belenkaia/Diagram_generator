@@ -116,13 +116,13 @@ enum RegisterType:
 	INPUT='input' | OUTPUT='output';
 
 Register:
-	type=RegisterType name=ID addr1=Integer addr2=Integer regSize=REG_SIZE ";";
+	type=RegisterType name=ID addr1=Integer addr2=Integer regSize=Integer ";";
 
 Const:
 	"const" constId=ID constValue=Expression ";";
 
 Enum:
-	"enum" enumMembers+=EnumMember (',' enumMembers+=EnumMember)* ";";
+	"enum" enumId=ID "{" enumMembers+=EnumMember (',' enumMembers+=EnumMember)* "}";
 
 EnumMember:
 	name=ID "=" value=Expression;
@@ -135,10 +135,10 @@ PostfixOp:
 	varId=ID op=InfixPostfixOp;
 
 FunctionCall:
-	funcId=ID "(" args+=Expression ("," args+=Expression)* ")";
+	funcId=ID "(" (args+=Expression ("," args+=Expression)*)? ")";
 
 PrimaryExpression:
-	varId=ID | literal=Integer | "(" expr=Expression ")";
+	varId=ID | Integer | {PrimaryExpression} Float | "(" expr=Expression ")";
 
 UnaryExpression:
 	PrimaryExpression |
@@ -268,27 +268,54 @@ terminal TACT:
 
 	// LITERALS
 Integer:
-	value=(DECIMAL | OCTAL | HEX) qualfier?=(LONG | UNSIGNED)?;
+	value=(HEX | OCTAL | DECIMAL) qualfier?=(LONG | UNSIGNED)?;
 
-terminal REG_SIZE returns ecore::EInt:
-	("8" | "16");
+Float:
+	DEC_FLOAT | HEX_FLOAT;
 
+terminal DEC_FLOAT:
+	DEC_SEQUENCE? '.' DEC_SEQUENCE (EXPONENT SIGN DEC_SEQUENCE)? (LONG | FLOAT_SUFFIX)?;
+
+terminal HEX_FLOAT:
+	HEX_SEQUENCE? '.' HEX_SEQUENCE (BIN_EXPONENT SIGN DEC_SEQUENCE)? (LONG | FLOAT_SUFFIX)?;
+
+terminal DEC_SEQUENCE:
+	('0'..'9')+;
+
+terminal HEX_SEQUENCE:
+	('0'..'9' | 'a'..'f' | 'A'..'F')+;
+
+terminal BIN_EXPONENT:
+	('p' | 'P');
+
+terminal EXPONENT:
+	'e' | 'E';
+
+terminal SIGN:
+	'+' | '-';
+
+	//terminal REG_SIZE returns ecore::EInt:
+//	("8" | "16");
 terminal DECIMAL:
-	('1'..'9') ('0'..'9')*;
+	"0" | ('1'..'9') ('0'..'9')*;
 
 terminal OCTAL:
-	'0' ('0'..'7')*;
+	'0' ('0'..'7')+;
 
 terminal HEX:
-	'0' ('x' | 'X') ('0'..'9' | 'a'..'f' | 'A'..'F')+;
+	HEX_PREFIX HEX_SEQUENCE;
+
+terminal HEX_PREFIX:
+	'0' ('x' | 'X');
 
 	// Time
 Time:
-	{Time} ("0t" | "0T") (DAY days=DECIMAL)? (HOUR hours=DECIMAL)? (MINUTE minutes=DECIMAL)? (SECOND seconds=DECIMAL)?
-	(MILISECOND milis=DECIMAL)? (MICROSECOND micros=DECIMAL)? (NANOSECOND nanos=DECIMAL)?;
-
+	{Time} ("0t" | "0T") (isDay?=DAY (days=DECIMAL))? (isHour?=HOUR (hours=DECIMAL))?; //(MINUTE minutes=DECIMAL)?(SECOND seconds=DECIMAL)?(MILISECOND milis=DECIMAL)?(MICROSECOND micros=DECIMAL)?(NANOSECOND nanos=DECIMAL)?;
 terminal LONG:
 	"L" | "l";
+
+terminal FLOAT_SUFFIX:
+	"F" | "f";
 
 terminal UNSIGNED:
 	"U" | "u";
