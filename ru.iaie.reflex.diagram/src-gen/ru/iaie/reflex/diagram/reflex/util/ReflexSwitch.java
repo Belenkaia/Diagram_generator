@@ -50,6 +50,7 @@ import ru.iaie.reflex.diagram.reflex.State;
 import ru.iaie.reflex.diagram.reflex.Statement;
 import ru.iaie.reflex.diagram.reflex.StopProcStat;
 import ru.iaie.reflex.diagram.reflex.SwitchStat;
+import ru.iaie.reflex.diagram.reflex.Tact;
 import ru.iaie.reflex.diagram.reflex.Time;
 import ru.iaie.reflex.diagram.reflex.TimeoutFunction;
 import ru.iaie.reflex.diagram.reflex.UnaryExpression;
@@ -610,25 +611,10 @@ public class ReflexSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case ReflexPackage.INTEGER:
+      case ReflexPackage.TACT:
       {
-        ru.iaie.reflex.diagram.reflex.Integer integer = (ru.iaie.reflex.diagram.reflex.Integer)theEObject;
-        T result = caseInteger(integer);
-        if (result == null) result = casePrimaryExpression(integer);
-        if (result == null) result = caseUnaryExpression(integer);
-        if (result == null) result = caseCastExpression(integer);
-        if (result == null) result = caseMultiplicativeExpression(integer);
-        if (result == null) result = caseAdditiveExpression(integer);
-        if (result == null) result = caseShiftExpression(integer);
-        if (result == null) result = caseCompareExpression(integer);
-        if (result == null) result = caseEqualityExpression(integer);
-        if (result == null) result = caseBitAndExpression(integer);
-        if (result == null) result = caseBitXorExpression(integer);
-        if (result == null) result = caseBitOrExpression(integer);
-        if (result == null) result = caseLogicalAndExpression(integer);
-        if (result == null) result = caseLogicalOrExpression(integer);
-        if (result == null) result = caseAssignmentExpression(integer);
-        if (result == null) result = caseExpression(integer);
+        Tact tact = (Tact)theEObject;
+        T result = caseTact(tact);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -1396,17 +1382,17 @@ public class ReflexSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Integer</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Tact</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Integer</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Tact</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseInteger(ru.iaie.reflex.diagram.reflex.Integer object)
+  public T caseTact(Tact object)
   {
     return null;
   }

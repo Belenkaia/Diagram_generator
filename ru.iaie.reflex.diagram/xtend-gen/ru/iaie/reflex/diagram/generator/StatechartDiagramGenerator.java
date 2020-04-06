@@ -87,7 +87,9 @@ public class StatechartDiagramGenerator extends GMLDiagramGenerator {
           EList<Statement> _statements_1 = state.getTimeoutFunction().getStatements();
           for (final Statement timeoutFunctionStatements : _statements_1) {
             {
-              String contextLabel = ("(Timeout [ time = " + " ]");
+              String _ticks = state.getTimeoutFunction().getTime().getTicks();
+              String _plus = ("(Timeout [ time = " + _ticks);
+              String contextLabel = (_plus + " ]");
               ArrayList<ActiveProcess> tempProcList = null;
               tempProcList = this.getStatechartList(timeoutFunctionStatements, this.procId.indexOf(state.getName()), contextLabel);
               this.procList.addAll(tempProcList);

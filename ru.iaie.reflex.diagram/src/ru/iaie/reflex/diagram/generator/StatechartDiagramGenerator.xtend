@@ -73,7 +73,7 @@ def generateStatechartModel(Resource resource, Process process)
 	         {
 	         	for(timeoutFunctionStatements: state.timeoutFunction.statements)
 	        	{
-	        		var String contextLabel = "(Timeout [ time = " /* + state.timeoutFunction.time*/ + " ]"
+	        		var String contextLabel = "(Timeout [ time = "  + state.timeoutFunction.time.ticks + " ]"
 	        		var ArrayList<ActiveProcess> tempProcList;
 	        		tempProcList = timeoutFunctionStatements.getStatechartList(procId.indexOf(state.name), contextLabel)
 	        		procList.addAll(tempProcList)

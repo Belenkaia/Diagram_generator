@@ -64,6 +64,7 @@ import ru.iaie.reflex.diagram.reflex.State;
 import ru.iaie.reflex.diagram.reflex.Statement;
 import ru.iaie.reflex.diagram.reflex.StopProcStat;
 import ru.iaie.reflex.diagram.reflex.SwitchStat;
+import ru.iaie.reflex.diagram.reflex.Tact;
 import ru.iaie.reflex.diagram.reflex.Time;
 import ru.iaie.reflex.diagram.reflex.TimeoutFunction;
 import ru.iaie.reflex.diagram.reflex.UnaryExpression;
@@ -170,7 +171,7 @@ public class ReflexFactoryImpl extends EFactoryImpl implements ReflexFactory
       case ReflexPackage.EXPRESSION: return createExpression();
       case ReflexPackage.CTYPE: return createCType();
       case ReflexPackage.REFLEX_TYPE: return createReflexType();
-      case ReflexPackage.INTEGER: return createInteger();
+      case ReflexPackage.TACT: return createTact();
       case ReflexPackage.TIME: return createTime();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -817,10 +818,10 @@ public class ReflexFactoryImpl extends EFactoryImpl implements ReflexFactory
    * @generated
    */
   @Override
-  public ru.iaie.reflex.diagram.reflex.Integer createInteger()
+  public Tact createTact()
   {
-    IntegerImpl integer = new IntegerImpl();
-    return integer;
+    TactImpl tact = new TactImpl();
+    return tact;
   }
 
   /**

@@ -105,19 +105,20 @@ ruleProgram returns [EObject current=null]
 		}
 		(
 			(
-				lv_ticks_3_0=RULE_TACT
 				{
-					newLeafNode(lv_ticks_3_0, grammarAccess.getProgramAccess().getTicksTACTTerminalRuleCall_3_0());
+					newCompositeNode(grammarAccess.getProgramAccess().getTicksTactParserRuleCall_3_0());
 				}
+				lv_ticks_3_0=ruleTact
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getProgramRule());
+						$current = createModelElementForParent(grammarAccess.getProgramRule());
 					}
-					setWithLastConsumed(
+					set(
 						$current,
 						"ticks",
 						true,
-						"ru.iaie.reflex.diagram.Reflex.TACT");
+						"ru.iaie.reflex.diagram.Reflex.Tact");
+					afterParserOrEnumRuleCall();
 				}
 			)
 		)?
@@ -332,29 +333,29 @@ ruleVariable returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		{
-			newCompositeNode(grammarAccess.getVariableAccess().getImportedVariableParserRuleCall_0());
-		}
-		this_ImportedVariable_0=ruleImportedVariable
-		{
-			$current = $this_ImportedVariable_0.current;
-			afterParserOrEnumRuleCall();
-		}
-		    |
 		(
 			{
-				newCompositeNode(grammarAccess.getVariableAccess().getDeclaredVariableParserRuleCall_1_0());
+				newCompositeNode(grammarAccess.getVariableAccess().getImportedVariableParserRuleCall_0_0());
+			}
+			this_ImportedVariable_0=ruleImportedVariable
+			{
+				$current = $this_ImportedVariable_0.current;
+				afterParserOrEnumRuleCall();
+			}
+			    |
+			{
+				newCompositeNode(grammarAccess.getVariableAccess().getDeclaredVariableParserRuleCall_0_1());
 			}
 			this_DeclaredVariable_1=ruleDeclaredVariable
 			{
 				$current = $this_DeclaredVariable_1.current;
 				afterParserOrEnumRuleCall();
 			}
-			otherlv_2=';'
-			{
-				newLeafNode(otherlv_2, grammarAccess.getVariableAccess().getSemicolonKeyword_1_1());
-			}
 		)
+		otherlv_2=';'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getVariableAccess().getSemicolonKeyword_1());
+		}
 	)
 ;
 
@@ -416,6 +417,30 @@ ruleImportedVariable returns [EObject current=null]
 						lv_varNames_3_0,
 						"org.eclipse.xtext.common.Terminals.ID");
 				}
+			)
+		)
+		(
+			otherlv_4=','
+			{
+				newLeafNode(otherlv_4, grammarAccess.getImportedVariableAccess().getCommaKeyword_4_0());
+			}
+			(
+				(
+					lv_varNames_5_0=RULE_ID
+					{
+						newLeafNode(lv_varNames_5_0, grammarAccess.getImportedVariableAccess().getVarNamesIDTerminalRuleCall_4_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getImportedVariableRule());
+						}
+						addWithLastConsumed(
+							$current,
+							"varNames",
+							lv_varNames_5_0,
+							"org.eclipse.xtext.common.Terminals.ID");
+					}
+				)
 			)
 		)*
 	)
@@ -630,20 +655,19 @@ ruleRegisterPort returns [EObject current=null]
 		}
 		(
 			(
+				lv_port_2_0=RULE_INTEGER
 				{
-					newCompositeNode(grammarAccess.getRegisterPortAccess().getPortIntegerParserRuleCall_2_0());
+					newLeafNode(lv_port_2_0, grammarAccess.getRegisterPortAccess().getPortINTEGERTerminalRuleCall_2_0());
 				}
-				lv_port_2_0=ruleInteger
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getRegisterPortRule());
+						$current = createModelElement(grammarAccess.getRegisterPortRule());
 					}
-					set(
+					setWithLastConsumed(
 						$current,
 						"port",
 						lv_port_2_0,
-						"ru.iaie.reflex.diagram.Reflex.Integer");
-					afterParserOrEnumRuleCall();
+						"ru.iaie.reflex.diagram.Reflex.INTEGER");
 				}
 			)
 		)
@@ -787,6 +811,30 @@ ruleVisibility returns [EObject current=null]
 							lv_sharingProcs_3_0,
 							"org.eclipse.xtext.common.Terminals.ID");
 					}
+				)
+			)
+			(
+				otherlv_4=','
+				{
+					newLeafNode(otherlv_4, grammarAccess.getVisibilityAccess().getCommaKeyword_2_2_0());
+				}
+				(
+					(
+						lv_sharingProcs_5_0=RULE_ID
+						{
+							newLeafNode(lv_sharingProcs_5_0, grammarAccess.getVisibilityAccess().getSharingProcsIDTerminalRuleCall_2_2_1_0());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getVisibilityRule());
+							}
+							addWithLastConsumed(
+								$current,
+								"sharingProcs",
+								lv_sharingProcs_5_0,
+								"org.eclipse.xtext.common.Terminals.ID");
+						}
+					)
 				)
 			)*
 		)
@@ -1394,20 +1442,19 @@ ruleCaseStat returns [EObject current=null]
 		}
 		(
 			(
+				lv_option_1_0=RULE_INTEGER
 				{
-					newCompositeNode(grammarAccess.getCaseStatAccess().getOptionIntegerParserRuleCall_1_0());
+					newLeafNode(lv_option_1_0, grammarAccess.getCaseStatAccess().getOptionINTEGERTerminalRuleCall_1_0());
 				}
-				lv_option_1_0=ruleInteger
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getCaseStatRule());
+						$current = createModelElement(grammarAccess.getCaseStatRule());
 					}
-					set(
+					setWithLastConsumed(
 						$current,
 						"option",
 						lv_option_1_0,
-						"ru.iaie.reflex.diagram.Reflex.Integer");
-					afterParserOrEnumRuleCall();
+						"ru.iaie.reflex.diagram.Reflex.INTEGER");
 				}
 			)
 		)
@@ -1435,15 +1482,57 @@ ruleCaseStat returns [EObject current=null]
 			)
 		)
 		(
-			otherlv_4='break'
-			{
-				newLeafNode(otherlv_4, grammarAccess.getCaseStatAccess().getBreakKeyword_4_0());
-			}
-			otherlv_5=';'
-			{
-				newLeafNode(otherlv_5, grammarAccess.getCaseStatAccess().getSemicolonKeyword_4_1());
-			}
+			(
+				{
+					newCompositeNode(grammarAccess.getCaseStatAccess().getHasBreakBreakStatParserRuleCall_4_0());
+				}
+				lv_hasBreak_4_0=ruleBreakStat
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getCaseStatRule());
+					}
+					set(
+						$current,
+						"hasBreak",
+						true,
+						"ru.iaie.reflex.diagram.Reflex.BreakStat");
+					afterParserOrEnumRuleCall();
+				}
+			)
 		)
+		otherlv_5='}'
+		{
+			newLeafNode(otherlv_5, grammarAccess.getCaseStatAccess().getRightCurlyBracketKeyword_5());
+		}
+	)
+;
+
+// Entry rule entryRuleBreakStat
+entryRuleBreakStat returns [String current=null]:
+	{ newCompositeNode(grammarAccess.getBreakStatRule()); }
+	iv_ruleBreakStat=ruleBreakStat
+	{ $current=$iv_ruleBreakStat.current.getText(); }
+	EOF;
+
+// Rule BreakStat
+ruleBreakStat returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		kw='break'
+		{
+			$current.merge(kw);
+			newLeafNode(kw, grammarAccess.getBreakStatAccess().getBreakKeyword_0());
+		}
+		kw=';'
+		{
+			$current.merge(kw);
+			newLeafNode(kw, grammarAccess.getBreakStatAccess().getSemicolonKeyword_1());
+		}
 	)
 ;
 
@@ -1896,58 +1985,55 @@ ruleRegister returns [EObject current=null]
 		)
 		(
 			(
+				lv_addr1_2_0=RULE_INTEGER
 				{
-					newCompositeNode(grammarAccess.getRegisterAccess().getAddr1IntegerParserRuleCall_2_0());
+					newLeafNode(lv_addr1_2_0, grammarAccess.getRegisterAccess().getAddr1INTEGERTerminalRuleCall_2_0());
 				}
-				lv_addr1_2_0=ruleInteger
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getRegisterRule());
+						$current = createModelElement(grammarAccess.getRegisterRule());
 					}
-					set(
+					setWithLastConsumed(
 						$current,
 						"addr1",
 						lv_addr1_2_0,
-						"ru.iaie.reflex.diagram.Reflex.Integer");
-					afterParserOrEnumRuleCall();
+						"ru.iaie.reflex.diagram.Reflex.INTEGER");
 				}
 			)
 		)
 		(
 			(
+				lv_addr2_3_0=RULE_INTEGER
 				{
-					newCompositeNode(grammarAccess.getRegisterAccess().getAddr2IntegerParserRuleCall_3_0());
+					newLeafNode(lv_addr2_3_0, grammarAccess.getRegisterAccess().getAddr2INTEGERTerminalRuleCall_3_0());
 				}
-				lv_addr2_3_0=ruleInteger
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getRegisterRule());
+						$current = createModelElement(grammarAccess.getRegisterRule());
 					}
-					set(
+					setWithLastConsumed(
 						$current,
 						"addr2",
 						lv_addr2_3_0,
-						"ru.iaie.reflex.diagram.Reflex.Integer");
-					afterParserOrEnumRuleCall();
+						"ru.iaie.reflex.diagram.Reflex.INTEGER");
 				}
 			)
 		)
 		(
 			(
+				lv_regSize_4_0=RULE_INTEGER
 				{
-					newCompositeNode(grammarAccess.getRegisterAccess().getRegSizeIntegerParserRuleCall_4_0());
+					newLeafNode(lv_regSize_4_0, grammarAccess.getRegisterAccess().getRegSizeINTEGERTerminalRuleCall_4_0());
 				}
-				lv_regSize_4_0=ruleInteger
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getRegisterRule());
+						$current = createModelElement(grammarAccess.getRegisterRule());
 					}
-					set(
+					setWithLastConsumed(
 						$current,
 						"regSize",
 						lv_regSize_4_0,
-						"ru.iaie.reflex.diagram.Reflex.Integer");
-					afterParserOrEnumRuleCall();
+						"ru.iaie.reflex.diagram.Reflex.INTEGER");
 				}
 			)
 		)
@@ -2413,14 +2499,19 @@ rulePrimaryExpression returns [EObject current=null]
 			)
 		)
 		    |
-		{
-			newCompositeNode(grammarAccess.getPrimaryExpressionAccess().getIntegerParserRuleCall_1());
-		}
-		this_Integer_1=ruleInteger
-		{
-			$current = $this_Integer_1.current;
-			afterParserOrEnumRuleCall();
-		}
+		(
+			(
+				{
+					$current = forceCreateModelElement(
+						grammarAccess.getPrimaryExpressionAccess().getPrimaryExpressionAction_1_0(),
+						$current);
+				}
+			)
+			this_INTEGER_2=RULE_INTEGER
+			{
+				newLeafNode(this_INTEGER_2, grammarAccess.getPrimaryExpressionAccess().getINTEGERTerminalRuleCall_1_1());
+			}
+		)
 		    |
 		(
 			(
@@ -2430,26 +2521,23 @@ rulePrimaryExpression returns [EObject current=null]
 						$current);
 				}
 			)
+			this_FLOAT_4=RULE_FLOAT
 			{
-				newCompositeNode(grammarAccess.getPrimaryExpressionAccess().getFloatParserRuleCall_2_1());
-			}
-			ruleFloat
-			{
-				afterParserOrEnumRuleCall();
+				newLeafNode(this_FLOAT_4, grammarAccess.getPrimaryExpressionAccess().getFLOATTerminalRuleCall_2_1());
 			}
 		)
 		    |
 		(
-			otherlv_4='('
+			otherlv_5='('
 			{
-				newLeafNode(otherlv_4, grammarAccess.getPrimaryExpressionAccess().getLeftParenthesisKeyword_3_0());
+				newLeafNode(otherlv_5, grammarAccess.getPrimaryExpressionAccess().getLeftParenthesisKeyword_3_0());
 			}
 			(
 				(
 					{
 						newCompositeNode(grammarAccess.getPrimaryExpressionAccess().getExprExpressionParserRuleCall_3_1_0());
 					}
-					lv_expr_5_0=ruleExpression
+					lv_expr_6_0=ruleExpression
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getPrimaryExpressionRule());
@@ -2457,15 +2545,15 @@ rulePrimaryExpression returns [EObject current=null]
 						set(
 							$current,
 							"expr",
-							lv_expr_5_0,
+							lv_expr_6_0,
 							"ru.iaie.reflex.diagram.Reflex.Expression");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
-			otherlv_6=')'
+			otherlv_7=')'
 			{
-				newLeafNode(otherlv_6, grammarAccess.getPrimaryExpressionAccess().getRightParenthesisKeyword_3_2());
+				newLeafNode(otherlv_7, grammarAccess.getPrimaryExpressionAccess().getRightParenthesisKeyword_3_2());
 			}
 		)
 	)
@@ -3614,15 +3702,15 @@ ruleReflexType returns [EObject current=null]
 	)
 ;
 
-// Entry rule entryRuleInteger
-entryRuleInteger returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getIntegerRule()); }
-	iv_ruleInteger=ruleInteger
-	{ $current=$iv_ruleInteger.current; }
+// Entry rule entryRuleTact
+entryRuleTact returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getTactRule()); }
+	iv_ruleTact=ruleTact
+	{ $current=$iv_ruleTact.current; }
 	EOF;
 
-// Rule Integer
-ruleInteger returns [EObject current=null]
+// Rule Tact
+ruleTact returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -3630,124 +3718,31 @@ ruleInteger returns [EObject current=null]
 	leaveRule();
 }:
 	(
+		otherlv_0='tact'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getTactAccess().getTactKeyword_0());
+		}
 		(
 			(
-				(
-					lv_value_0_1=RULE_HEX
-					{
-						newLeafNode(lv_value_0_1, grammarAccess.getIntegerAccess().getValueHEXTerminalRuleCall_0_0_0());
+				lv_value_1_0=RULE_INTEGER
+				{
+					newLeafNode(lv_value_1_0, grammarAccess.getTactAccess().getValueINTEGERTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getTactRule());
 					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getIntegerRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"value",
-							lv_value_0_1,
-							"ru.iaie.reflex.diagram.Reflex.HEX");
-					}
-					    |
-					lv_value_0_2=RULE_OCTAL
-					{
-						newLeafNode(lv_value_0_2, grammarAccess.getIntegerAccess().getValueOCTALTerminalRuleCall_0_0_1());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getIntegerRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"value",
-							lv_value_0_2,
-							"ru.iaie.reflex.diagram.Reflex.OCTAL");
-					}
-					    |
-					lv_value_0_3=RULE_DECIMAL
-					{
-						newLeafNode(lv_value_0_3, grammarAccess.getIntegerAccess().getValueDECIMALTerminalRuleCall_0_0_2());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getIntegerRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"value",
-							lv_value_0_3,
-							"ru.iaie.reflex.diagram.Reflex.DECIMAL");
-					}
-				)
+					setWithLastConsumed(
+						$current,
+						"value",
+						lv_value_1_0,
+						"ru.iaie.reflex.diagram.Reflex.INTEGER");
+				}
 			)
 		)
-		(
-			(
-				(
-					lv_qualfier_1_1=RULE_LONG
-					{
-						newLeafNode(lv_qualfier_1_1, grammarAccess.getIntegerAccess().getQualfierLONGTerminalRuleCall_1_0_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getIntegerRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"qualfier",
-							true,
-							"ru.iaie.reflex.diagram.Reflex.LONG");
-					}
-					    |
-					lv_qualfier_1_2=RULE_UNSIGNED
-					{
-						newLeafNode(lv_qualfier_1_2, grammarAccess.getIntegerAccess().getQualfierUNSIGNEDTerminalRuleCall_1_0_1());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getIntegerRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"qualfier",
-							true,
-							"ru.iaie.reflex.diagram.Reflex.UNSIGNED");
-					}
-				)
-			)
-		)?
-	)
-;
-
-// Entry rule entryRuleFloat
-entryRuleFloat returns [String current=null]:
-	{ newCompositeNode(grammarAccess.getFloatRule()); }
-	iv_ruleFloat=ruleFloat
-	{ $current=$iv_ruleFloat.current.getText(); }
-	EOF;
-
-// Rule Float
-ruleFloat returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		this_DEC_FLOAT_0=RULE_DEC_FLOAT
+		otherlv_2=';'
 		{
-			$current.merge(this_DEC_FLOAT_0);
-		}
-		{
-			newLeafNode(this_DEC_FLOAT_0, grammarAccess.getFloatAccess().getDEC_FLOATTerminalRuleCall_0());
-		}
-		    |
-		this_HEX_FLOAT_1=RULE_HEX_FLOAT
-		{
-			$current.merge(this_HEX_FLOAT_1);
-		}
-		{
-			newLeafNode(this_HEX_FLOAT_1, grammarAccess.getFloatAccess().getHEX_FLOATTerminalRuleCall_1());
+			newLeafNode(otherlv_2, grammarAccess.getTactAccess().getSemicolonKeyword_2());
 		}
 	)
 ;
@@ -3769,99 +3764,21 @@ ruleTime returns [EObject current=null]
 }:
 	(
 		(
+			lv_ticks_0_0=RULE_INTEGER
 			{
-				$current = forceCreateModelElement(
-					grammarAccess.getTimeAccess().getTimeAction_0(),
-					$current);
+				newLeafNode(lv_ticks_0_0, grammarAccess.getTimeAccess().getTicksINTEGERTerminalRuleCall_0());
+			}
+			{
+				if ($current==null) {
+					$current = createModelElement(grammarAccess.getTimeRule());
+				}
+				setWithLastConsumed(
+					$current,
+					"ticks",
+					lv_ticks_0_0,
+					"ru.iaie.reflex.diagram.Reflex.INTEGER");
 			}
 		)
-		(
-			otherlv_1='0t'
-			{
-				newLeafNode(otherlv_1, grammarAccess.getTimeAccess().getTKeyword_1_0());
-			}
-			    |
-			otherlv_2='0T'
-			{
-				newLeafNode(otherlv_2, grammarAccess.getTimeAccess().getTKeyword_1_1());
-			}
-		)
-		(
-			(
-				(
-					lv_isDay_3_0=RULE_DAY
-					{
-						newLeafNode(lv_isDay_3_0, grammarAccess.getTimeAccess().getIsDayDAYTerminalRuleCall_2_0_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getTimeRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"isDay",
-							true,
-							"ru.iaie.reflex.diagram.Reflex.DAY");
-					}
-				)
-			)
-			(
-				(
-					lv_days_4_0=RULE_DECIMAL
-					{
-						newLeafNode(lv_days_4_0, grammarAccess.getTimeAccess().getDaysDECIMALTerminalRuleCall_2_1_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getTimeRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"days",
-							lv_days_4_0,
-							"ru.iaie.reflex.diagram.Reflex.DECIMAL");
-					}
-				)
-			)
-		)?
-		(
-			(
-				(
-					lv_isHour_5_0=RULE_HOUR
-					{
-						newLeafNode(lv_isHour_5_0, grammarAccess.getTimeAccess().getIsHourHOURTerminalRuleCall_3_0_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getTimeRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"isHour",
-							true,
-							"ru.iaie.reflex.diagram.Reflex.HOUR");
-					}
-				)
-			)
-			(
-				(
-					lv_hours_6_0=RULE_DECIMAL
-					{
-						newLeafNode(lv_hours_6_0, grammarAccess.getTimeAccess().getHoursDECIMALTerminalRuleCall_3_1_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getTimeRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"hours",
-							lv_hours_6_0,
-							"ru.iaie.reflex.diagram.Reflex.DECIMAL");
-					}
-				)
-			)
-		)?
 	)
 ;
 
@@ -4263,11 +4180,13 @@ RULE_LONG_C_TYPE : 'long';
 
 RULE_BOOL_TYPE : 'bool';
 
-RULE_TACT : 'tact';
+RULE_INTEGER : (RULE_HEX|RULE_OCTAL|RULE_DECIMAL) (RULE_LONG|RULE_UNSIGNED)?;
 
-RULE_DEC_FLOAT : RULE_DEC_SEQUENCE? '.' RULE_DEC_SEQUENCE (RULE_EXPONENT RULE_SIGN RULE_DEC_SEQUENCE)? (RULE_LONG|RULE_FLOAT_SUFFIX)?;
+RULE_FLOAT : (RULE_DEC_FLOAT|RULE_HEX_FLOAT);
 
-RULE_HEX_FLOAT : RULE_HEX_SEQUENCE? '.' RULE_HEX_SEQUENCE (RULE_BIN_EXPONENT RULE_SIGN RULE_DEC_SEQUENCE)? (RULE_LONG|RULE_FLOAT_SUFFIX)?;
+fragment RULE_DEC_FLOAT : RULE_DEC_SEQUENCE? '.' RULE_DEC_SEQUENCE (RULE_EXPONENT RULE_SIGN RULE_DEC_SEQUENCE)? (RULE_LONG|RULE_FLOAT_SUFFIX)?;
+
+fragment RULE_HEX_FLOAT : RULE_HEX_SEQUENCE? '.' RULE_HEX_SEQUENCE (RULE_BIN_EXPONENT RULE_SIGN RULE_DEC_SEQUENCE)? (RULE_LONG|RULE_FLOAT_SUFFIX)?;
 
 fragment RULE_DEC_SEQUENCE : ('0'..'9')+;
 
@@ -4279,33 +4198,19 @@ fragment RULE_EXPONENT : ('e'|'E');
 
 fragment RULE_SIGN : ('+'|'-');
 
-RULE_DECIMAL : ('0'|'1'..'9' ('0'..'9')*);
+fragment RULE_DECIMAL : ('0'|'1'..'9' ('0'..'9')*);
 
-RULE_OCTAL : '0' ('0'..'7')+;
+fragment RULE_OCTAL : '0' ('0'..'7')+;
 
-RULE_HEX : RULE_HEX_PREFIX RULE_HEX_SEQUENCE;
+fragment RULE_HEX : RULE_HEX_PREFIX RULE_HEX_SEQUENCE;
 
 fragment RULE_HEX_PREFIX : '0' ('x'|'X');
 
-RULE_LONG : ('L'|'l');
+fragment RULE_LONG : ('L'|'l');
 
 fragment RULE_FLOAT_SUFFIX : ('F'|'f');
 
-RULE_UNSIGNED : ('U'|'u');
-
-RULE_DAY : ('D'|'d');
-
-RULE_HOUR : ('H'|'h');
-
-RULE_MINUTE : ('M'|'m');
-
-RULE_SECOND : ('S'|'s');
-
-RULE_MILISECOND : ('MS'|'ms');
-
-RULE_MICROSECOND : ('US'|'us');
-
-RULE_NANOSECOND : ('NS'|'ns');
+fragment RULE_UNSIGNED : ('U'|'u');
 
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 

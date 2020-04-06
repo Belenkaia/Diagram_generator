@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link ru.iaie.reflex.diagram.reflex.CaseStat#getOption <em>Option</em>}</li>
  *   <li>{@link ru.iaie.reflex.diagram.reflex.CaseStat#getBody <em>Body</em>}</li>
+ *   <li>{@link ru.iaie.reflex.diagram.reflex.CaseStat#isHasBreak <em>Has Break</em>}</li>
  * </ul>
  *
  * @see ru.iaie.reflex.diagram.reflex.ReflexPackage#getCaseStat()
@@ -25,26 +26,26 @@ import org.eclipse.emf.ecore.EObject;
 public interface CaseStat extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Option</b></em>' containment reference.
+   * Returns the value of the '<em><b>Option</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Option</em>' containment reference.
-   * @see #setOption(ru.iaie.reflex.diagram.reflex.Integer)
+   * @return the value of the '<em>Option</em>' attribute.
+   * @see #setOption(String)
    * @see ru.iaie.reflex.diagram.reflex.ReflexPackage#getCaseStat_Option()
-   * @model containment="true"
+   * @model
    * @generated
    */
-  ru.iaie.reflex.diagram.reflex.Integer getOption();
+  String getOption();
 
   /**
-   * Sets the value of the '{@link ru.iaie.reflex.diagram.reflex.CaseStat#getOption <em>Option</em>}' containment reference.
+   * Sets the value of the '{@link ru.iaie.reflex.diagram.reflex.CaseStat#getOption <em>Option</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Option</em>' containment reference.
+   * @param value the new value of the '<em>Option</em>' attribute.
    * @see #getOption()
    * @generated
    */
-  void setOption(ru.iaie.reflex.diagram.reflex.Integer value);
+  void setOption(String value);
 
   /**
    * Returns the value of the '<em><b>Body</b></em>' containment reference.
@@ -67,5 +68,27 @@ public interface CaseStat extends EObject
    * @generated
    */
   void setBody(Statement value);
+
+  /**
+   * Returns the value of the '<em><b>Has Break</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Has Break</em>' attribute.
+   * @see #setHasBreak(boolean)
+   * @see ru.iaie.reflex.diagram.reflex.ReflexPackage#getCaseStat_HasBreak()
+   * @model
+   * @generated
+   */
+  boolean isHasBreak();
+
+  /**
+   * Sets the value of the '{@link ru.iaie.reflex.diagram.reflex.CaseStat#isHasBreak <em>Has Break</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Has Break</em>' attribute.
+   * @see #isHasBreak()
+   * @generated
+   */
+  void setHasBreak(boolean value);
 
 } // CaseStat
