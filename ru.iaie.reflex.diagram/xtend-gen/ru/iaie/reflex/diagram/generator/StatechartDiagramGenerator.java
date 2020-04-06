@@ -9,8 +9,10 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import ru.iaie.reflex.diagram.generator.ActiveProcess;
 import ru.iaie.reflex.diagram.generator.GMLDiagramGenerator;
 import ru.iaie.reflex.diagram.generator.GMLTextGenerator;
+import ru.iaie.reflex.diagram.reflex.AssignmentExpression;
 import ru.iaie.reflex.diagram.reflex.CompoundStatement;
 import ru.iaie.reflex.diagram.reflex.Expression;
+import ru.iaie.reflex.diagram.reflex.ExpressionStatement;
 import ru.iaie.reflex.diagram.reflex.IfElseStat;
 import ru.iaie.reflex.diagram.reflex.SetStateStat;
 import ru.iaie.reflex.diagram.reflex.State;
@@ -76,7 +78,7 @@ public class StatechartDiagramGenerator extends GMLDiagramGenerator {
               this.procList.add(startNode);
             }
             ArrayList<ActiveProcess> tempProcList = null;
-            tempProcList = this.getStatechartList(statement, this.procId.indexOf(state.getName()), "(");
+            tempProcList = this.getStatechartList(statement, this.procId.indexOf(state.getName()), "(", "");
             this.procList.addAll(tempProcList);
             flagFirstStateInProcess = false;
           }
@@ -89,9 +91,9 @@ public class StatechartDiagramGenerator extends GMLDiagramGenerator {
             {
               String _ticks = state.getTimeoutFunction().getTime().getTicks();
               String _plus = ("(Timeout [ time = " + _ticks);
-              String contextLabel = (_plus + " ]");
+              String contextLabel = (_plus + "ticks ]");
               ArrayList<ActiveProcess> tempProcList = null;
-              tempProcList = this.getStatechartList(timeoutFunctionStatements, this.procId.indexOf(state.getName()), contextLabel);
+              tempProcList = this.getStatechartList(timeoutFunctionStatements, this.procId.indexOf(state.getName()), contextLabel, "");
               this.procList.addAll(tempProcList);
             }
           }
@@ -100,11 +102,11 @@ public class StatechartDiagramGenerator extends GMLDiagramGenerator {
     }
   }
   
-  protected ArrayList<ActiveProcess> _getStatechartList(final Statement statement, final int contextStateId, final String contextLabel) {
+  protected ArrayList<ActiveProcess> _getStatechartList(final Statement statement, final int contextStateId, final String contextLabel, final String expressionStatement) {
     return new ArrayList<ActiveProcess>();
   }
   
-  protected ArrayList<ActiveProcess> _getStatechartList(final IfElseStat statement, final int contextStateId, final String contextLabel) {
+  protected ArrayList<ActiveProcess> _getStatechartList(final IfElseStat statement, final int contextStateId, final String contextLabel, final String expressionStatement) {
     String newThenContextLabel = null;
     int index = contextLabel.lastIndexOf("]");
     if ((index != (-1))) {
@@ -120,8 +122,10 @@ public class StatechartDiagramGenerator extends GMLDiagramGenerator {
       String _plus_4 = (_plus_3 + ") ]");
       newThenContextLabel = _plus_4;
     }
+    String newExprLabel = "";
+    newExprLabel = this.getContextLabel(statement.getThen(), contextStateId, newThenContextLabel, newExprLabel);
     ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>();
-    ArrayList<ActiveProcess> procTempThenList = this.getStatechartList(statement.getThen(), contextStateId, newThenContextLabel);
+    ArrayList<ActiveProcess> procTempThenList = this.getStatechartList(statement.getThen(), contextStateId, newThenContextLabel, newExprLabel);
     ArrayList<ActiveProcess> procTempElseList = new ArrayList<ActiveProcess>();
     Statement _else = statement.getElse();
     boolean _tripleNotEquals = (_else != null);
@@ -140,28 +144,67 @@ public class StatechartDiagramGenerator extends GMLDiagramGenerator {
         String _plus_9 = (_plus_8 + ") ]");
         newElseContextLabel = _plus_9;
       }
-      procTempElseList = this.getStatechartList(statement.getElse(), contextStateId, newElseContextLabel);
+      newExprLabel = "";
+      newExprLabel = this.getContextLabel(statement.getElse(), contextStateId, newElseContextLabel, newExprLabel);
+      procTempElseList = this.getStatechartList(statement.getElse(), contextStateId, newElseContextLabel, newExprLabel);
     }
     procTempList.addAll(procTempThenList);
     procTempList.addAll(procTempElseList);
     return procTempList;
   }
   
-  protected ArrayList<ActiveProcess> _getStatechartList(final CompoundStatement statement, final int contextStateId, final String contextLabel) {
+  protected ArrayList<ActiveProcess> _getStatechartList(final CompoundStatement statement, final int contextStateId, final String contextLabel, final String expressionStatement) {
     ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>();
+    String newExprLabel = expressionStatement;
     EList<Statement> _statements = statement.getStatements();
     for (final Statement s : _statements) {
       {
-        ArrayList<ActiveProcess> subProcList = this.getStatechartList(s, contextStateId, contextLabel);
+        newExprLabel = this.getContextLabel(s, contextStateId, contextLabel, newExprLabel);
+        System.out.println(("E (compound): " + newExprLabel));
+      }
+    }
+    EList<Statement> _statements_1 = statement.getStatements();
+    for (final Statement s_1 : _statements_1) {
+      {
+        ArrayList<ActiveProcess> subProcList = this.getStatechartList(s_1, contextStateId, contextLabel, newExprLabel);
         procTempList.addAll(subProcList);
       }
     }
     return procTempList;
   }
   
-  protected ArrayList<ActiveProcess> _getStatechartList(final SetStateStat statement, final int contextStateId, final String contextLabel) {
+  protected String _getContextLabel(final ExpressionStatement statement, final int contextStateId, final String contextLabel, final String expressionStatement) {
+    String newExprContextLabel = "";
+    int _length = expressionStatement.length();
+    boolean _greaterThan = (_length > 0);
+    if (_greaterThan) {
+      String _expression = this.getExpression(statement.getExpr());
+      String _plus = ((expressionStatement + "; ") + _expression);
+      newExprContextLabel = _plus;
+    } else {
+      String _expression_1 = this.getExpression(statement.getExpr());
+      String _plus_1 = (expressionStatement + _expression_1);
+      newExprContextLabel = _plus_1;
+    }
+    String _expression_2 = this.getExpression(statement.getExpr());
+    String _plus_2 = ((("expr: " + newExprContextLabel) + ", getExpr: ") + _expression_2);
+    System.out.println(_plus_2);
+    return newExprContextLabel;
+  }
+  
+  protected String _getContextLabel(final Statement statement, final int contextStateId, final String contextLabel, final String expressionStatement) {
+    return expressionStatement;
+  }
+  
+  protected ArrayList<ActiveProcess> _getStatechartList(final SetStateStat statement, final int contextStateId, final String contextLabel, final String expressionStatement) {
     String finishEdgeLabel = null;
-    finishEdgeLabel = (contextLabel + ")");
+    int _length = expressionStatement.length();
+    boolean _greaterThan = (_length > 0);
+    if (_greaterThan) {
+      finishEdgeLabel = (((contextLabel + "/") + expressionStatement) + ")");
+    } else {
+      finishEdgeLabel = (contextLabel + ")");
+    }
     ActiveProcess tempElem = new ActiveProcess();
     ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>();
     tempElem.setIdFrom(contextStateId);
@@ -183,18 +226,51 @@ public class StatechartDiagramGenerator extends GMLDiagramGenerator {
     return _builder.toString();
   }
   
-  public ArrayList<ActiveProcess> getStatechartList(final Statement statement, final int contextStateId, final String contextLabel) {
+  protected String _getExpression(final Expression expr) {
+    return "";
+  }
+  
+  protected String _getExpression(final AssignmentExpression expr) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _trim = NodeModelUtils.getNode(expr).getText().trim();
+    _builder.append(_trim);
+    return _builder.toString();
+  }
+  
+  public ArrayList<ActiveProcess> getStatechartList(final Statement statement, final int contextStateId, final String contextLabel, final String expressionStatement) {
     if (statement instanceof CompoundStatement) {
-      return _getStatechartList((CompoundStatement)statement, contextStateId, contextLabel);
+      return _getStatechartList((CompoundStatement)statement, contextStateId, contextLabel, expressionStatement);
     } else if (statement instanceof IfElseStat) {
-      return _getStatechartList((IfElseStat)statement, contextStateId, contextLabel);
+      return _getStatechartList((IfElseStat)statement, contextStateId, contextLabel, expressionStatement);
     } else if (statement instanceof SetStateStat) {
-      return _getStatechartList((SetStateStat)statement, contextStateId, contextLabel);
+      return _getStatechartList((SetStateStat)statement, contextStateId, contextLabel, expressionStatement);
     } else if (statement != null) {
-      return _getStatechartList(statement, contextStateId, contextLabel);
+      return _getStatechartList(statement, contextStateId, contextLabel, expressionStatement);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(statement, contextStateId, contextLabel).toString());
+        Arrays.<Object>asList(statement, contextStateId, contextLabel, expressionStatement).toString());
+    }
+  }
+  
+  public String getContextLabel(final Statement statement, final int contextStateId, final String contextLabel, final String expressionStatement) {
+    if (statement instanceof ExpressionStatement) {
+      return _getContextLabel((ExpressionStatement)statement, contextStateId, contextLabel, expressionStatement);
+    } else if (statement != null) {
+      return _getContextLabel(statement, contextStateId, contextLabel, expressionStatement);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(statement, contextStateId, contextLabel, expressionStatement).toString());
+    }
+  }
+  
+  public String getExpression(final Expression expr) {
+    if (expr instanceof AssignmentExpression) {
+      return _getExpression((AssignmentExpression)expr);
+    } else if (expr != null) {
+      return _getExpression(expr);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(expr).toString());
     }
   }
 }

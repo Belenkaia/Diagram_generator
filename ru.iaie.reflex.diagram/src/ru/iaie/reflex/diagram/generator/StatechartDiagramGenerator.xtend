@@ -9,6 +9,8 @@ import ru.iaie.reflex.diagram.reflex.SetStateStat
 import ru.iaie.reflex.diagram.reflex.Statement
 import ru.iaie.reflex.diagram.reflex.Expression
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
+import ru.iaie.reflex.diagram.reflex.ExpressionStatement
+import ru.iaie.reflex.diagram.reflex.AssignmentExpression
 
 class StatechartDiagramGenerator  extends GMLDiagramGenerator{
 var GMLTextGenerator gmlTextGenerator = new GMLTextGenerator()
@@ -64,7 +66,7 @@ def generateStatechartModel(Resource resource, Process process)
 	    			procList.add(startNode)
 	         	}
 	         	var ArrayList<ActiveProcess> tempProcList;
-	         	tempProcList = statement.getStatechartList(procId.indexOf(state.name), "(")
+	         	tempProcList = statement.getStatechartList(procId.indexOf(state.name), "(", "")
 	         	procList.addAll(tempProcList)
 	         	flagFirstStateInProcess = false;
 	         }
@@ -73,9 +75,9 @@ def generateStatechartModel(Resource resource, Process process)
 	         {
 	         	for(timeoutFunctionStatements: state.timeoutFunction.statements)
 	        	{
-	        		var String contextLabel = "(Timeout [ time = "  + state.timeoutFunction.time.ticks + " ]"
+	        		var String contextLabel = "(Timeout [ time = "  + state.timeoutFunction.time.ticks + "ticks ]"
 	        		var ArrayList<ActiveProcess> tempProcList;
-	        		tempProcList = timeoutFunctionStatements.getStatechartList(procId.indexOf(state.name), contextLabel)
+	        		tempProcList = timeoutFunctionStatements.getStatechartList(procId.indexOf(state.name), contextLabel, "")
 	        		procList.addAll(tempProcList)
 	        	}
 	         }
@@ -87,7 +89,7 @@ def generateStatechartModel(Resource resource, Process process)
 //
 // Polymorphic method for Statement (to avoid exception)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-def dispatch ArrayList<ActiveProcess> getStatechartList(Statement statement, int contextStateId, String contextLabel)
+def dispatch ArrayList<ActiveProcess> getStatechartList(Statement statement, int contextStateId, String contextLabel, String expressionStatement)
 	{
 		return new ArrayList<ActiveProcess>;
 	}
@@ -98,7 +100,7 @@ def dispatch ArrayList<ActiveProcess> getStatechartList(Statement statement, int
 //Method calls getStatechartList for 'else' and 'then' fields of statement and collecting their returns to return it
 //Output: ArrayList<ActiveProcess> which have information about relationships between states (like set next and etc)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def dispatch ArrayList<ActiveProcess> getStatechartList(IfElseStat statement, int contextStateId, String contextLabel)
+	def dispatch ArrayList<ActiveProcess> getStatechartList(IfElseStat statement, int contextStateId, String contextLabel, String expressionStatement)
 	{
 		var String newThenContextLabel
 		var index = contextLabel.lastIndexOf("]")
@@ -110,8 +112,12 @@ def dispatch ArrayList<ActiveProcess> getStatechartList(Statement statement, int
 		{
 			newThenContextLabel = contextLabel + "[ (" + statement.cond.translateExpr() + ") ]"
 		}
+		var String newExprLabel = "";
+		newExprLabel = statement.then.getContextLabel(contextStateId, newThenContextLabel, newExprLabel)
+		
+		
 		var ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>
-		var ArrayList<ActiveProcess> procTempThenList = statement.then.getStatechartList(contextStateId, newThenContextLabel)
+		var ArrayList<ActiveProcess> procTempThenList = statement.then.getStatechartList(contextStateId, newThenContextLabel, newExprLabel)
 		
 		var ArrayList<ActiveProcess> procTempElseList = new ArrayList<ActiveProcess>
 		if(statement.getElse() !== null) // 'if' may be without 'else'
@@ -125,7 +131,10 @@ def dispatch ArrayList<ActiveProcess> getStatechartList(Statement statement, int
 			{
 				newElseContextLabel = contextLabel + "[ !(" + statement.cond.translateExpr()  + ") ]"
 			}
-			procTempElseList = statement.getElse().getStatechartList(contextStateId, newElseContextLabel)
+			newExprLabel =  "";
+			newExprLabel = statement.getElse().getContextLabel(contextStateId, newElseContextLabel, newExprLabel)
+		
+			procTempElseList = statement.getElse().getStatechartList(contextStateId, newElseContextLabel, newExprLabel)
 		}
 		procTempList.addAll(procTempThenList)
 		procTempList.addAll(procTempElseList)
@@ -138,26 +147,80 @@ def dispatch ArrayList<ActiveProcess> getStatechartList(Statement statement, int
 //Method calls getStatechartList for their statements and collecting their returns to return it
 //Output: ArrayList<ActiveProcess> which have information about relationships between states (like set next and etc)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def dispatch ArrayList<ActiveProcess> getStatechartList(CompoundStatement statement, int contextStateId, String contextLabel)
+	def dispatch ArrayList<ActiveProcess> getStatechartList(CompoundStatement statement, int contextStateId, String contextLabel, String expressionStatement)
 	{
 		var ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>;
+		var String newExprLabel =  expressionStatement;
 		for(s : statement.statements)
 		{
-			var ArrayList<ActiveProcess> subProcList = s.getStatechartList(contextStateId, contextLabel);
+			newExprLabel = s.getContextLabel(contextStateId, contextLabel, newExprLabel)
+			System.out.println("E (compound): "+ newExprLabel)
+		}
+		for(s : statement.statements)
+		{
+			var ArrayList<ActiveProcess> subProcList = s.getStatechartList(contextStateId, contextLabel, newExprLabel);
 			procTempList.addAll(subProcList)
 		}
 		return procTempList
 	}
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	def dispatch String getContextLabel(ExpressionStatement statement, int contextStateId, String contextLabel, String expressionStatement)
+	{
+		var String newExprContextLabel = "";
+		/*var index = contextLabel.lastIndexOf("]")
+		if( index != -1)
+		{
+			var index2 = contextLabel.lastIndexOf("/")
+			if(index2 != -1)
+			{
+				newExprContextLabel = contextLabel.substring(0, index) + ";" + statement.expr.getExpression + "]";
+			}
+			else
+			{
+				newExprContextLabel = contextLabel.substring(0, index) + "/" + statement.expr.getExpression + "]";
+			}
+		}
+		else
+		{
+			newExprContextLabel = contextLabel + "[ /" + statement.expr.getExpression +  "]"
+		}
+		System.out.println("expr: " + newExprContextLabel);*/
+		if(expressionStatement.length > 0)
+		{
+			newExprContextLabel = expressionStatement + "; " + statement.expr.getExpression
+		}
+		else
+		{
+			newExprContextLabel = expressionStatement + statement.expr.getExpression
+		}
+		System.out.println("expr: " + newExprContextLabel + ", getExpr: "+ statement.expr.getExpression);
+		return newExprContextLabel
+	}
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	def dispatch String getContextLabel(Statement statement, int contextStateId, String contextLabel, String expressionStatement)
+	{
+		return expressionStatement
+	}
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Polymorphic method for SetStateStat, input: contextStateId which is current state id in the list procId
 //Method returns one element of ArrayList<ActiveProcess>, which have information about which state set which state (we have their id in the procId list)
 //Output: ArrayList<ActiveProcess> which have information about relationships between states (like set next and etc)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def dispatch ArrayList<ActiveProcess> getStatechartList(SetStateStat statement, int contextStateId, String contextLabel)
+	def dispatch ArrayList<ActiveProcess> getStatechartList(SetStateStat statement, int contextStateId, String contextLabel, String expressionStatement)
 	{
 		var String finishEdgeLabel
-		finishEdgeLabel = contextLabel + ")"
+		if(expressionStatement.length() > 0)
+			finishEdgeLabel = contextLabel + "/" + expressionStatement + ")"
+		else
+			finishEdgeLabel = contextLabel + ")"
 		
 		var ActiveProcess tempElem = new ActiveProcess()
 		var ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>;
@@ -175,6 +238,16 @@ def dispatch ArrayList<ActiveProcess> getStatechartList(Statement statement, int
 // Method returns expression text (used in edge labels)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def translateExpr(Expression expr) 
+	{
+		return '''« NodeModelUtils.getNode(expr).text.trim »'''
+	}
+	
+	def dispatch String getExpression(Expression expr)
+	{
+		return ""
+	}
+	
+	def dispatch String getExpression(AssignmentExpression expr)
 	{
 		return '''« NodeModelUtils.getNode(expr).text.trim »'''
 	}
