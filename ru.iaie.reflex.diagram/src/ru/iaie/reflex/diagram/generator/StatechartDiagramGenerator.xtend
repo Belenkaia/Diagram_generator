@@ -106,14 +106,14 @@ def dispatch ArrayList<ActiveProcess> getStatechartList(Statement statement, int
 		var index = contextLabel.lastIndexOf("]")
 		if( index != -1)
 		{
-			newThenContextLabel = contextLabel.substring(0, index) + " &amp;&amp; (" + statement.cond.translateExpr() + ") ]"
+			newThenContextLabel = contextLabel.substring(0, index) + " &amp;&amp; (" + statement.cond.translateExpr() + ") ]"//collecting conditions in contextLabel
 		}
 		else
 		{
 			newThenContextLabel = contextLabel + "[ (" + statement.cond.translateExpr() + ") ]"
 		}
 		var String newExprLabel = "";
-		newExprLabel = statement.then.getContextLabel(contextStateId, newThenContextLabel, newExprLabel)
+		newExprLabel = statement.then.getContextLabel(contextStateId, newThenContextLabel, newExprLabel) //collecting expressions context for edge label (which after /)
 		
 		
 		var ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>
@@ -131,8 +131,8 @@ def dispatch ArrayList<ActiveProcess> getStatechartList(Statement statement, int
 			{
 				newElseContextLabel = contextLabel + "[ !(" + statement.cond.translateExpr()  + ") ]"
 			}
-			newExprLabel =  "";
-			newExprLabel = statement.getElse().getContextLabel(contextStateId, newElseContextLabel, newExprLabel)
+			newExprLabel =  ""; //needed only local expressions in that scope
+			newExprLabel = statement.getElse().getContextLabel(contextStateId, newElseContextLabel, newExprLabel) //collecting expressions context for edge label (which after /)
 		
 			procTempElseList = statement.getElse().getStatechartList(contextStateId, newElseContextLabel, newExprLabel)
 		}
@@ -153,8 +153,7 @@ def dispatch ArrayList<ActiveProcess> getStatechartList(Statement statement, int
 		var String newExprLabel =  expressionStatement;
 		for(s : statement.statements)
 		{
-			newExprLabel = s.getContextLabel(contextStateId, contextLabel, newExprLabel)
-			System.out.println("E (compound): "+ newExprLabel)
+			newExprLabel = s.getContextLabel(contextStateId, contextLabel, newExprLabel) //collecting expressions context for edge label (which is after /)
 		}
 		for(s : statement.statements)
 		{
@@ -165,43 +164,24 @@ def dispatch ArrayList<ActiveProcess> getStatechartList(Statement statement, int
 	}
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//
+//Polymorphic method for ExpressionStatement to collect expressions like (a = b) which have to be after '/' in edge label
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def dispatch String getContextLabel(ExpressionStatement statement, int contextStateId, String contextLabel, String expressionStatement)
 	{
 		var String newExprContextLabel = "";
-		/*var index = contextLabel.lastIndexOf("]")
-		if( index != -1)
+		if(expressionStatement.length > 0)//not first expression
 		{
-			var index2 = contextLabel.lastIndexOf("/")
-			if(index2 != -1)
-			{
-				newExprContextLabel = contextLabel.substring(0, index) + ";" + statement.expr.getExpression + "]";
-			}
-			else
-			{
-				newExprContextLabel = contextLabel.substring(0, index) + "/" + statement.expr.getExpression + "]";
-			}
+			newExprContextLabel = expressionStatement + "; " + statement.expr.getExpression //collecting expressions like 'a; b; c' (will be put in edge labels after '/')
 		}
 		else
 		{
-			newExprContextLabel = contextLabel + "[ /" + statement.expr.getExpression +  "]"
+			newExprContextLabel = expressionStatement + statement.expr.getExpression //collecting expressions like 'a; b; c' (will be put in edge labels after '/')
 		}
-		System.out.println("expr: " + newExprContextLabel);*/
-		if(expressionStatement.length > 0)
-		{
-			newExprContextLabel = expressionStatement + "; " + statement.expr.getExpression
-		}
-		else
-		{
-			newExprContextLabel = expressionStatement + statement.expr.getExpression
-		}
-		System.out.println("expr: " + newExprContextLabel + ", getExpr: "+ statement.expr.getExpression);
 		return newExprContextLabel
 	}
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//
+//Polymorphic method for all other Statements - they not needed
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def dispatch String getContextLabel(Statement statement, int contextStateId, String contextLabel, String expressionStatement)
 	{

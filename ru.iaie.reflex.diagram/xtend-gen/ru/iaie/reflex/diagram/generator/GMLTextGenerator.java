@@ -136,7 +136,6 @@ public class GMLTextGenerator {
     _builder.append("label\t\"");
     _builder.append(label, "\t");
     _builder.append("\"");
-    System.out.println(((("generate edge from " + Integer.valueOf(fromId)) + " to ") + Integer.valueOf(toId)));
     _builder.newLineIfNotEmpty();
     _builder.append("]");
     _builder.newLine();

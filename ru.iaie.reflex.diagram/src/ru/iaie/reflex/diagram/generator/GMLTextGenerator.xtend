@@ -91,7 +91,7 @@ class GMLTextGenerator {
 	[
 		source	«fromId»
 		target	«toId»
-		label	"«label»"«System.out.println("generate edge from " + fromId + " to " + toId)»
+		label	"«label»"
 	]
 	'''
 	

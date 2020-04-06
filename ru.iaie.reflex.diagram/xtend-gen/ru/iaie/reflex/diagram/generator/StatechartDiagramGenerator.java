@@ -158,10 +158,7 @@ public class StatechartDiagramGenerator extends GMLDiagramGenerator {
     String newExprLabel = expressionStatement;
     EList<Statement> _statements = statement.getStatements();
     for (final Statement s : _statements) {
-      {
-        newExprLabel = this.getContextLabel(s, contextStateId, contextLabel, newExprLabel);
-        System.out.println(("E (compound): " + newExprLabel));
-      }
+      newExprLabel = this.getContextLabel(s, contextStateId, contextLabel, newExprLabel);
     }
     EList<Statement> _statements_1 = statement.getStatements();
     for (final Statement s_1 : _statements_1) {
@@ -186,9 +183,6 @@ public class StatechartDiagramGenerator extends GMLDiagramGenerator {
       String _plus_1 = (expressionStatement + _expression_1);
       newExprContextLabel = _plus_1;
     }
-    String _expression_2 = this.getExpression(statement.getExpr());
-    String _plus_2 = ((("expr: " + newExprContextLabel) + ", getExpr: ") + _expression_2);
-    System.out.println(_plus_2);
     return newExprContextLabel;
   }
   
