@@ -10,6 +10,7 @@ import ru.iaie.reflex.diagram.reflex.PhysicalVariable
 import ru.iaie.reflex.diagram.reflex.Process
 import ru.iaie.reflex.diagram.reflex.ProgramVariable
 import ru.iaie.reflex.diagram.reflex.ReflexType
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
 class DataDiagramGenerator extends GMLDiagramGenerator{
 	var HashMap<String, Integer> variableId = new HashMap<String, Integer>();
@@ -107,8 +108,17 @@ def dispatch String getVariableAction(ImportedVariable variable)
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 def dispatch String getVariableNameAndType(ProgramVariable variable)
 {
-	return variable.type.getSigned + " ReflexType : "/*  variable.type.getReflexType() + " " + */  + " " + variable.name
+	return variable.type.getSigned +" " + variable.type.getType +" :" + variable.name
 }
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+def String getType(ReflexType type)
+	{
+		return '''« NodeModelUtils.getNode(type).text.trim »'''
+	}
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Полиморфный метод. Возвращает строку с именем переменной и ее типом
@@ -117,22 +127,6 @@ def dispatch String getVariableNameAndType(ProgramVariable variable)
 def dispatch String getVariableNameAndType(PhysicalVariable variable)
 {
 	return variable.type + " : " + variable.name	
-}
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// 
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-def dispatch String getReflexType(CType type)
-{
-	return type.toString
-}
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// 
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-def dispatch String getReflexType(ReflexType type)
-{
-	return "ReflexType"
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -153,7 +147,7 @@ def dispatch String getSigned(CType type)
 	if(type.signSpec)
 		return 	"unsigned"
 	else
-		return 	"signed"
+		return 	""
 }
 
 

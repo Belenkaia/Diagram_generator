@@ -8,6 +8,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import ru.iaie.reflex.diagram.generator.ActiveProcess;
 import ru.iaie.reflex.diagram.generator.GMLDiagramGenerator;
@@ -84,10 +85,19 @@ public class DataDiagramGenerator extends GMLDiagramGenerator {
   
   protected String _getVariableNameAndType(final ProgramVariable variable) {
     String _signed = this.getSigned(variable.getType());
-    String _plus = (_signed + " ReflexType : ");
-    String _plus_1 = (_plus + " ");
+    String _plus = (_signed + " ");
+    String _type = this.getType(variable.getType());
+    String _plus_1 = (_plus + _type);
+    String _plus_2 = (_plus_1 + " :");
     String _name = variable.getName();
-    return (_plus_1 + _name);
+    return (_plus_2 + _name);
+  }
+  
+  public String getType(final ReflexType type) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _trim = NodeModelUtils.getNode(type).getText().trim();
+    _builder.append(_trim);
+    return _builder.toString();
   }
   
   protected String _getVariableNameAndType(final PhysicalVariable variable) {
@@ -95,14 +105,6 @@ public class DataDiagramGenerator extends GMLDiagramGenerator {
     String _plus = (_type + " : ");
     String _name = variable.getName();
     return (_plus + _name);
-  }
-  
-  protected String _getReflexType(final CType type) {
-    return type.toString();
-  }
-  
-  protected String _getReflexType(final ReflexType type) {
-    return "ReflexType";
   }
   
   protected String _getSigned(final ReflexType type) {
@@ -114,7 +116,7 @@ public class DataDiagramGenerator extends GMLDiagramGenerator {
     if (_isSignSpec) {
       return "unsigned";
     } else {
-      return "signed";
+      return "";
     }
   }
   
@@ -172,17 +174,6 @@ public class DataDiagramGenerator extends GMLDiagramGenerator {
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(variable).toString());
-    }
-  }
-  
-  public String getReflexType(final ReflexType type) {
-    if (type instanceof CType) {
-      return _getReflexType((CType)type);
-    } else if (type != null) {
-      return _getReflexType(type);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(type).toString());
     }
   }
   
