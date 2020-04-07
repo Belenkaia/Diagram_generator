@@ -4,7 +4,7 @@ graph
 [
 	hierarchic	1
 	label	""
-	directed	1
+	directed	10
 	node
 	[
 		id	0
@@ -13,7 +13,7 @@ graph
 	    [
 	    	w	40.0
 	    	h	48.0
-	    	type	"ellipse"
+	    	type	"roundrectangle"
 	    	raisedBorder	0
 	    	fill	"#FFFFFF"
 	    	outline	"#000000"
@@ -33,7 +33,7 @@ graph
 	    [
 	    	w	210.0
 	    	h	48.0
-	    	type	"ellipse"
+	    	type	"roundrectangle"
 	    	raisedBorder	0
 	    	fill	"#FFFFFF"
 	    	outline	"#000000"
@@ -53,7 +53,7 @@ graph
 	    [
 	    	w	120.0
 	    	h	48.0
-	    	type	"ellipse"
+	    	type	"roundrectangle"
 	    	raisedBorder	0
 	    	fill	"#FFFFFF"
 	    	outline	"#000000"
@@ -73,7 +73,7 @@ graph
 	    [
 	    	w	70.0
 	    	h	48.0
-	    	type	"ellipse"
+	    	type	"roundrectangle"
 	    	raisedBorder	0
 	    	fill	"#FFFFFF"
 	    	outline	"#000000"
@@ -93,7 +93,7 @@ graph
 	    [
 	    	w	60.0
 	    	h	48.0
-	    	type	"ellipse"
+	    	type	"roundrectangle"
 	    	raisedBorder	0
 	    	fill	"#FFFFFF"
 	    	outline	"#000000"
@@ -113,7 +113,7 @@ graph
 	    [
 	    	w	120.0
 	    	h	48.0
-	    	type	"ellipse"
+	    	type	"roundrectangle"
 	    	raisedBorder	0
 	    	fill	"#FFFFFF"
 	    	outline	"#000000"
@@ -133,7 +133,7 @@ graph
 	    [
 	    	w	240.0
 	    	h	48.0
-	    	type	"ellipse"
+	    	type	"roundrectangle"
 	    	raisedBorder	0
 	    	fill	"#FFFFFF"
 	    	outline	"#000000"
@@ -153,7 +153,7 @@ graph
 	    [
 	    	w	180.0
 	    	h	48.0
-	    	type	"ellipse"
+	    	type	"roundrectangle"
 	    	raisedBorder	0
 	    	fill	"#FFFFFF"
 	    	outline	"#000000"
@@ -173,7 +173,7 @@ graph
 	    [
 	    	w	210.0
 	    	h	48.0
-	    	type	"roundrectangle"
+	    	type	"ellipse"
 	    	raisedBorder	0
 	    	fill	"#FFFFFF"
 	    	outline	"#000000"
@@ -193,7 +193,7 @@ graph
 	    [
 	    	w	130.0
 	    	h	48.0
-	    	type	"roundrectangle"
+	    	type	"ellipse"
 	    	raisedBorder	0
 	    	fill	"#FFFFFF"
 	    	outline	"#000000"
@@ -213,7 +213,7 @@ graph
 	    [
 	    	w	270.0
 	    	h	48.0
-	    	type	"roundrectangle"
+	    	type	"ellipse"
 	    	raisedBorder	0
 	    	fill	"#FFFFFF"
 	    	outline	"#000000"
@@ -233,7 +233,7 @@ graph
 	    [
 	    	w	200.0
 	    	h	48.0
-	    	type	"roundrectangle"
+	    	type	"ellipse"
 	    	raisedBorder	0
 	    	fill	"#FFFFFF"
 	    	outline	"#000000"
@@ -253,7 +253,7 @@ graph
 	    [
 	    	w	130.0
 	    	h	48.0
-	    	type	"roundrectangle"
+	    	type	"ellipse"
 	    	raisedBorder	0
 	    	fill	"#FFFFFF"
 	    	outline	"#000000"
@@ -273,7 +273,7 @@ graph
 	    [
 	    	w	130.0
 	    	h	48.0
-	    	type	"roundrectangle"
+	    	type	"ellipse"
 	    	raisedBorder	0
 	    	fill	"#FFFFFF"
 	    	outline	"#000000"
@@ -293,7 +293,7 @@ graph
 	    [
 	    	w	140.0
 	    	h	48.0
-	    	type	"roundrectangle"
+	    	type	"ellipse"
 	    	raisedBorder	0
 	    	fill	"#FFFFFF"
 	    	outline	"#000000"
@@ -308,19 +308,19 @@ graph
 	node
 	[
 		id	15
-		label	" ReflexType :  COOK_TIME"
+		label	" bool :COOK_TIME"
 	    graphics
 	    [
-	    	w	240.0
+	    	w	160.0
 	    	h	48.0
-	    	type	"roundrectangle"
+	    	type	"ellipse"
 	    	raisedBorder	0
 	    	fill	"#FFFFFF"
 	    	outline	"#000000"
 	    ]
 		LabelGraphics
 		[
-			text	" ReflexType :  COOK_TIME"
+			text	" bool :COOK_TIME"
 			fontSize	12
 			fontName	"Dialog"
 		]
@@ -328,19 +328,19 @@ graph
 	node
 	[
 		id	16
-		label	"signed ReflexType :  Time"
+		label	" long :Time"
 	    graphics
 	    [
-	    	w	250.0
+	    	w	110.0
 	    	h	48.0
-	    	type	"roundrectangle"
+	    	type	"ellipse"
 	    	raisedBorder	0
 	    	fill	"#FFFFFF"
 	    	outline	"#000000"
 	    ]
 		LabelGraphics
 		[
-			text	"signed ReflexType :  Time"
+			text	" long :Time"
 			fontSize	12
 			fontName	"Dialog"
 		]
@@ -348,19 +348,19 @@ graph
 	node
 	[
 		id	17
-		label	"signed ReflexType :  TimeTable"
+		label	" long :TimeTable"
 	    graphics
 	    [
-	    	w	300.0
+	    	w	160.0
 	    	h	48.0
-	    	type	"roundrectangle"
+	    	type	"ellipse"
 	    	raisedBorder	0
 	    	fill	"#FFFFFF"
 	    	outline	"#000000"
 	    ]
 		LabelGraphics
 		[
-			text	"signed ReflexType :  TimeTable"
+			text	" long :TimeTable"
 			fontSize	12
 			fontName	"Dialog"
 		]

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import ru.iaie.reflex.diagram.generator.ActiveProcess;
 
 @SuppressWarnings("all")
-public class GMLDiagramGenerator {
+public class ProcessDiagramGenerator {
   protected int count_id = 0;
   
   protected ArrayList<ActiveProcess> procList = new ArrayList<ActiveProcess>();

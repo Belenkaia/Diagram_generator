@@ -12,7 +12,7 @@ import ru.iaie.reflex.diagram.reflex.ProgramVariable
 import ru.iaie.reflex.diagram.reflex.ReflexType
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
-class DataDiagramGenerator extends GMLDiagramGenerator{
+class DataDiagramGenerator extends ProcessDiagramGenerator{
 	var HashMap<String, Integer> variableId = new HashMap<String, Integer>();
 	var GMLTextGenerator gmlTextGenerator = new GMLTextGenerator()	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

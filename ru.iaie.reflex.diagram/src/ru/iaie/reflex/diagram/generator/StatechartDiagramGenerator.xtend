@@ -12,7 +12,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 import ru.iaie.reflex.diagram.reflex.ExpressionStatement
 import ru.iaie.reflex.diagram.reflex.AssignmentExpression
 
-class StatechartDiagramGenerator  extends GMLDiagramGenerator{
+class StatechartDiagramGenerator  extends ProcessDiagramGenerator{
 var GMLTextGenerator gmlTextGenerator = new GMLTextGenerator()
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

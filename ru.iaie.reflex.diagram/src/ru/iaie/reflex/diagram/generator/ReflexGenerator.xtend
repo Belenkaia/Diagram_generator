@@ -5,7 +5,8 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import ru.iaie.reflex.diagram.reflex.Process
-
+//import static extension org.eclipse.xtext.EcoreUtil2.*
+//import java.io.File;
 /**
  * Generates code from your model files on save.
  * 
@@ -22,8 +23,6 @@ var StatechartDiagramGenerator statechartDiagramGenerator = new StatechartDiagra
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 	
-      	fsa.generateFile("activity_diagram.gml", activityDiagramGenerator.generateActivityDiagram(resource));
-     	activityDiagramGenerator.clear()
      	fsa.generateFile("data_diagram.gml", dataDiagramGenerator.generateDataDiagram(resource));
      	dataDiagramGenerator.clear()
      	for (process : resource.allContents.toIterable.filter(Process)) 
@@ -31,6 +30,12 @@ var StatechartDiagramGenerator statechartDiagramGenerator = new StatechartDiagra
 			fsa.generateFile(process.name + "_statechart_diagram.gml", statechartDiagramGenerator.generateStatechartDiagram(resource, process));
 			statechartDiagramGenerator.clear()
 		}
+		
+		fsa.generateFile("activity_diagram.gml", activityDiagramGenerator.generateActivityDiagram(resource));
+		//System.out.println("url: " + resource.normalizedURI.lastSegment)
+      	fsa.generateFile("activity_diagram.graphml", activityDiagramGenerator.generateActivityGraphMLDiagram(resource, "D:\\GitHub\\runtime-EclipseXtext\\test\\src-gen"));
+     	activityDiagramGenerator.clear()
+		
      	
       }     
 }

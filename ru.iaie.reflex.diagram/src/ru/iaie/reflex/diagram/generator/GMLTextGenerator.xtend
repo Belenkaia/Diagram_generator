@@ -5,12 +5,12 @@ import org.eclipse.emf.ecore.resource.Resource
 import ru.iaie.reflex.diagram.reflex.Process
 
 class GMLTextGenerator {
-	//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Метод возвращает строку, содержащую заголовок выходного GML файла. Также обнуляется счетчик вершин (count_id)
 //
 // Method returns string, which is a head of output GML file. Also nodes counter is made zero 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	
-	def writeHeadGML(GMLDiagramGenerator generator) '''
+	def writeHeadGML(ProcessDiagramGenerator generator) '''
 	Creator	"tranlator"
 	Version	"2.15"
 	graph
@@ -117,7 +117,7 @@ class GMLTextGenerator {
 //
 //Output: string which have a  notification of all process nodes. Also method is saving accord of process name and its id in ArrayList procId
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def String generateProcessNodes(Resource resource/* , int count_id*/, GMLDiagramGenerator generator)
+	def String generateProcessNodes(Resource resource/* , int count_id*/, ProcessDiagramGenerator generator)
 	{
 		var String tempString = "";
 		for (e : resource.allContents.toIterable.filter(Process)) //получаем список всех процессов, и проходим по нему

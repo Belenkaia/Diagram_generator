@@ -1,4 +1,5 @@
-program Micro                                 {           
+program Micro
+{           
 const ON 1;
 const OFF 0;
 const OPEN 1;
@@ -11,13 +12,12 @@ const ONE_MIN 60*ONE_SEK;
 const BA_FPGA1_U1 0XA110; /* ВХОД */
 const BA_FPGA3_U1 0XA910; /* ВЫХОД */
 
-
 /*######## ОПИСАНИЕ РЕГИСТРОВ МОДУЛЕЙ УСО #########*/
 /*###########################################################*/
 input LOG_INPUT 0x01 0x02 8; 
 output LOG_OUTPUT 0x03 0x04 16;
 
-proc INIT{ 
+proc INIT{
 
 	/* ВХОДНЫЕ СИГНАЛЫ: */
 	bool K_BUTTON_START = {LOG_INPUT[1]} global;
@@ -33,10 +33,10 @@ proc INIT{
 
 	state Start
 	{
-		//Y_WARM = OFF;
-		//Y_LAMP = OFF;
-		//Y_ALARM = OFF;
-		//COOK_TIME = 0;
+		Y_WARM = OFF;
+		Y_LAMP = OFF;
+		Y_ALARM = OFF;
+		COOK_TIME = 0;
 		start Start_Button_Controle;
 		start Cooking;
 		start Lights_alarm;
@@ -48,63 +48,57 @@ proc INIT{
 	}
 }
 
-
-
 proc Start_Button_Controle { /* при нажатии кнопки пуска
 							увеличивает время готовки */
-	from proc INIT K_BUTTON_START COOK_TIME
-//	from proc INIT COOK_TIME
-	//, COOK_TIME;
+	from proc INIT K_BUTTON_START, COOK_TIME;
 	state PressControl
 	{
 		if (K_BUTTON_START == ON) 
 		{
-			//COOK_TIME += ONE_MIN;
-			//SET NEXT;
+			COOK_TIME += ONE_MIN;
+			set next;
 		}
 	}
-
 	state PauseOnButtonBounce
 	{
-		timeout 0t { //1s
+		timeout 100 
+		{ //1s
 			set state PressControl;
-			}
+		}
 	}
 }
 
 proc Lights_alarm { /*зажигает и гасит лампочку, когда
 								это требуется */
-	from proc INIT K_DOOR Y_WARM Y_LAMP
+	from proc INIT K_DOOR, Y_WARM, Y_LAMP;
 
 	state TermControleForStart
 	{
 		if ((K_DOOR == OPEN) || (Y_WARM == ON))
 		{
-			//Y_LAMP = ON;
+			Y_LAMP = ON;
 		}
 		else {
-			//Y_LAMP = OFF;
+			Y_LAMP = OFF;
 		}
 		loop;
 	}
 }
 
-proc Cooking{ /* готовит, IF дверца закрыта и время ненулевое,
-					IF открывается дверца - выключает нагреватель,
-					IF приготовил - звуковой сигнал 1 сек */
-	from proc INIT K_DOOR Y_ALARM
-						Y_WARM COOK_TIME
+
+proc Cooking{
+	from proc INIT K_DOOR, Y_ALARM, Y_WARM, COOK_TIME;
 	
 	state Start
 	{
 		if (K_DOOR == OPEN)
 		{
-			//COOK_TIME = 0;
+			COOK_TIME = 0;
 		} else 
 		{
 			if (COOK_TIME != 0)
 			{
-				//Y_WARM = ON;
+				Y_WARM = ON;
 				set next;
 			}
 		}
@@ -112,29 +106,28 @@ proc Cooking{ /* готовит, IF дверца закрыта и время ненулевое,
 	
 	state Cooking
 	{
-		if (K_DOOR != OPEN)
+		if (K_DOOR == OPEN)
 		{
-			//Y_WARM = OFF; 
+			Y_WARM = OFF; 
 			set state WaitForDoorClose;
 		}
-		timeout 0t//(COOK_TIME) 
+		timeout 100//(COOK_TIME) 
 		{
-			//Y_WARM = OFF;
+			Y_WARM = OFF;
 			set next;
 		}
 	}
-
 	state VoiceAlarm 
-	{ /* можно выделить в PROCесс, а можно и так */
-		//Y_ALARM = ON;
-		//COOK_TIME = 0;
-		timeout 0t//ONE_SEK 
+	{ 
+		
+		Y_ALARM = ON;
+		COOK_TIME = 0;
+		timeout 100//ONE_SEK 
 		{
-			//Y_ALARM = OFF;
+			Y_ALARM = OFF;
 			set state Start;
 		}
 	}
-
 	state WaitForDoorClose
 	{
 		if (COOK_TIME == 0)
@@ -142,13 +135,13 @@ proc Cooking{ /* готовит, IF дверца закрыта и время ненулевое,
 		else
 		if (K_DOOR != OPEN)
 		{
-			//Y_WARM = ON;
+			Y_WARM = ON;
 			set state Cooking;
 		}
 		else set state WaitForDoorClose;
-		timeout 0t//30 * ONE_MIN 
+		timeout 180000//(30 * ONE_MIN) 
 		{
-			//COOK_TIME = 0;
+			COOK_TIME = 0;
 			set state Start;
 		}
 	}
@@ -161,7 +154,7 @@ proc Clocks
 	
 	state INIT
 	{
-		//Time = 0;
+		Time = 0;
 		set state Clocks;
 	}
 	state Clocks
@@ -170,9 +163,9 @@ proc Clocks
 	}
 	state AddMinute
 	{
-		timeout 0t//ONE_MIN 
+		timeout 6000//ONE_MIN 
 		{
-			//Time += ONE_MIN;
+			Time += ONE_MIN;
 			set state Clocks;
 		}
 	}
@@ -181,23 +174,23 @@ proc Clocks
 
 proc Display_work
 {
-	from proc INIT COOK_TIME
-	from proc Clocks Time
+	from proc INIT COOK_TIME;
+	from proc Clocks Time;
 	long TimeTable local;	
 	
 	state Start
 	{
-	  //TimeTable = Time;
+	  TimeTable = Time;
 	  set state ShowTime;
 	}
 	state ShowTime
    {
 	if (COOK_TIME == 0){
-		//TimeTable = Time;
+		TimeTable = Time;
 	}
 	else 
 	{
-			//TimeTable = COOK_TIME;
+		TimeTable = COOK_TIME;
 	}
 	loop;
 	}
@@ -205,39 +198,37 @@ proc Display_work
 
 proc ChangeTimeButtonControle { /* при нажатии кнопки пуска
 									увеличивает время на 1 мин */
-	from proc INIT K_BUTTON_CHANGE_TIME
-	from proc Clocks Time
+	from proc INIT K_BUTTON_CHANGE_TIME;
+	from proc Clocks Time;
 	state PressControl
 	{
 		if (K_BUTTON_CHANGE_TIME == ON) 
 		{
-			//Time += ONE_MIN;
+			Time += ONE_MIN;
 			set next;
 		}	
 	}
-	
 	state PauseOnButtonBounce
 	{
-		timeout 0t/*ONE_SEK*/ set state PressControl;
+		timeout 100 /*ONE_SEK*/ set state PressControl;
 	}
 }
 
-proc HourButtonControle { /* при нажатии кнопки пуска
-						увеличивает время на 1 час */
-	from proc INIT K_BUTTON_HOUR
-	from proc Clocks Time
+proc HourButtonControle { 
+	from proc INIT K_BUTTON_HOUR;
+	from proc Clocks Time;
 
 	state PressControl{
 		if (K_BUTTON_HOUR == ON) 
 		{
-			//Time += ONE_MIN * 60;
+			Time += ONE_MIN * 60;
 			set next;
 		}
 	}
 
 	state PauseOnButtonBounce
 	{
-		timeout 0t/*ONE_SEK*/ set state PressControl;
+		timeout 100/*ONE_SEK*/ set state PressControl;
 	}
 }
 }

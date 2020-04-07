@@ -26,8 +26,6 @@ public class ReflexGenerator extends AbstractGenerator {
   
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
-    fsa.generateFile("activity_diagram.gml", this.activityDiagramGenerator.generateActivityDiagram(resource));
-    this.activityDiagramGenerator.clear();
     fsa.generateFile("data_diagram.gml", this.dataDiagramGenerator.generateDataDiagram(resource));
     this.dataDiagramGenerator.clear();
     Iterable<ru.iaie.reflex.diagram.reflex.Process> _filter = Iterables.<ru.iaie.reflex.diagram.reflex.Process>filter(IteratorExtensions.<EObject>toIterable(resource.getAllContents()), ru.iaie.reflex.diagram.reflex.Process.class);
@@ -39,5 +37,8 @@ public class ReflexGenerator extends AbstractGenerator {
         this.statechartDiagramGenerator.clear();
       }
     }
+    fsa.generateFile("activity_diagram.gml", this.activityDiagramGenerator.generateActivityDiagram(resource));
+    fsa.generateFile("activity_diagram.graphml", this.activityDiagramGenerator.generateActivityGraphMLDiagram(resource, "D:\\GitHub\\runtime-EclipseXtext\\test\\src-gen"));
+    this.activityDiagramGenerator.clear();
   }
 }

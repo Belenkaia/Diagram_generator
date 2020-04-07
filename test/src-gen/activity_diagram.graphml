@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:java="http://www.yworks.com/xml/yfiles-common/1.0/java" xmlns:sys="http://www.yworks.com/xml/yfiles-common/markup/primitives/2.0" xmlns:x="http://www.yworks.com/xml/yfiles-common/markup/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:y="http://www.yworks.com/xml/graphml" xmlns:yed="http://www.yworks.com/xml/yed/3" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://www.yworks.com/xml/schema/graphml/1.1/ygraphml.xsd">
+  <key for="port" id="d0" yfiles.type="portgraphics"/>
+  <key for="port" id="d1" yfiles.type="portgeometry"/>
+  <key for="port" id="d2" yfiles.type="portuserdata"/>
+  <key attr.name="url" attr.type="string" for="node" id="d3"/>
+  <key for="node" id="d5" yfiles.type="nodegraphics"/>
+  <key for="graphml" id="d6" yfiles.type="resources"/>
+  <key for="edge" id="d9" yfiles.type="edgegraphics"/>0
+<graph edgedefault="directed" id="G">
+	<node id="n0">
+	  <data key="d3"><![CDATA[D:\GitHub\runtime-EclipseXtext\test\src-gen/INIT_statechart_diagram.gml]]></data>
+	  <data key="d5">
+	    <y:ShapeNode>
+	      <y:Geometry height="48.0" width="40"/>
+	      <y:Fill color="#FFFFFF" transparent="false"/>
+	      <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+	      <y:NodeLabel alignment="center" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="26.6640625">INIT</y:NodeLabel>
+	      <y:Shape type="roundrectangle"/>
+	    </y:ShapeNode>
+	  </data>
+	</node>
+	<node id="n1">
+	  <data key="d3"><![CDATA[D:\GitHub\runtime-EclipseXtext\test\src-gen/Start_Button_Controle_statechart_diagram.gml]]></data>
+	  <data key="d5">
+	    <y:ShapeNode>
+	      <y:Geometry height="48.0" width="210"/>
+	      <y:Fill color="#FFFFFF" transparent="false"/>
+	      <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+	      <y:NodeLabel alignment="center" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="26.6640625">Start_Button_Controle</y:NodeLabel>
+	      <y:Shape type="roundrectangle"/>
+	    </y:ShapeNode>
+	  </data>
+	</node>
+	<node id="n2">
+	  <data key="d3"><![CDATA[D:\GitHub\runtime-EclipseXtext\test\src-gen/Lights_alarm_statechart_diagram.gml]]></data>
+	  <data key="d5">
+	    <y:ShapeNode>
+	      <y:Geometry height="48.0" width="120"/>
+	      <y:Fill color="#FFFFFF" transparent="false"/>
+	      <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+	      <y:NodeLabel alignment="center" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="26.6640625">Lights_alarm</y:NodeLabel>
+	      <y:Shape type="roundrectangle"/>
+	    </y:ShapeNode>
+	  </data>
+	</node>
+	<node id="n3">
+	  <data key="d3"><![CDATA[D:\GitHub\runtime-EclipseXtext\test\src-gen/Cooking_statechart_diagram.gml]]></data>
+	  <data key="d5">
+	    <y:ShapeNode>
+	      <y:Geometry height="48.0" width="70"/>
+	      <y:Fill color="#FFFFFF" transparent="false"/>
+	      <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+	      <y:NodeLabel alignment="center" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="26.6640625">Cooking</y:NodeLabel>
+	      <y:Shape type="roundrectangle"/>
+	    </y:ShapeNode>
+	  </data>
+	</node>
+	<node id="n4">
+	  <data key="d3"><![CDATA[D:\GitHub\runtime-EclipseXtext\test\src-gen/Clocks_statechart_diagram.gml]]></data>
+	  <data key="d5">
+	    <y:ShapeNode>
+	      <y:Geometry height="48.0" width="60"/>
+	      <y:Fill color="#FFFFFF" transparent="false"/>
+	      <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+	      <y:NodeLabel alignment="center" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="26.6640625">Clocks</y:NodeLabel>
+	      <y:Shape type="roundrectangle"/>
+	    </y:ShapeNode>
+	  </data>
+	</node>
+	<node id="n5">
+	  <data key="d3"><![CDATA[D:\GitHub\runtime-EclipseXtext\test\src-gen/Display_work_statechart_diagram.gml]]></data>
+	  <data key="d5">
+	    <y:ShapeNode>
+	      <y:Geometry height="48.0" width="120"/>
+	      <y:Fill color="#FFFFFF" transparent="false"/>
+	      <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+	      <y:NodeLabel alignment="center" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="26.6640625">Display_work</y:NodeLabel>
+	      <y:Shape type="roundrectangle"/>
+	    </y:ShapeNode>
+	  </data>
+	</node>
+	<node id="n6">
+	  <data key="d3"><![CDATA[D:\GitHub\runtime-EclipseXtext\test\src-gen/ChangeTimeButtonControle_statechart_diagram.gml]]></data>
+	  <data key="d5">
+	    <y:ShapeNode>
+	      <y:Geometry height="48.0" width="240"/>
+	      <y:Fill color="#FFFFFF" transparent="false"/>
+	      <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+	      <y:NodeLabel alignment="center" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="26.6640625">ChangeTimeButtonControle</y:NodeLabel>
+	      <y:Shape type="roundrectangle"/>
+	    </y:ShapeNode>
+	  </data>
+	</node>
+	<node id="n7">
+	  <data key="d3"><![CDATA[D:\GitHub\runtime-EclipseXtext\test\src-gen/HourButtonControle_statechart_diagram.gml]]></data>
+	  <data key="d5">
+	    <y:ShapeNode>
+	      <y:Geometry height="48.0" width="180"/>
+	      <y:Fill color="#FFFFFF" transparent="false"/>
+	      <y:BorderStyle color="#000000" raised="false" type="line" width="1.0"/>
+	      <y:NodeLabel alignment="center" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.701171875" horizontalTextPosition="center" iconTextGap="4" modelName="internal" modelPosition="c" textColor="#000000" verticalTextPosition="bottom" visible="true" width="26.6640625">HourButtonControle</y:NodeLabel>
+	      <y:Shape type="roundrectangle"/>
+	    </y:ShapeNode>
+	  </data>
+	</node>
+	<edge id="e0" source="n0" target="n1">
+	      <data key="d9">
+	        <y:PolyLineEdge>
+	          <y:LineStyle color="#000000" type="line" width="1.0"/>
+	          <y:Arrows source="none" target="standard"/>
+	          <y:EdgeLabel alignment="center" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" iconTextGap="4" preferredPlacement="anywhere" textColor="#000000" verticalTextPosition="bottom" visible="true">start<y:PreferredPlacementDescriptor/>
+	          </y:EdgeLabel>
+	        </y:PolyLineEdge>
+	      </data>
+	</edge>
+	<edge id="e1" source="n0" target="n3">
+	      <data key="d9">
+	        <y:PolyLineEdge>
+	          <y:LineStyle color="#000000" type="line" width="1.0"/>
+	          <y:Arrows source="none" target="standard"/>
+	          <y:EdgeLabel alignment="center" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" iconTextGap="4" preferredPlacement="anywhere" textColor="#000000" verticalTextPosition="bottom" visible="true">start<y:PreferredPlacementDescriptor/>
+	          </y:EdgeLabel>
+	        </y:PolyLineEdge>
+	      </data>
+	</edge>
+	<edge id="e2" source="n0" target="n2">
+	      <data key="d9">
+	        <y:PolyLineEdge>
+	          <y:LineStyle color="#000000" type="line" width="1.0"/>
+	          <y:Arrows source="none" target="standard"/>
+	          <y:EdgeLabel alignment="center" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" iconTextGap="4" preferredPlacement="anywhere" textColor="#000000" verticalTextPosition="bottom" visible="true">start<y:PreferredPlacementDescriptor/>
+	          </y:EdgeLabel>
+	        </y:PolyLineEdge>
+	      </data>
+	</edge>
+	<edge id="e3" source="n0" target="n4">
+	      <data key="d9">
+	        <y:PolyLineEdge>
+	          <y:LineStyle color="#000000" type="line" width="1.0"/>
+	          <y:Arrows source="none" target="standard"/>
+	          <y:EdgeLabel alignment="center" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" iconTextGap="4" preferredPlacement="anywhere" textColor="#000000" verticalTextPosition="bottom" visible="true">start<y:PreferredPlacementDescriptor/>
+	          </y:EdgeLabel>
+	        </y:PolyLineEdge>
+	      </data>
+	</edge>
+	<edge id="e4" source="n0" target="n5">
+	      <data key="d9">
+	        <y:PolyLineEdge>
+	          <y:LineStyle color="#000000" type="line" width="1.0"/>
+	          <y:Arrows source="none" target="standard"/>
+	          <y:EdgeLabel alignment="center" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" iconTextGap="4" preferredPlacement="anywhere" textColor="#000000" verticalTextPosition="bottom" visible="true">start<y:PreferredPlacementDescriptor/>
+	          </y:EdgeLabel>
+	        </y:PolyLineEdge>
+	      </data>
+	</edge>
+	<edge id="e5" source="n0" target="n6">
+	      <data key="d9">
+	        <y:PolyLineEdge>
+	          <y:LineStyle color="#000000" type="line" width="1.0"/>
+	          <y:Arrows source="none" target="standard"/>
+	          <y:EdgeLabel alignment="center" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" iconTextGap="4" preferredPlacement="anywhere" textColor="#000000" verticalTextPosition="bottom" visible="true">start<y:PreferredPlacementDescriptor/>
+	          </y:EdgeLabel>
+	        </y:PolyLineEdge>
+	      </data>
+	</edge>
+	<edge id="e6" source="n0" target="n7">
+	      <data key="d9">
+	        <y:PolyLineEdge>
+	          <y:LineStyle color="#000000" type="line" width="1.0"/>
+	          <y:Arrows source="none" target="standard"/>
+	          <y:EdgeLabel alignment="center" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" iconTextGap="4" preferredPlacement="anywhere" textColor="#000000" verticalTextPosition="bottom" visible="true">start<y:PreferredPlacementDescriptor/>
+	          </y:EdgeLabel>
+	        </y:PolyLineEdge>
+	      </data>
+	</edge>
+	<edge id="e7" source="n0" target="n0">
+	      <data key="d9">
+	        <y:PolyLineEdge>
+	          <y:LineStyle color="#000000" type="line" width="1.0"/>
+	          <y:Arrows source="none" target="standard"/>
+	          <y:EdgeLabel alignment="center" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" horizontalTextPosition="center" iconTextGap="4" preferredPlacement="anywhere" textColor="#000000" verticalTextPosition="bottom" visible="true">stop<y:PreferredPlacementDescriptor/>
+	          </y:EdgeLabel>
+	        </y:PolyLineEdge>
+	      </data>
+	</edge>
+  </graph>
+    <data key="d6">
+	  <y:Resources/>
+	</data>
+</graphml>

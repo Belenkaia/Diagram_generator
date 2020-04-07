@@ -1,27 +1,32 @@
-
 program Dryer {
 	input in 0x01 0x02 8;
   	output out 0x03 0x04 16;
-	
 	proc Dryer {
+
 		state Wait 
 		{
-			start Proc1;
 		}
 		state Test
 		{
-			
+			timeout 0t {
+				start Proc1;
+			}
 		}
 	}
 	proc Proc1
 	{
 		state Work 
 		{
-			start Proc2;
-			start Proc3;
+			start Proc4;
+			if (a) 
+			{
+				start Proc2;
+			}			
+			else
+			{
+				start Proc3;
+			}
 		}
-			
-			
 	}
 	proc Proc2
 	{
@@ -33,6 +38,13 @@ program Dryer {
 	proc Proc3
 	{
 		state Work2 
+		{
+			stop;
+		}
+	}
+	proc Proc4
+	{
+		state St1 
 		{
 			stop;
 		}

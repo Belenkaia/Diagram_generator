@@ -9,8 +9,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import ru.iaie.reflex.diagram.generator.ActiveProcess;
-import ru.iaie.reflex.diagram.generator.GMLDiagramGenerator;
 import ru.iaie.reflex.diagram.generator.GMLTextGenerator;
+import ru.iaie.reflex.diagram.generator.GraphMLTextGenerator;
+import ru.iaie.reflex.diagram.generator.ProcessDiagramGenerator;
 import ru.iaie.reflex.diagram.reflex.CompoundStatement;
 import ru.iaie.reflex.diagram.reflex.IfElseStat;
 import ru.iaie.reflex.diagram.reflex.StartProcStat;
@@ -20,8 +21,10 @@ import ru.iaie.reflex.diagram.reflex.StopProcStat;
 import ru.iaie.reflex.diagram.reflex.TimeoutFunction;
 
 @SuppressWarnings("all")
-public class ActivityDiagramGenerator extends GMLDiagramGenerator {
+public class ActivityDiagramGenerator extends ProcessDiagramGenerator {
   private GMLTextGenerator gmlTextGenerator = new GMLTextGenerator();
+  
+  private GraphMLTextGenerator graphMLTextGenerator = new GraphMLTextGenerator();
   
   public void constructActiveModel(final Resource resource) {
     for (int i = 0; (i < this.procId.size()); i++) {
@@ -135,6 +138,37 @@ public class ActivityDiagramGenerator extends GMLDiagramGenerator {
     _builder.append(_generateAllEdges, "\t");
     _builder.newLineIfNotEmpty();
     _builder.append("]");
+    return _builder;
+  }
+  
+  public CharSequence generateActivityGraphMLDiagram(final Resource resource, final String url) {
+    StringConcatenation _builder = new StringConcatenation();
+    CharSequence _headGraphMlGenerator = this.graphMLTextGenerator.headGraphMlGenerator(this);
+    _builder.append(_headGraphMlGenerator);
+    _builder.newLineIfNotEmpty();
+    _builder.append("<graph edgedefault=\"directed\" id=\"G\">");
+    _builder.newLine();
+    _builder.append("\t");
+    String _generateProcessNodes = this.graphMLTextGenerator.generateProcessNodes(resource, this, url);
+    _builder.append(_generateProcessNodes, "\t");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    String _generateAllEdges = this.graphMLTextGenerator.generateAllEdges(this.procList);
+    _builder.append(_generateAllEdges, "\t");
+    _builder.newLineIfNotEmpty();
+    _builder.append("  ");
+    _builder.append("</graph>");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<data key=\"d6\">");
+    _builder.newLine();
+    _builder.append("\t  ");
+    _builder.append("<y:Resources/>");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("</data>");
+    _builder.newLine();
+    _builder.append("</graphml>");
     return _builder;
   }
   

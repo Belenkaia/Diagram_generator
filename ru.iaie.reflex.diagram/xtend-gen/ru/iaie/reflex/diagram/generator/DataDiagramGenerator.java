@@ -11,8 +11,8 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import ru.iaie.reflex.diagram.generator.ActiveProcess;
-import ru.iaie.reflex.diagram.generator.GMLDiagramGenerator;
 import ru.iaie.reflex.diagram.generator.GMLTextGenerator;
+import ru.iaie.reflex.diagram.generator.ProcessDiagramGenerator;
 import ru.iaie.reflex.diagram.reflex.CType;
 import ru.iaie.reflex.diagram.reflex.DeclaredVariable;
 import ru.iaie.reflex.diagram.reflex.ImportedVariable;
@@ -22,7 +22,7 @@ import ru.iaie.reflex.diagram.reflex.ReflexType;
 import ru.iaie.reflex.diagram.reflex.Variable;
 
 @SuppressWarnings("all")
-public class DataDiagramGenerator extends GMLDiagramGenerator {
+public class DataDiagramGenerator extends ProcessDiagramGenerator {
   private HashMap<String, Integer> variableId = new HashMap<String, Integer>();
   
   private GMLTextGenerator gmlTextGenerator = new GMLTextGenerator();

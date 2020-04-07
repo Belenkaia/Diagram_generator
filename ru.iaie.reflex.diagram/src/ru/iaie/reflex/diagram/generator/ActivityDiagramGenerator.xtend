@@ -9,8 +9,9 @@ import ru.iaie.reflex.diagram.reflex.StartProcStat
 import ru.iaie.reflex.diagram.reflex.Statement
 import ru.iaie.reflex.diagram.reflex.StopProcStat
 
-class ActivityDiagramGenerator extends GMLDiagramGenerator{
+class ActivityDiagramGenerator extends ProcessDiagramGenerator{
 	var GMLTextGenerator gmlTextGenerator = new GMLTextGenerator()
+	var GraphMLTextGenerator graphMLTextGenerator = new GraphMLTextGenerator()
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Метод создает модель связи процессов по управлению в виде списка ArrayList<ActiveProcess>
 //
@@ -161,5 +162,21 @@ def dispatch ArrayList<ActiveProcess> getActiveList(Statement statement, int con
 ]'''
 
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Метод соединяет вместе заголовок GraphML файла, список вершин диаграммы и список ребер. Для этого вызываются соответствующие методы. Возвращает готовый текст activity-диаграммы 
+//
+// Method is collecting a GML head, nodes list and edge list of diagram by calling the same methods 
+// Output: finished text of GraphML activity diagram
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	def generateActivityGraphMLDiagram(Resource resource, String url)
+	'''«graphMLTextGenerator.headGraphMlGenerator(this)»
+<graph edgedefault="directed" id="G">
+	«graphMLTextGenerator.generateProcessNodes(resource, this, url)»
+	«graphMLTextGenerator.generateAllEdges(procList)»
+  </graph>
+    <data key="d6">
+	  <y:Resources/>
+	</data>
+</graphml>'''
 
 }

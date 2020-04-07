@@ -7,8 +7,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import ru.iaie.reflex.diagram.generator.ActiveProcess;
-import ru.iaie.reflex.diagram.generator.GMLDiagramGenerator;
 import ru.iaie.reflex.diagram.generator.GMLTextGenerator;
+import ru.iaie.reflex.diagram.generator.ProcessDiagramGenerator;
 import ru.iaie.reflex.diagram.reflex.AssignmentExpression;
 import ru.iaie.reflex.diagram.reflex.CompoundStatement;
 import ru.iaie.reflex.diagram.reflex.Expression;
@@ -20,7 +20,7 @@ import ru.iaie.reflex.diagram.reflex.Statement;
 import ru.iaie.reflex.diagram.reflex.TimeoutFunction;
 
 @SuppressWarnings("all")
-public class StatechartDiagramGenerator extends GMLDiagramGenerator {
+public class StatechartDiagramGenerator extends ProcessDiagramGenerator {
   private GMLTextGenerator gmlTextGenerator = new GMLTextGenerator();
   
   public String generateStatechartNodes(final Resource resource, final ru.iaie.reflex.diagram.reflex.Process process) {

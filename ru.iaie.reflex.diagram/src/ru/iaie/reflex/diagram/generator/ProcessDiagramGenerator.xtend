@@ -2,7 +2,7 @@ package ru.iaie.reflex.diagram.generator
 
 import java.util.ArrayList
 
-class GMLDiagramGenerator {
+class ProcessDiagramGenerator {
 	protected var count_id = 0;
 	protected var ArrayList<ActiveProcess> procList = new ArrayList<ActiveProcess>;
 	protected var procId = new ArrayList<String>();
