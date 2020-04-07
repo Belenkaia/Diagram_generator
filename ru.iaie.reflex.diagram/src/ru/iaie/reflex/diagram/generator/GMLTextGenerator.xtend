@@ -122,9 +122,9 @@ class GMLTextGenerator {
 		var String tempString = "";
 		for (e : resource.allContents.toIterable.filter(Process)) //получаем список всех процессов, и проходим по нему
 		{ 
-	         tempString += generateOneProcessNode(generator.getCountId()/*count_id*/, e.name, "roundrectangle") // для каждого процесса генерируем строковое описание вершины графа, и конкатенируем его к предыдущим
-	         generator.addElementToProcId(generator.getCountId()/*count_id*/, e.name)// procId.add(count_id, e.name) // запоминаем соответствие имени процесса назначенному ему Id
-	         generator.incrementCountId()//count_id ++ // инкрементируем счетчик процессов (это число будет Id для вершины следующего процесса)
+	         tempString += generateOneProcessNode(generator.getCountId(), e.name, "roundrectangle") // для каждого процесса генерируем строковое описание вершины графа, и конкатенируем его к предыдущим
+	         generator.addElementToProcId(generator.getCountId(), e.name)// procId.add(count_id, e.name) // запоминаем соответствие имени процесса назначенному ему Id
+	         generator.incrementCountId()// инкрементируем счетчик процессов (это число будет Id для вершины следующего процесса)
 	     }
 	    return tempString
 	}

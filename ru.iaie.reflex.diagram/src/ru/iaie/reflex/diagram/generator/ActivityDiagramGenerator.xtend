@@ -19,12 +19,6 @@ class ActivityDiagramGenerator extends ProcessDiagramGenerator{
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def constructActiveModel(Resource resource)
 	{
-		for (var int i = 0; i < procId.size; i ++) // äëÿ îòëàäêè
-		{
-			System.out.print(i + ":" + procId.get(i) + ", ")
-		}
-		System.out.println()
-		
 		for (process : resource.allContents.toIterable.filter(Process)) 
 		{
 	         for (state : process.states) 
@@ -155,11 +149,11 @@ def dispatch ArrayList<ActiveProcess> getActiveList(Statement statement, int con
 // Output: finished text of GML activity diagram
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def generateActivityDiagram(Resource resource)
-	'''«gmlTextGenerator.writeHeadGML(this)»
-	«gmlTextGenerator.generateProcessNodes(resource, this/* , NS_RECTANGLE*/)»
+	'''«System.out.print("Generate GML activity diagram...")»«gmlTextGenerator.writeHeadGML(this)»
+	«gmlTextGenerator.generateProcessNodes(resource, this)»
 	«constructActiveModel(resource)»
 	«gmlTextGenerator.generateAllEdges(procList)»
-]'''
+]«System.out.println("done.")»'''
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -168,15 +162,15 @@ def dispatch ArrayList<ActiveProcess> getActiveList(Statement statement, int con
 // Method is collecting a GML head, nodes list and edge list of diagram by calling the same methods 
 // Output: finished text of GraphML activity diagram
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def generateActivityGraphMLDiagram(Resource resource, String url)
-	'''«graphMLTextGenerator.headGraphMlGenerator(this)»
+	def generateActivityGraphMLDiagram(Resource resource, String url, String statechartFileNameTail)
+	'''«System.out.print("Generate GraphML activity diagram...")»«graphMLTextGenerator.headGraphMlGenerator(this)»
 <graph edgedefault="directed" id="G">
-	«graphMLTextGenerator.generateProcessNodes(resource, this, url)»
+	«graphMLTextGenerator.generateProcessNodes(resource, this, url, statechartFileNameTail)»
 	«graphMLTextGenerator.generateAllEdges(procList)»
   </graph>
     <data key="d6">
 	  <y:Resources/>
 	</data>
-</graphml>'''
+</graphml>«System.out.println("done.")»'''
 
 }

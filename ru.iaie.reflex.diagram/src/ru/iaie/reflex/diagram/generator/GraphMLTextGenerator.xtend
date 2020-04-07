@@ -6,12 +6,11 @@ import ru.iaie.reflex.diagram.reflex.Process
 
 class GraphMLTextGenerator {
 	
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Метод возвращает строку, содержащую заголовок выходного GraphML файла. Также обнуляется счетчик вершин (count_id)
 //
 // Method returns string, which is a head of output GraphML file. Also nodes counter is made zero 
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	
-	
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------		
 	def headGraphMlGenerator(ProcessDiagramGenerator generator)
 	'''
 	<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -24,8 +23,11 @@ class GraphMLTextGenerator {
 	  <key for="graphml" id="d6" yfiles.type="resources"/>
 	  <key for="edge" id="d9" yfiles.type="edgegraphics"/>«generator.zeroCountId()»
 	'''
-
-	def generateShareNodeGraphML(int nameLength, String processName, String shapetype) '''
+	
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Method returns string, which declare the nodes properties like shape and label 
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	def generateShapeNodeGraphML(int nameLength, String processName, String shapetype) '''
 	        <y:ShapeNode>
 	          <y:Geometry height="48.0" width="«(nameLength * 10)»"/>
 	          <y:Fill color="#FFFFFF" transparent="false"/>
@@ -34,18 +36,29 @@ class GraphMLTextGenerator {
 	          <y:Shape type="«shapetype»"/>
 	        </y:ShapeNode>
 	'''
+	
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Method returns string, which declare the nodes properties and other data keys like url 
+//urlStatechartDiagram - is a link in file system to statechart diagram for that process
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def dataKeysGraphMLGenerator(int nameLength, String processName, String shapetype, String urlStatechartDiagram)'''
 	      <data key="d3"><![CDATA[«urlStatechartDiagram»]]></data>
 	      <data key="d5">
-	        «generateShareNodeGraphML(nameLength, processName, shapetype)»
+	        «generateShapeNodeGraphML(nameLength, processName, shapetype)»
 	      </data>
 	'''
+	
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Method returns string, which declare one node in GraphML format 
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def nodeGraphMLGenerate(int processId, String processName, String shapetype, String urlStatechartDiagram)'''
 	    <node id="n«processId»">
 	      «dataKeysGraphMLGenerator(processName.length(), processName, shapetype, urlStatechartDiagram)»
 	    </node>
 	'''
-	
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Method returns string, which declare one edge in GraphML format
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	
 	def generateOneEdgeGraphML(int edgeId, int fromId, int toId, String edgeLabel)
 	'''
 	<edge id="e«edgeId»" source="n«fromId»" target="n«toId»">
@@ -54,7 +67,9 @@ class GraphMLTextGenerator {
 	      </data>
 	</edge>
 	'''
-	
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Method returns string, which declare one edge's properties in GraphML format (like edge label)
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------	
 	def generatePoliLineEdgeGraphML(String edgeLabel)'''
 		        <y:PolyLineEdge>
 		          <y:LineStyle color="#000000" type="line" width="1.0"/>
@@ -87,13 +102,13 @@ class GraphMLTextGenerator {
 //
 //Output: string which have a  notification of all process nodes. Also method is saving accord of process name and its id in ArrayList procId
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def String generateProcessNodes(Resource resource, ProcessDiagramGenerator generator, String url)
+	def String generateProcessNodes(Resource resource, ProcessDiagramGenerator generator, String url, String statechartFileNameTail)
 	{
 		var String tempString = "";
 		for (e : resource.allContents.toIterable.filter(Process)) //получаем список всех процессов, и проходим по нему
 		{ 
-	         tempString += nodeGraphMLGenerate(generator.getCountId(), e.name, "roundrectangle", url + "/" + e.name + "_statechart_diagram.gml")// для каждого процесса генерируем строковое описание вершины графа, и конкатенируем его к предыдущим
-	         //generator.addElementToProcId(generator.getCountId(), e.name)// procId.add(count_id, e.name) // запоминаем соответствие имени процесса назначенному ему Id
+	         tempString += nodeGraphMLGenerate(generator.getCountId(), e.name, "roundrectangle", url + "/" + e.name + statechartFileNameTail)// для каждого процесса генерируем строковое описание вершины графа, и конкатенируем его к предыдущим
+	         //generator.addElementToProcId(generator.getCountId(), e.name)// procId.add(count_id, e.name) // этот список создается при генерации этой диаграммы в GML
 	         generator.incrementCountId()// инкрементируем счетчик процессов (это число будет Id для вершины следующего процесса)
 	     }
 	    return tempString

@@ -27,14 +27,6 @@ public class ActivityDiagramGenerator extends ProcessDiagramGenerator {
   private GraphMLTextGenerator graphMLTextGenerator = new GraphMLTextGenerator();
   
   public void constructActiveModel(final Resource resource) {
-    for (int i = 0; (i < this.procId.size()); i++) {
-      String _plus = (Integer.valueOf(i) + ":");
-      String _get = this.procId.get(i);
-      String _plus_1 = (_plus + _get);
-      String _plus_2 = (_plus_1 + ", ");
-      System.out.print(_plus_2);
-    }
-    System.out.println();
     Iterable<ru.iaie.reflex.diagram.reflex.Process> _filter = Iterables.<ru.iaie.reflex.diagram.reflex.Process>filter(IteratorExtensions.<EObject>toIterable(resource.getAllContents()), ru.iaie.reflex.diagram.reflex.Process.class);
     for (final ru.iaie.reflex.diagram.reflex.Process process : _filter) {
       EList<State> _states = process.getStates();
@@ -123,6 +115,7 @@ public class ActivityDiagramGenerator extends ProcessDiagramGenerator {
   
   public CharSequence generateActivityDiagram(final Resource resource) {
     StringConcatenation _builder = new StringConcatenation();
+    System.out.print("Generate GML activity diagram...");
     CharSequence _writeHeadGML = this.gmlTextGenerator.writeHeadGML(this);
     _builder.append(_writeHeadGML);
     _builder.newLineIfNotEmpty();
@@ -138,18 +131,20 @@ public class ActivityDiagramGenerator extends ProcessDiagramGenerator {
     _builder.append(_generateAllEdges, "\t");
     _builder.newLineIfNotEmpty();
     _builder.append("]");
+    System.out.println("done.");
     return _builder;
   }
   
-  public CharSequence generateActivityGraphMLDiagram(final Resource resource, final String url) {
+  public CharSequence generateActivityGraphMLDiagram(final Resource resource, final String url, final String statechartFileNameTail) {
     StringConcatenation _builder = new StringConcatenation();
+    System.out.print("Generate GraphML activity diagram...");
     CharSequence _headGraphMlGenerator = this.graphMLTextGenerator.headGraphMlGenerator(this);
     _builder.append(_headGraphMlGenerator);
     _builder.newLineIfNotEmpty();
     _builder.append("<graph edgedefault=\"directed\" id=\"G\">");
     _builder.newLine();
     _builder.append("\t");
-    String _generateProcessNodes = this.graphMLTextGenerator.generateProcessNodes(resource, this, url);
+    String _generateProcessNodes = this.graphMLTextGenerator.generateProcessNodes(resource, this, url, statechartFileNameTail);
     _builder.append(_generateProcessNodes, "\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -169,6 +164,7 @@ public class ActivityDiagramGenerator extends ProcessDiagramGenerator {
     _builder.append("</data>");
     _builder.newLine();
     _builder.append("</graphml>");
+    System.out.println("done.");
     return _builder;
   }
   

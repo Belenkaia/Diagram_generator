@@ -158,12 +158,13 @@ def dispatch String getSigned(CType type)
 // Output: finished text of GML data diagram
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	def generateDataDiagram(Resource resource)
-	'''«gmlTextGenerator.writeHeadGML(this)»
+	'''«System.out.print("Generate GML data diagram...")»
+	«gmlTextGenerator.writeHeadGML(this)»
 	«gmlTextGenerator.generateProcessNodes(resource, this)»
 	«getVariablesNodes(resource)»
 	«generateDataModel(resource)»
 	«gmlTextGenerator.generateAllEdges(procList)»
-]'''
+]«System.out.println("done.")»'''
 
 		
 }

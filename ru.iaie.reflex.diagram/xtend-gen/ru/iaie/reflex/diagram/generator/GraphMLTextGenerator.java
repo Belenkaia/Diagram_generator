@@ -43,7 +43,7 @@ public class GraphMLTextGenerator {
     return _builder;
   }
   
-  public CharSequence generateShareNodeGraphML(final int nameLength, final String processName, final String shapetype) {
+  public CharSequence generateShapeNodeGraphML(final int nameLength, final String processName, final String shapetype) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("<y:ShapeNode>");
     _builder.newLine();
@@ -82,8 +82,8 @@ public class GraphMLTextGenerator {
     _builder.append("<data key=\"d5\">");
     _builder.newLine();
     _builder.append("  ");
-    CharSequence _generateShareNodeGraphML = this.generateShareNodeGraphML(nameLength, processName, shapetype);
-    _builder.append(_generateShareNodeGraphML, "  ");
+    CharSequence _generateShapeNodeGraphML = this.generateShapeNodeGraphML(nameLength, processName, shapetype);
+    _builder.append(_generateShapeNodeGraphML, "  ");
     _builder.newLineIfNotEmpty();
     _builder.append("</data>");
     _builder.newLine();
@@ -163,7 +163,7 @@ public class GraphMLTextGenerator {
     return tempString;
   }
   
-  public String generateProcessNodes(final Resource resource, final ProcessDiagramGenerator generator, final String url) {
+  public String generateProcessNodes(final Resource resource, final ProcessDiagramGenerator generator, final String url, final String statechartFileNameTail) {
     String tempString = "";
     Iterable<ru.iaie.reflex.diagram.reflex.Process> _filter = Iterables.<ru.iaie.reflex.diagram.reflex.Process>filter(IteratorExtensions.<EObject>toIterable(resource.getAllContents()), ru.iaie.reflex.diagram.reflex.Process.class);
     for (final ru.iaie.reflex.diagram.reflex.Process e : _filter) {
@@ -173,7 +173,7 @@ public class GraphMLTextGenerator {
         String _name = e.getName();
         String _name_1 = e.getName();
         String _plus = ((url + "/") + _name_1);
-        String _plus_1 = (_plus + "_statechart_diagram.gml");
+        String _plus_1 = (_plus + statechartFileNameTail);
         CharSequence _nodeGraphMLGenerate = this.nodeGraphMLGenerate(_countId, _name, "roundrectangle", _plus_1);
         tempString = (_tempString + _nodeGraphMLGenerate);
         generator.incrementCountId();

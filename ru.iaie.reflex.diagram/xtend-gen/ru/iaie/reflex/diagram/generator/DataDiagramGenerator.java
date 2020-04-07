@@ -122,8 +122,11 @@ public class DataDiagramGenerator extends ProcessDiagramGenerator {
   
   public CharSequence generateDataDiagram(final Resource resource) {
     StringConcatenation _builder = new StringConcatenation();
+    System.out.print("Generate GML data diagram...");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
     CharSequence _writeHeadGML = this.gmlTextGenerator.writeHeadGML(this);
-    _builder.append(_writeHeadGML);
+    _builder.append(_writeHeadGML, "\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     String _generateProcessNodes = this.gmlTextGenerator.generateProcessNodes(resource, this);
@@ -141,6 +144,7 @@ public class DataDiagramGenerator extends ProcessDiagramGenerator {
     _builder.append(_generateAllEdges, "\t");
     _builder.newLineIfNotEmpty();
     _builder.append("]");
+    System.out.println("done.");
     return _builder;
   }
   

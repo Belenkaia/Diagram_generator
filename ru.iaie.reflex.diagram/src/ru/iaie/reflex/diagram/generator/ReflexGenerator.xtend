@@ -13,9 +13,13 @@ import ru.iaie.reflex.diagram.reflex.Process
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
 class ReflexGenerator extends AbstractGenerator {
-var ActivityDiagramGenerator activityDiagramGenerator = new ActivityDiagramGenerator()
-var DataDiagramGenerator dataDiagramGenerator = new DataDiagramGenerator()
-var StatechartDiagramGenerator statechartDiagramGenerator = new StatechartDiagramGenerator()
+	val WORKING_DIRECTORY = "D:\\GitHub\\runtime-EclipseXtext\\test\\src-gen"
+	val STATECHART_FILE_NAME_TAIL = "_statechart_diagram.gml"
+	var ActivityDiagramGenerator activityDiagramGenerator = new ActivityDiagramGenerator()
+	
+	var DataDiagramGenerator dataDiagramGenerator = new DataDiagramGenerator()
+	var StatechartDiagramGenerator statechartDiagramGenerator = new StatechartDiagramGenerator()
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Основной метод. Создает файл диаграммы и записывает в него результат генерации.
 //
@@ -25,15 +29,15 @@ var StatechartDiagramGenerator statechartDiagramGenerator = new StatechartDiagra
 	
      	fsa.generateFile("data_diagram.gml", dataDiagramGenerator.generateDataDiagram(resource));
      	dataDiagramGenerator.clear()
+     	System.out.print("Generate statechart GML diagrams...")
      	for (process : resource.allContents.toIterable.filter(Process)) 
 		{
-			fsa.generateFile(process.name + "_statechart_diagram.gml", statechartDiagramGenerator.generateStatechartDiagram(resource, process));
+			fsa.generateFile(process.name + STATECHART_FILE_NAME_TAIL, statechartDiagramGenerator.generateStatechartDiagram(resource, process));
 			statechartDiagramGenerator.clear()
 		}
-		
+		System.out.println("done.")
 		fsa.generateFile("activity_diagram.gml", activityDiagramGenerator.generateActivityDiagram(resource));
-		//System.out.println("url: " + resource.normalizedURI.lastSegment)
-      	fsa.generateFile("activity_diagram.graphml", activityDiagramGenerator.generateActivityGraphMLDiagram(resource, "D:\\GitHub\\runtime-EclipseXtext\\test\\src-gen"));
+      	fsa.generateFile("activity_diagram.graphml", activityDiagramGenerator.generateActivityGraphMLDiagram(resource, WORKING_DIRECTORY, STATECHART_FILE_NAME_TAIL));
      	activityDiagramGenerator.clear()
 		
      	
