@@ -12,6 +12,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import ru.iaie.reflex.diagram.generator.ActiveProcess;
 import ru.iaie.reflex.diagram.generator.GMLTextGenerator;
+import ru.iaie.reflex.diagram.generator.GraphMLTextGenerator;
 import ru.iaie.reflex.diagram.generator.ProcessDiagramGenerator;
 import ru.iaie.reflex.diagram.reflex.CType;
 import ru.iaie.reflex.diagram.reflex.DeclaredVariable;
@@ -27,6 +28,8 @@ public class DataDiagramGenerator extends ProcessDiagramGenerator {
   
   private GMLTextGenerator gmlTextGenerator = new GMLTextGenerator();
   
+  private GraphMLTextGenerator graphMLTextGenerator = new GraphMLTextGenerator();
+  
   public String getVariablesNodes(final Resource resource) {
     String tempStr = "";
     Iterable<DeclaredVariable> _filter = Iterables.<DeclaredVariable>filter(IteratorExtensions.<EObject>toIterable(resource.getAllContents()), DeclaredVariable.class);
@@ -35,6 +38,21 @@ public class DataDiagramGenerator extends ProcessDiagramGenerator {
         String _tempStr = tempStr;
         CharSequence _generateOneProcessNode = this.gmlTextGenerator.generateOneProcessNode(this.count_id, this.getVariableNameAndType(variable), "ellipse");
         tempStr = (_tempStr + _generateOneProcessNode);
+        this.variableId.put(variable.getName(), Integer.valueOf(this.count_id));
+        this.incrementCountId();
+      }
+    }
+    return tempStr;
+  }
+  
+  public String getVariablesNodesGraphML(final Resource resource) {
+    String tempStr = "";
+    Iterable<DeclaredVariable> _filter = Iterables.<DeclaredVariable>filter(IteratorExtensions.<EObject>toIterable(resource.getAllContents()), DeclaredVariable.class);
+    for (final DeclaredVariable variable : _filter) {
+      {
+        String _tempStr = tempStr;
+        CharSequence _nodeGraphMLGenerate = this.graphMLTextGenerator.nodeGraphMLGenerate(this.count_id, this.getVariableNameAndType(variable), "ellipse", "");
+        tempStr = (_tempStr + _nodeGraphMLGenerate);
         this.variableId.put(variable.getName(), Integer.valueOf(this.count_id));
         this.incrementCountId();
       }
@@ -144,6 +162,43 @@ public class DataDiagramGenerator extends ProcessDiagramGenerator {
     _builder.append(_generateAllEdges, "\t");
     _builder.newLineIfNotEmpty();
     _builder.append("]");
+    System.out.println("done.");
+    return _builder;
+  }
+  
+  public CharSequence generateDataGraphMLDiagram(final Resource resource, final String url, final String statechartFileNameTail) {
+    StringConcatenation _builder = new StringConcatenation();
+    System.out.print("Generate GraphML data diagram...");
+    CharSequence _headGraphMlGenerator = this.graphMLTextGenerator.headGraphMlGenerator(this);
+    _builder.append(_headGraphMlGenerator);
+    _builder.newLineIfNotEmpty();
+    _builder.append("<graph edgedefault=\"directed\" id=\"G\">");
+    _builder.newLine();
+    _builder.append("\t");
+    String _generateProcessNodes = this.graphMLTextGenerator.generateProcessNodes(resource, this, url, statechartFileNameTail);
+    _builder.append(_generateProcessNodes, "\t");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    String _variablesNodesGraphML = this.getVariablesNodesGraphML(resource);
+    _builder.append(_variablesNodesGraphML, "\t");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    String _generateAllEdges = this.graphMLTextGenerator.generateAllEdges(this.procList);
+    _builder.append(_generateAllEdges, "\t");
+    _builder.newLineIfNotEmpty();
+    _builder.append("  ");
+    _builder.append("</graph>");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.append("<data key=\"d6\">");
+    _builder.newLine();
+    _builder.append("\t  ");
+    _builder.append("<y:Resources/>");
+    _builder.newLine();
+    _builder.append("\t");
+    _builder.append("</data>");
+    _builder.newLine();
+    _builder.append("</graphml>");
     System.out.println("done.");
     return _builder;
   }

@@ -113,5 +113,7 @@ class GraphMLTextGenerator {
 	     }
 	    return tempString
 	}
+	
+	
     
 }

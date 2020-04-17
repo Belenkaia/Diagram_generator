@@ -14,7 +14,8 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils
 
 class DataDiagramGenerator extends ProcessDiagramGenerator{
 	var HashMap<String, Integer> variableId = new HashMap<String, Integer>();
-	var GMLTextGenerator gmlTextGenerator = new GMLTextGenerator()	
+	var GMLTextGenerator gmlTextGenerator = new GMLTextGenerator()
+	var GraphMLTextGenerator graphMLTextGenerator = new GraphMLTextGenerator()
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Метод возвращает строку, содержащую описание вершин переменных в формате gml для диаграммы связи по данным
 //
@@ -32,7 +33,24 @@ class DataDiagramGenerator extends ProcessDiagramGenerator{
 	    return tempStr;
 	}
 
-	
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Метод возвращает строку, содержащую описание вершин переменных в формате GraphML для диаграммы связи по данным
+//
+// Output: string with data nodes notification in the GraphML format
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	def getVariablesNodesGraphML(Resource resource)
+	{
+		var String tempStr = "";
+		for (variable : resource.allContents.toIterable.filter(DeclaredVariable)) // идем по объявленным переменным
+		{
+			tempStr += graphMLTextGenerator.nodeGraphMLGenerate(count_id, variable.getVariableNameAndType(), "ellipse", "")
+			variableId.put(variable.name, count_id) // запоминаем соответствие имени переменной назначенной ее вершине Id
+	        incrementCountId() // инкрементируем счетчик вершин (это число будет Id для вершины следующей вершины)
+	    }
+	    return tempStr;
+	}
+
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Метод создает модель связи процессов и переменных в формате ArrayList<ActiveProcess> (procList)
 //
@@ -166,5 +184,22 @@ def dispatch String getSigned(CType type)
 	«gmlTextGenerator.generateAllEdges(procList)»
 ]«System.out.println("done.")»'''
 
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Метод соединяет вместе заголовок GraphML файла, список вершин диаграммы и список ребер. Для этого вызываются соответствующие методы. Возвращает готовый текст data-диаграммы
+//
+// Method is collecting a GraphML head, nodes list (process nodes and data nodes) and edge list of diagram by calling the same methods 
+// Output: finished text of GraphML data diagram
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	def generateDataGraphMLDiagram(Resource resource, String url, String statechartFileNameTail)
+	'''«System.out.print("Generate GraphML data diagram...")»«graphMLTextGenerator.headGraphMlGenerator(this)»
+<graph edgedefault="directed" id="G">
+	«graphMLTextGenerator.generateProcessNodes(resource, this, url, statechartFileNameTail)»
+	«getVariablesNodesGraphML(resource)»
+	«graphMLTextGenerator.generateAllEdges(procList)»
+  </graph>
+    <data key="d6">
+	  <y:Resources/>
+	</data>
+</graphml>«System.out.println("done.")»'''
 		
 }

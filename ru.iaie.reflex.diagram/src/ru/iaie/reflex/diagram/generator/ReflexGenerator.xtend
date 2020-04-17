@@ -27,8 +27,7 @@ class ReflexGenerator extends AbstractGenerator {
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 	
-     	fsa.generateFile("data_diagram.gml", dataDiagramGenerator.generateDataDiagram(resource));
-     	dataDiagramGenerator.clear()
+     	
      	System.out.print("Generate statechart GML diagrams...")
      	for (process : resource.allContents.toIterable.filter(Process)) 
 		{
@@ -39,6 +38,10 @@ class ReflexGenerator extends AbstractGenerator {
 		fsa.generateFile("activity_diagram.gml", activityDiagramGenerator.generateActivityDiagram(resource));
       	fsa.generateFile("activity_diagram.graphml", activityDiagramGenerator.generateActivityGraphMLDiagram(resource, WORKING_DIRECTORY, STATECHART_FILE_NAME_TAIL));
      	activityDiagramGenerator.clear()
+     	
+     	fsa.generateFile("data_diagram.gml", dataDiagramGenerator.generateDataDiagram(resource));
+     	fsa.generateFile("data_diagram.graphml", dataDiagramGenerator.generateDataGraphMLDiagram(resource, WORKING_DIRECTORY, STATECHART_FILE_NAME_TAIL));
+     	dataDiagramGenerator.clear()
 		
      	
       }     
