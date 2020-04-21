@@ -1,7 +1,10 @@
 package ru.iaie.reflex.diagram.generator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import ru.iaie.reflex.diagram.generator.ActiveProcess;
+import ru.iaie.reflex.diagram.generator.DiagramNode;
+import ru.iaie.reflex.diagram.generator.GMLTextGenerator;
 
 @SuppressWarnings("all")
 public class ProcessDiagramGenerator {
@@ -9,7 +12,13 @@ public class ProcessDiagramGenerator {
   
   protected ArrayList<ActiveProcess> procList = new ArrayList<ActiveProcess>();
   
-  protected ArrayList<String> procId = new ArrayList<String>();
+  protected HashMap<String, DiagramNode> procId = new HashMap<String, DiagramNode>();
+  
+  protected GMLTextGenerator gmlTextGenerator = new GMLTextGenerator();
+  
+  public ProcessDiagramGenerator() {
+    this.count_id = 0;
+  }
   
   public boolean addElementToProcList(final ActiveProcess elem) {
     return this.procList.add(elem);
@@ -19,20 +28,31 @@ public class ProcessDiagramGenerator {
     return this.procList.addAll(list);
   }
   
-  public boolean addElementToProcId(final String elem) {
-    return this.procId.add(elem);
+  public int addElementToProcId(final DiagramNode elem) {
+    int _xblockexpression = (int) 0;
+    {
+      elem.setIndex(this.count_id);
+      this.procId.put(elem.getName(), elem);
+      _xblockexpression = this.count_id++;
+    }
+    return _xblockexpression;
   }
   
-  public void addElementToProcId(final int index, final String elem) {
-    this.procId.add(index, elem);
+  public DiagramNode addElementToProcId(final int ind, final DiagramNode elem) {
+    DiagramNode _xblockexpression = null;
+    {
+      elem.setIndex(ind);
+      _xblockexpression = this.procId.put(elem.getName(), elem);
+    }
+    return _xblockexpression;
   }
   
-  public String getElementProcId(final int index) {
-    return this.procId.get(index);
+  public DiagramNode getElementProcId(final String key) {
+    return this.procId.get(key);
   }
   
-  public int getElementIndexProcId(final String elem) {
-    return this.procId.indexOf(elem);
+  public int getElementIndexProcId(final String key) {
+    return this.procId.get(key).getIndex();
   }
   
   public int zeroCountId() {

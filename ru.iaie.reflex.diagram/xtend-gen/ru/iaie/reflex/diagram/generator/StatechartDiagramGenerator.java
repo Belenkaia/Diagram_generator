@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import ru.iaie.reflex.diagram.generator.ActiveProcess;
-import ru.iaie.reflex.diagram.generator.GMLTextGenerator;
+import ru.iaie.reflex.diagram.generator.DiagramNode;
 import ru.iaie.reflex.diagram.generator.ProcessDiagramGenerator;
 import ru.iaie.reflex.diagram.reflex.AssignmentExpression;
 import ru.iaie.reflex.diagram.reflex.CompoundStatement;
@@ -21,39 +21,32 @@ import ru.iaie.reflex.diagram.reflex.TimeoutFunction;
 
 @SuppressWarnings("all")
 public class StatechartDiagramGenerator extends ProcessDiagramGenerator {
-  private GMLTextGenerator gmlTextGenerator = new GMLTextGenerator();
-  
-  public String generateStatechartNodes(final Resource resource, final ru.iaie.reflex.diagram.reflex.Process process) {
-    String tempString = "";
-    String _tempString = tempString;
-    CharSequence _generateOneProcessNode = this.gmlTextGenerator.generateOneProcessNode(this.count_id, "     ", "circle");
-    tempString = (_tempString + _generateOneProcessNode);
-    this.procId.add(this.count_id, "start_default");
-    this.count_id++;
+  public void getStatechartNodes(final ru.iaie.reflex.diagram.reflex.Process process) {
+    DiagramNode newNode = new DiagramNode("   ", "circle");
+    this.addElementToProcId(newNode);
     EList<State> _states = process.getStates();
     for (final State state : _states) {
       {
-        String _tempString_1 = tempString;
-        CharSequence _generateOneProcessNode_1 = this.gmlTextGenerator.generateOneProcessNode(this.count_id, state.getName(), "roundrectangle");
-        tempString = (_tempString_1 + _generateOneProcessNode_1);
-        this.procId.add(this.count_id, state.getName());
-        this.count_id++;
+        String _name = state.getName();
+        DiagramNode tmpNode = new DiagramNode(_name);
+        this.addElementToProcId(tmpNode);
       }
     }
-    return tempString;
   }
   
-  public CharSequence generateStatechartDiagram(final Resource resource, final ru.iaie.reflex.diagram.reflex.Process process) {
+  public void generateStatechartDiagramModel(final Resource resource, final ru.iaie.reflex.diagram.reflex.Process process) {
+    this.getStatechartNodes(process);
+    this.generateStatechartModel(resource, process);
+  }
+  
+  public CharSequence generateStatechartDiagram(final ru.iaie.reflex.diagram.reflex.Process process) {
     StringConcatenation _builder = new StringConcatenation();
     CharSequence _writeHeadGML = this.gmlTextGenerator.writeHeadGML(this);
     _builder.append(_writeHeadGML);
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
-    String _generateStatechartNodes = this.generateStatechartNodes(resource, process);
-    _builder.append(_generateStatechartNodes, "\t");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    this.generateStatechartModel(resource, process);
+    String _generateNodes = this.gmlTextGenerator.generateNodes(this);
+    _builder.append(_generateNodes, "\t");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     String _generateAllEdges = this.gmlTextGenerator.generateAllEdges(this.procList);
@@ -73,12 +66,12 @@ public class StatechartDiagramGenerator extends ProcessDiagramGenerator {
           {
             if (flagFirstStateInProcess) {
               ActiveProcess startNode = new ActiveProcess();
-              startNode.setIdFrom(this.procId.indexOf("start_default"));
-              startNode.setIdTo(this.procId.indexOf(state.getName()));
+              startNode.setIdFrom(this.getElementIndexProcId("   "));
+              startNode.setIdTo(this.getElementIndexProcId(state.getName()));
               this.procList.add(startNode);
             }
             ArrayList<ActiveProcess> tempProcList = null;
-            tempProcList = this.getStatechartList(statement, this.procId.indexOf(state.getName()), "(", "");
+            tempProcList = this.getStatechartList(statement, this.getElementIndexProcId(state.getName()), "(", "");
             this.procList.addAll(tempProcList);
             flagFirstStateInProcess = false;
           }
@@ -93,7 +86,7 @@ public class StatechartDiagramGenerator extends ProcessDiagramGenerator {
               String _plus = ("(Timeout [ time = " + _ticks);
               String contextLabel = (_plus + "ticks ]");
               ArrayList<ActiveProcess> tempProcList = null;
-              tempProcList = this.getStatechartList(timeoutFunctionStatements, this.procId.indexOf(state.getName()), contextLabel, "");
+              tempProcList = this.getStatechartList(timeoutFunctionStatements, this.getElementIndexProcId(state.getName()), contextLabel, "");
               this.procList.addAll(tempProcList);
             }
           }
@@ -206,7 +199,7 @@ public class StatechartDiagramGenerator extends ProcessDiagramGenerator {
     if (_isNext) {
       tempElem.setIdTo((contextStateId + 1));
     } else {
-      tempElem.setIdTo(this.procId.indexOf(statement.getStateId()));
+      tempElem.setIdTo(this.getElementIndexProcId(statement.getStateId()));
     }
     tempElem.setAction(finishEdgeLabel);
     procTempList.add(tempElem);

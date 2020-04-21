@@ -13,36 +13,56 @@ import ru.iaie.reflex.diagram.reflex.ExpressionStatement
 import ru.iaie.reflex.diagram.reflex.AssignmentExpression
 
 class StatechartDiagramGenerator  extends ProcessDiagramGenerator{
-var GMLTextGenerator gmlTextGenerator = new GMLTextGenerator()
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //Input: process, to which we will generate statechart diagram
 //Output: string with statechart diagram node's for that process
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def String generateStatechartNodes(Resource resource, Process process)
+	def /*String*/ getStatechartNodes(Process process)
 	{
-		var String tempString = "";
-		tempString += gmlTextGenerator.generateOneProcessNode(count_id, "     ", "circle")
-		procId.add(count_id, "start_default") // запоминаем соответствие имени назначенному ему Id
-	    count_id ++
+		//var String tempString = "";
+		var DiagramNode newNode = new DiagramNode("   ", "circle")
+		addElementToProcId(newNode)
+		
+		//tempString += gmlTextGenerator.generateOneProcessNode(count_id, "     ", newNode.getShape)
+		//procId.add(count_id, "start_default") // запоминаем соответствие имени назначенному ему Id
+	    //count_id ++
 		for (state : process.states)//получаем список всех состояний процесса, и проходим по нему
 		{ 
-	    	tempString += gmlTextGenerator.generateOneProcessNode(count_id, state.name, "roundrectangle") 
-	    	procId.add(count_id, state.name) // запоминаем соответствие имени назначенному ему Id
-	        count_id ++
+			var DiagramNode tmpNode = new DiagramNode(state.name)
+	    	
+	    	//tempString += gmlTextGenerator.generateOneProcessNode(count_id, state.name, "roundrectangle") 
+	    	addElementToProcId(tmpNode)
+	    	//procId.add(count_id, tmpNode) // запоминаем соответствие имени назначенному ему Id
+	        //count_id ++
 	    }
-	    return tempString
+	    /*System.out.println("procId:")
+	    for(e: procId.values())
+	    {
+	    	System.out.print(e.name + ":" + e.shape +", ")
+	    }
+	    System.out.println(" ");*/
+	  //  return tempString
 	}
+
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def generateStatechartDiagramModel(Resource resource, Process process)
+{
+	 getStatechartNodes(process)
+	 generateStatechartModel(resource, process)
+}
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Возвращает готовый текст statechart-диаграммы
 // Input: process, to which we will generate statechart diagram
 // Output: finished text of GML process statechart diagram
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def generateStatechartDiagram(Resource resource, Process process)
+	def generateStatechartDiagram(Process process)
 	'''«gmlTextGenerator.writeHeadGML(this)»
-	«generateStatechartNodes(resource, process)»
-	«generateStatechartModel(resource, process)»
+	«gmlTextGenerator.generateNodes(this/* , procId*/)»
 	«gmlTextGenerator.generateAllEdges(procList)»
 ]'''	
 	
@@ -55,18 +75,20 @@ def generateStatechartModel(Resource resource, Process process)
 		var boolean flagFirstStateInProcess = true;
 		for (state : process.states) 
 	    {
-	    	
+	    	//var DiagramNode tmpNode = new DiagramNode(state.name)
+
 	         for(statement: state.statements) // go throw statements
 	         {
 	         	if(flagFirstStateInProcess) // we need to put start node to diagram (such circle with edge to first state on process)
 	         	{
+	         		//var DiagramNode stNode = new DiagramNode("   ", "circle")	
 	         		var ActiveProcess startNode = new ActiveProcess()
-	    			startNode.idFrom = procId.indexOf("start_default")
-	    			startNode.idTo = procId.indexOf(state.name)
+	    			startNode.idFrom = getElementIndexProcId("   ")
+	    			startNode.idTo = getElementIndexProcId(state.name)
 	    			procList.add(startNode)
 	         	}
 	         	var ArrayList<ActiveProcess> tempProcList;
-	         	tempProcList = statement.getStatechartList(procId.indexOf(state.name), "(", "")
+	         	tempProcList = statement.getStatechartList(getElementIndexProcId(state.name), "(", "")
 	         	procList.addAll(tempProcList)
 	         	flagFirstStateInProcess = false;
 	         }
@@ -77,7 +99,7 @@ def generateStatechartModel(Resource resource, Process process)
 	        	{
 	        		var String contextLabel = "(Timeout [ time = "  + state.timeoutFunction.time.ticks + "ticks ]"
 	        		var ArrayList<ActiveProcess> tempProcList;
-	        		tempProcList = timeoutFunctionStatements.getStatechartList(procId.indexOf(state.name), contextLabel, "")
+	        		tempProcList = timeoutFunctionStatements.getStatechartList(getElementIndexProcId(state.name), contextLabel, "")
 	        		procList.addAll(tempProcList)
 	        	}
 	         }
@@ -208,7 +230,10 @@ def dispatch ArrayList<ActiveProcess> getStatechartList(Statement statement, int
 		if(statement.next) // we gets id to states in the order we found states in process notification, so, next state will have number id which is currentId + 1
 			tempElem.idTo = contextStateId + 1
 		else
-			tempElem.idTo = (procId.indexOf(statement.stateId))
+		{
+			//var DiagramNode tmpNode = new DiagramNode(statement.stateId)
+			tempElem.idTo = (getElementIndexProcId(statement.stateId))
+		}
 		tempElem.action = finishEdgeLabel
 		procTempList.add(tempElem)
 		return procTempList

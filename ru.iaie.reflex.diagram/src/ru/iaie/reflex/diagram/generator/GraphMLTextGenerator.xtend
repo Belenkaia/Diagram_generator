@@ -1,8 +1,7 @@
 package ru.iaie.reflex.diagram.generator
 
 import java.util.ArrayList
-import org.eclipse.emf.ecore.resource.Resource
-import ru.iaie.reflex.diagram.reflex.Process
+import java.util.HashMap
 
 class GraphMLTextGenerator {
 	
@@ -102,14 +101,14 @@ class GraphMLTextGenerator {
 //
 //Output: string which have a  notification of all process nodes. Also method is saving accord of process name and its id in ArrayList procId
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def String generateProcessNodes(Resource resource, ProcessDiagramGenerator generator, String url, String statechartFileNameTail)
+	def String generateNodes(ProcessDiagramGenerator generator/*, HashMap<String, DiagramNode> nodeList */, String url, String statechartFileNameTail)
 	{
 		var String tempString = "";
-		for (e : resource.allContents.toIterable.filter(Process)) //получаем список всех процессов, и проходим по нему
+		for (e : generator.procId.values()) //получаем список всех процессов, и проходим по нему
 		{ 
-	         tempString += nodeGraphMLGenerate(generator.getCountId(), e.name, "roundrectangle", url + "/" + e.name + statechartFileNameTail)// для каждого процесса генерируем строковое описание вершины графа, и конкатенируем его к предыдущим
+	         tempString += nodeGraphMLGenerate(generator.getElementIndexProcId(e.getName()), e.getName(), e.getShape(), url + "/" + e.name + statechartFileNameTail)// для каждого процесса генерируем строковое описание вершины графа, и конкатенируем его к предыдущим
 	         //generator.addElementToProcId(generator.getCountId(), e.name)// procId.add(count_id, e.name) // этот список создается при генерации этой диаграммы в GML
-	         generator.incrementCountId()// инкрементируем счетчик процессов (это число будет Id для вершины следующего процесса)
+	         //generator.incrementCountId()// инкрементируем счетчик процессов (это число будет Id для вершины следующего процесса)
 	     }
 	    return tempString
 	}

@@ -2,20 +2,18 @@ package ru.iaie.reflex.diagram.generator;
 
 @SuppressWarnings("all")
 public class ActiveProcess {
-  private int idFrom = 0;
+  private int idFrom;
   
-  private int idTo = 0;
+  private int idTo;
   
-  private String action = "";
+  private String action;
   
-  /**
-   * new (int idF, int idT, String act)
-   * {
-   * idFrom = idF
-   * idTo = idT
-   * action = act
-   * }
-   */
+  public ActiveProcess() {
+    this.idFrom = 0;
+    this.idTo = 0;
+    this.action = "";
+  }
+  
   public void setAction(final String act) {
     this.action = act;
   }

@@ -9,6 +9,7 @@ import org.eclipse.xtext.generator.IGeneratorContext;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import ru.iaie.reflex.diagram.generator.ActivityDiagramGenerator;
 import ru.iaie.reflex.diagram.generator.DataDiagramGenerator;
+import ru.iaie.reflex.diagram.generator.ResultOfSeparation;
 import ru.iaie.reflex.diagram.generator.StatechartDiagramGenerator;
 
 /**
@@ -34,18 +35,31 @@ public class ReflexGenerator extends AbstractGenerator {
     Iterable<ru.iaie.reflex.diagram.reflex.Process> _filter = Iterables.<ru.iaie.reflex.diagram.reflex.Process>filter(IteratorExtensions.<EObject>toIterable(resource.getAllContents()), ru.iaie.reflex.diagram.reflex.Process.class);
     for (final ru.iaie.reflex.diagram.reflex.Process process : _filter) {
       {
+        this.statechartDiagramGenerator.generateStatechartDiagramModel(resource, process);
         String _name = process.getName();
         String _plus = (_name + this.STATECHART_FILE_NAME_TAIL);
-        fsa.generateFile(_plus, this.statechartDiagramGenerator.generateStatechartDiagram(resource, process));
+        fsa.generateFile(_plus, this.statechartDiagramGenerator.generateStatechartDiagram(process));
         this.statechartDiagramGenerator.clear();
       }
     }
     System.out.println("done.");
-    fsa.generateFile("activity_diagram.gml", this.activityDiagramGenerator.generateActivityDiagram(resource));
-    fsa.generateFile("activity_diagram.graphml", this.activityDiagramGenerator.generateActivityGraphMLDiagram(resource, this.WORKING_DIRECTORY, this.STATECHART_FILE_NAME_TAIL));
-    this.activityDiagramGenerator.clear();
-    fsa.generateFile("data_diagram.gml", this.dataDiagramGenerator.generateDataDiagram(resource));
-    fsa.generateFile("data_diagram.graphml", this.dataDiagramGenerator.generateDataGraphMLDiagram(resource, this.WORKING_DIRECTORY, this.STATECHART_FILE_NAME_TAIL));
-    this.dataDiagramGenerator.clear();
+    this.activityDiagramGenerator.generateActivityDiagramModel(resource);
+    ResultOfSeparation activityResult = this.activityDiagramGenerator.separateDiadram();
+    for (int i = 0; (i < activityResult.getDiagramComponents().size()); i++) {
+      {
+        fsa.generateFile(((("activity_diagram" + "_") + Integer.valueOf(i)) + ".gml"), this.activityDiagramGenerator.generateActivityDiagram(activityResult.getDiagramComponentNodes().get(i), activityResult.getDiagramComponents().get(i)));
+        fsa.generateFile(((("activity_diagram" + "_") + Integer.valueOf(i)) + ".graphml"), this.activityDiagramGenerator.generateActivityGraphMLDiagram(activityResult.getDiagramComponentNodes().get(i), activityResult.getDiagramComponents().get(i), this.WORKING_DIRECTORY, this.STATECHART_FILE_NAME_TAIL));
+        this.activityDiagramGenerator.clear();
+      }
+    }
+    this.dataDiagramGenerator.generateDataDiagramModel(resource);
+    ResultOfSeparation dataResult = this.dataDiagramGenerator.separateDiadram();
+    for (int j = 0; (j < dataResult.getDiagramComponents().size()); j++) {
+      {
+        fsa.generateFile(((("data_diagram" + "_") + Integer.valueOf(j)) + ".gml"), this.dataDiagramGenerator.generateDataDiagram(dataResult.getDiagramComponentNodes().get(j), dataResult.getDiagramComponents().get(j)));
+        fsa.generateFile(((("data_diagram" + "_") + Integer.valueOf(j)) + ".graphml"), this.dataDiagramGenerator.generateDataGraphMLDiagram(dataResult.getDiagramComponentNodes().get(j), dataResult.getDiagramComponents().get(j), this.WORKING_DIRECTORY, this.STATECHART_FILE_NAME_TAIL));
+        this.dataDiagramGenerator.clear();
+      }
+    }
   }
 }

@@ -5,6 +5,7 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import ru.iaie.reflex.diagram.reflex.Process
+//import org.eclipse.core.runtime.*
 //import static extension org.eclipse.xtext.EcoreUtil2.*
 //import java.io.File;
 /**
@@ -27,22 +28,40 @@ class ReflexGenerator extends AbstractGenerator {
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 	
-     	
+     	//System.out.println(resource.URI)
+     	//System.out.println(Platform.getLocation())
      	System.out.print("Generate statechart GML diagrams...")
      	for (process : resource.allContents.toIterable.filter(Process)) 
 		{
-			fsa.generateFile(process.name + STATECHART_FILE_NAME_TAIL, statechartDiagramGenerator.generateStatechartDiagram(resource, process));
+			statechartDiagramGenerator.generateStatechartDiagramModel(resource, process)
+			fsa.generateFile(process.name + STATECHART_FILE_NAME_TAIL, statechartDiagramGenerator.generateStatechartDiagram(process));
 			statechartDiagramGenerator.clear()
 		}
 		System.out.println("done.")
-		fsa.generateFile("activity_diagram.gml", activityDiagramGenerator.generateActivityDiagram(resource));
-      	fsa.generateFile("activity_diagram.graphml", activityDiagramGenerator.generateActivityGraphMLDiagram(resource, WORKING_DIRECTORY, STATECHART_FILE_NAME_TAIL));
-     	activityDiagramGenerator.clear()
-     	
-     	fsa.generateFile("data_diagram.gml", dataDiagramGenerator.generateDataDiagram(resource));
-     	fsa.generateFile("data_diagram.graphml", dataDiagramGenerator.generateDataGraphMLDiagram(resource, WORKING_DIRECTORY, STATECHART_FILE_NAME_TAIL));
-     	dataDiagramGenerator.clear()
 		
+		activityDiagramGenerator.generateActivityDiagramModel(resource)
+		var ResultOfSeparation activityResult = activityDiagramGenerator.separateDiadram()
+		//fsa.generateFile("activity_diagram" + "_"  + ".gml", activityDiagramGenerator.generateActivityDiagram(activityDiagramGenerator.procId, activityDiagramGenerator.procList));
+		//fsa.generateFile("activity_diagram" + "_"  + ".graphml", activityDiagramGenerator.generateActivityGraphMLDiagram(activityDiagramGenerator.procId, activityDiagramGenerator.procList, WORKING_DIRECTORY, STATECHART_FILE_NAME_TAIL));
+     	//activityDiagramGenerator.clear()
+		
+		for (var i = 0; i < activityResult.getDiagramComponents.size(); i ++)
+		{
+			fsa.generateFile("activity_diagram" + "_" + i + ".gml", activityDiagramGenerator.generateActivityDiagram(activityResult.getDiagramComponentNodes.get(i), activityResult.getDiagramComponents.get(i)));
+			fsa.generateFile("activity_diagram" + "_" + i + ".graphml", activityDiagramGenerator.generateActivityGraphMLDiagram(activityResult.getDiagramComponentNodes.get(i), activityResult.getDiagramComponents.get(i), WORKING_DIRECTORY, STATECHART_FILE_NAME_TAIL));
+     		activityDiagramGenerator.clear()
+		}
+		
+		dataDiagramGenerator.generateDataDiagramModel(resource)
+		var ResultOfSeparation dataResult = dataDiagramGenerator.separateDiadram()
+		//var ArrayList<ArrayList<DiagramNode>> dataDiagramComponentNodes =  dataDiagramGenerator.getNodeList()
+		
+		for (var j = 0; j < dataResult.getDiagramComponents.size(); j ++)
+		{
+			fsa.generateFile("data_diagram" + "_" + j + ".gml", dataDiagramGenerator.generateDataDiagram(dataResult.getDiagramComponentNodes.get(j), dataResult.getDiagramComponents.get(j)));
+			fsa.generateFile("data_diagram" + "_" + j + ".graphml", dataDiagramGenerator.generateDataGraphMLDiagram(dataResult.getDiagramComponentNodes.get(j), dataResult.getDiagramComponents.get(j), WORKING_DIRECTORY, STATECHART_FILE_NAME_TAIL));
+     		dataDiagramGenerator.clear()
+		}
      	
       }     
 }

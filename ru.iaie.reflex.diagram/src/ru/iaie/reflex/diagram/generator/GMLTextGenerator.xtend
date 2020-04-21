@@ -1,8 +1,7 @@
 package ru.iaie.reflex.diagram.generator
 
 import java.util.ArrayList
-import org.eclipse.emf.ecore.resource.Resource
-import ru.iaie.reflex.diagram.reflex.Process
+import java.util.HashMap
 
 class GMLTextGenerator {
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -117,14 +116,14 @@ class GMLTextGenerator {
 //
 //Output: string which have a  notification of all process nodes. Also method is saving accord of process name and its id in ArrayList procId
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def String generateProcessNodes(Resource resource/* , int count_id*/, ProcessDiagramGenerator generator)
+	def String generateNodes(ProcessDiagramGenerator generator/* ,  HashMap<String, DiagramNode> nodeList*/)
 	{
 		var String tempString = "";
-		for (e : resource.allContents.toIterable.filter(Process)) //получаем список всех процессов, и проходим по нему
+		for (e : generator.procId.values()) //получаем список всех node, и проходим по нему
 		{ 
-	         tempString += generateOneProcessNode(generator.getCountId(), e.name, "roundrectangle") // для каждого процесса генерируем строковое описание вершины графа, и конкатенируем его к предыдущим
-	         generator.addElementToProcId(generator.getCountId(), e.name)// procId.add(count_id, e.name) // запоминаем соответствие имени процесса назначенному ему Id
-	         generator.incrementCountId()// инкрементируем счетчик процессов (это число будет Id для вершины следующего процесса)
+	         tempString += generateOneProcessNode(generator.getElementIndexProcId(e.getName()), e.getName(), e.getShape()) // для каждого процесса генерируем строковое описание вершины графа, и конкатенируем его к предыдущим
+	         //generator.addElementToProcId(generator.getCountId(), e.name)// procId.add(count_id, e.name) // запоминаем соответствие имени процесса назначенному ему Id
+	         //generator.incrementCountId()// инкрементируем счетчик процессов (это число будет Id для вершины следующего процесса)
 	     }
 	    return tempString
 	}

@@ -1,15 +1,16 @@
 package ru.iaie.reflex.diagram.generator
 
 class ActiveProcess {
-		var int idFrom = 0;
-		var int idTo = 0;
-		var String action = "";
-		/*new (int idF, int idT, String act)
+		var int idFrom;
+		var int idTo;
+		var String action;
+		
+		new ()
 		{
-			idFrom = idF
-			idTo = idT
-			action = act
-		}*/
+			idFrom = 0;
+			idTo = 0;
+			action = "";
+		}
 		def void setAction(String act)
 		{
 			action = act;
@@ -23,6 +24,7 @@ class ActiveProcess {
 			idTo = id;
 		}
 		
+		
 		def String getAction()
 		{
 			return action;
@@ -35,4 +37,5 @@ class ActiveProcess {
 		{
 			return idTo
 		}
+		
 	}

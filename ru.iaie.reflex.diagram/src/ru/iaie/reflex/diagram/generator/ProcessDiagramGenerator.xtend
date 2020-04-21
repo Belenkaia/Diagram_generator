@@ -1,12 +1,17 @@
 package ru.iaie.reflex.diagram.generator
 
 import java.util.ArrayList
+import java.util.HashMap
 
 class ProcessDiagramGenerator {
 	protected var count_id = 0;
 	protected var ArrayList<ActiveProcess> procList = new ArrayList<ActiveProcess>;
-	protected var procId = new ArrayList<String>();
-	 
+	protected var HashMap<String, DiagramNode> procId = new HashMap<String, DiagramNode>();
+	protected var GMLTextGenerator gmlTextGenerator = new GMLTextGenerator()
+	new()
+	{
+		count_id = 0
+	}
 	def addElementToProcList(ActiveProcess elem)
 	{
 		procList.add(elem)
@@ -16,22 +21,25 @@ class ProcessDiagramGenerator {
 	{
 		procList.addAll(list)
 	}
-	def addElementToProcId(String elem)
+	def addElementToProcId(DiagramNode elem)
 	{
-		procId.add(elem)
+		elem.index = count_id
+		procId.put(elem.name, elem)
+		count_id++
 	}
-	def addElementToProcId(int index, String elem)
+	def addElementToProcId(int ind, DiagramNode elem)
 	{
-		procId.add(index, elem)
+		elem.index = ind
+		procId.put(elem.name, elem)
 	}
-	def String getElementProcId(int index)
+	def DiagramNode getElementProcId(String key)
 	{
-		return procId.get(index)
+		return procId.get(key)
 	}
 	
-	def int getElementIndexProcId(String elem)
+	def int getElementIndexProcId(String key)
 	{
-		return procId.indexOf(elem)
+		return procId.get(key).index
 	}
 	
 	def zeroCountId()
@@ -46,6 +54,7 @@ class ProcessDiagramGenerator {
 	{
 		return count_id
 	}
+	
 	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Очистка памяти, обнуление счетчиков

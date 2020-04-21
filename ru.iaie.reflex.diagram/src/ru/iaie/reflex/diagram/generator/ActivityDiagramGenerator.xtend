@@ -8,25 +8,26 @@ import ru.iaie.reflex.diagram.reflex.Process
 import ru.iaie.reflex.diagram.reflex.StartProcStat
 import ru.iaie.reflex.diagram.reflex.Statement
 import ru.iaie.reflex.diagram.reflex.StopProcStat
+import java.util.HashMap
 
-class ActivityDiagramGenerator extends ProcessDiagramGenerator{
-	var GMLTextGenerator gmlTextGenerator = new GMLTextGenerator()
-	var GraphMLTextGenerator graphMLTextGenerator = new GraphMLTextGenerator()
+class ActivityDiagramGenerator extends ProcessDiagramGraphMLGenerator{
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Ìåòîä ñîçäàåò ìîäåëü ñâÿçè ïğîöåññîâ ïî óïğàâëåíèş â âèäå ñïèñêà ArrayList<ActiveProcess>
 //
 // Method construct the model of manage connecting behind processes like an ArrayList<ActiveProcess> 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def constructActiveModel(Resource resource)
+	def generateActivityModel(Resource resource)
 	{
 		for (process : resource.allContents.toIterable.filter(Process)) 
 		{
+			//var DiagramNode tmpNode = new DiagramNode(process.name) 
 	         for (state : process.states) 
 	         {
 	         	for(statement: state.statements) // go throw statements
 	         	{
 	         		var ArrayList<ActiveProcess> tempProcList;
-	         		tempProcList = statement.getActiveList(procId.indexOf(process.name))
+	         		tempProcList = statement.getActiveList(getElementIndexProcId(process.name))
 	         		procList.addAll(tempProcList)
 	         	}
 	       
@@ -35,7 +36,7 @@ class ActivityDiagramGenerator extends ProcessDiagramGenerator{
 	         		for(timeoutFunctionStatements: state.timeoutFunction.statements)
 	         		{
 	         			var ArrayList<ActiveProcess> tempProcList;
-	         			tempProcList = timeoutFunctionStatements.getActiveList(procId.indexOf(process.name))
+	         			tempProcList = timeoutFunctionStatements.getActiveList(getElementIndexProcId(process.name))
 	         			procList.addAll(tempProcList)
 	         		}
 	         	}  
@@ -54,9 +55,10 @@ class ActivityDiagramGenerator extends ProcessDiagramGenerator{
 	{
 		var ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>
 		var ActiveProcess proc = new ActiveProcess()
+		//var DiagramNode tmpNode = new DiagramNode(statement.procId) 
 	    proc.setAction("start");
 	    proc.setIdFrom(contextProcessId)
-	    proc.setIdTo(procId.indexOf(statement.procId))
+	    proc.setIdTo(getElementIndexProcId(statement.procId))
 	    procTempList.add(proc)
 	    
 		return procTempList
@@ -73,11 +75,12 @@ class ActivityDiagramGenerator extends ProcessDiagramGenerator{
 	{
 		var ArrayList<ActiveProcess> procTempList = new ArrayList<ActiveProcess>
 		var ActiveProcess proc = new ActiveProcess()
+		//var DiagramNode tmpNode = new DiagramNode(statement.procId) 
 	    proc.setAction("stop");
 	    proc.setIdFrom(contextProcessId)
 	    if (statement.procId !== null)
 	    {
-	    	proc.setIdTo(procId.indexOf(statement.procId))
+	    	proc.setIdTo(getElementIndexProcId(statement.procId))
 	    }
 	    else
 	    {
@@ -142,18 +145,37 @@ def dispatch ArrayList<ActiveProcess> getActiveList(Statement statement, int con
 
 	
 	
+	
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//
+//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+def generateActivityDiagramModel(Resource resource)
+{
+	generateProcList(resource)
+	generateActivityModel(resource)
+}
+
+	
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Ìåòîä ñîåäèíÿåò âìåñòå çàãîëîâîê gml ôàéëà, ñïèñîê âåğøèí äèàãğàììû è ñïèñîê ğåáåğ. Äëÿ ıòîãî âûçûâàşòñÿ ñîîòâåòñòâóşùèå ìåòîäû. Âîçâğàùàåò ãîòîâûé òåêñò activity-äèàãğàììû
 //
 // Method is collecting a GML head, nodes list and edge list of diagram by calling the same methods 
 // Output: finished text of GML activity diagram
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def generateActivityDiagram(Resource resource)
-	'''«System.out.print("Generate GML activity diagram...")»«gmlTextGenerator.writeHeadGML(this)»
-	«gmlTextGenerator.generateProcessNodes(resource, this)»
-	«constructActiveModel(resource)»
-	«gmlTextGenerator.generateAllEdges(procList)»
-]«System.out.println("done.")»'''
+	def String generateActivityDiagram(HashMap<String, DiagramNode> nodesId, ArrayList<ActiveProcess> diagramModel)
+	{
+		var String result = ""
+		System.out.print("Generate GML activity diagram...")
+		result += '''«gmlTextGenerator.writeHeadGML(this)»
+		'''
+		procId = nodesId
+		procList = diagramModel
+		result += '''	«gmlTextGenerator.generateNodes(this/*, nodesId */)»
+			«gmlTextGenerator.generateAllEdges(diagramModel)»
+		]'''
+		System.out.println("done.")
+		return result
+	}
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -162,15 +184,25 @@ def dispatch ArrayList<ActiveProcess> getActiveList(Statement statement, int con
 // Method is collecting a GML head, nodes list and edge list of diagram by calling the same methods 
 // Output: finished text of GraphML activity diagram
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	def generateActivityGraphMLDiagram(Resource resource, String url, String statechartFileNameTail)
-	'''«System.out.print("Generate GraphML activity diagram...")»«graphMLTextGenerator.headGraphMlGenerator(this)»
-<graph edgedefault="directed" id="G">
-	«graphMLTextGenerator.generateProcessNodes(resource, this, url, statechartFileNameTail)»
-	«graphMLTextGenerator.generateAllEdges(procList)»
+	def String generateActivityGraphMLDiagram(HashMap<String, DiagramNode> nodesId, ArrayList<ActiveProcess> diagramModel, String url, String statechartFileNameTail)
+	{
+		var String result = ""
+		System.out.print("Generate GraphML activity diagram...")
+		result += '''«graphMLTextGenerator.headGraphMlGenerator(this)»
+		'''
+		procId = nodesId
+		procList = diagramModel
+		result += '''<graph edgedefault="directed" id="G">
+	«graphMLTextGenerator.generateNodes(this/*, nodesId */, url, statechartFileNameTail)»
+	«graphMLTextGenerator.generateAllEdges(diagramModel)»
   </graph>
     <data key="d6">
 	  <y:Resources/>
 	</data>
-</graphml>«System.out.println("done.")»'''
+</graphml>'''
+		System.out.println("done.")
+		return result
+	}
+	
 
 }

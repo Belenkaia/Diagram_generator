@@ -1,12 +1,10 @@
 package ru.iaie.reflex.diagram.generator;
 
-import com.google.common.collect.Iterables;
 import java.util.ArrayList;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
+import java.util.Collection;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import ru.iaie.reflex.diagram.generator.ActiveProcess;
+import ru.iaie.reflex.diagram.generator.DiagramNode;
 import ru.iaie.reflex.diagram.generator.ProcessDiagramGenerator;
 
 @SuppressWarnings("all")
@@ -152,17 +150,13 @@ public class GMLTextGenerator {
     return tempString;
   }
   
-  public String generateProcessNodes(final Resource resource, final ProcessDiagramGenerator generator) {
+  public String generateNodes(final ProcessDiagramGenerator generator) {
     String tempString = "";
-    Iterable<ru.iaie.reflex.diagram.reflex.Process> _filter = Iterables.<ru.iaie.reflex.diagram.reflex.Process>filter(IteratorExtensions.<EObject>toIterable(resource.getAllContents()), ru.iaie.reflex.diagram.reflex.Process.class);
-    for (final ru.iaie.reflex.diagram.reflex.Process e : _filter) {
-      {
-        String _tempString = tempString;
-        CharSequence _generateOneProcessNode = this.generateOneProcessNode(generator.getCountId(), e.getName(), "roundrectangle");
-        tempString = (_tempString + _generateOneProcessNode);
-        generator.addElementToProcId(generator.getCountId(), e.getName());
-        generator.incrementCountId();
-      }
+    Collection<DiagramNode> _values = generator.procId.values();
+    for (final DiagramNode e : _values) {
+      String _tempString = tempString;
+      CharSequence _generateOneProcessNode = this.generateOneProcessNode(generator.getElementIndexProcId(e.getName()), e.getName(), e.getShape());
+      tempString = (_tempString + _generateOneProcessNode);
     }
     return tempString;
   }
